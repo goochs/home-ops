@@ -29,8 +29,7 @@ spec:
       ingressClassName: internal
       annotations:
         hajimari.io/icon: simple-icons:rancher
-      hosts:
-        - &host "longhorn.${SECRET_DOMAIN}"
+      host: "longhorn.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host

@@ -118,7 +118,7 @@ spec:
           hajimari.io/appName: Prometheus
           hajimari.io/icon: simple-icons:prometheus
         pathType: Prefix
-        host:
+        hosts:
           - &host "prometheus.${SECRET_DOMAIN}"
         tls:
           - hosts:
