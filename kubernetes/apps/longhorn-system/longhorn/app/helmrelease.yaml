@@ -32,9 +32,9 @@ spec:
       defaultDataPath: /longhorn
       defaultReplicaCount: 2
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: internal
       annotations:
         hajimari.io/icon: simple-icons:rancher
       host: longhorn.${SECRET_DOMAIN}
-      tls: false
+      tls: true
