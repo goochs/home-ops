@@ -142,6 +142,8 @@ spec:
             failureDomain: host
             replicated:
               size: 3
+            parameters:
+              min_size: "1"
           dataPool:
             failureDomain: host
             erasureCoded:
