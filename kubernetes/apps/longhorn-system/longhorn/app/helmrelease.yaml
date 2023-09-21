@@ -37,4 +37,4 @@ spec:
       annotations:
         hajimari.io/icon: simple-icons:rancher
       host: longhorn.${SECRET_DOMAIN}
-      tls: true
+      tls: false
