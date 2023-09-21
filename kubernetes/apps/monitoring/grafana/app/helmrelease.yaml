@@ -25,8 +25,8 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: local-path-provisioner
-      namespace: kube-system
+    - name: longhorn
+      namespace: longhorn-system
   values:
     deploymentStrategy:
       type: Recreate
@@ -168,7 +168,7 @@ spec:
         - hosts:
             - *host
     persistence:
-      enabled: true
-      storageClassName: local-path
+      enabled: false
+      storageClassName: longhorn
     testFramework:
       enabled: false

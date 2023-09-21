@@ -32,6 +32,7 @@ spec:
       defaultClassReplicaCount: 2
       defaultFsType: ext4
     defaultSettings:
+      defaultDataLocality: best-effort
       defaultDataPath: /longhorn
       defaultReplicaCount: 2
     ingress:
