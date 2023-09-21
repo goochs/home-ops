@@ -55,6 +55,10 @@ spec:
           requireMsgr2: true
       crashCollector:
         disable: false
+      mgr:
+        modules:
+          - name: rook
+            enabled: true
       dashboard:
         enabled: true
         urlPrefix: /
