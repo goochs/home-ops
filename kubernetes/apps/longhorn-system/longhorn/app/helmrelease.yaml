@@ -25,6 +25,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    monitoring:
+      enabled: true
+      createPrometheusRules: true
     persistence:
       defaultClassReplicaCount: 2
       defaultFsType: ext4
@@ -32,7 +35,7 @@ spec:
       defaultDataPath: /longhorn
       defaultReplicaCount: 2
     ingress:
-      enabled: false
+      enabled: true
       ingressClassName: internal
       annotations:
         hajimari.io/icon: simple-icons:rancher
