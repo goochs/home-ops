@@ -60,7 +60,7 @@ spec:
           - name: rook
             enabled: true
       dashboard:
-        enabled: true
+        enabled: false
         urlPrefix: /
         ssl: false
       storage:
