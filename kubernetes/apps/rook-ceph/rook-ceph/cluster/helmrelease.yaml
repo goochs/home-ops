@@ -147,7 +147,7 @@ spec:
             erasureCoded:
               dataChunks: 2
               codingChunks: 1
-          preservePoolsOnDelete: true
+          preservePoolsOnDelete: false
           gateway:
             port: 80
             resources:
@@ -161,7 +161,7 @@ spec:
             bucket:
               interval: 60s
         storageClass:
-          enabled: true
+          enabled: false
           name: ceph-bucket
           reclaimPolicy: Delete
           parameters:
