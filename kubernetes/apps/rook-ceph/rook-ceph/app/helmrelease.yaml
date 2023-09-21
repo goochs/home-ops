@@ -34,3 +34,5 @@ spec:
       cephFSKernelMountOptions: ms_mode=secure
     monitoring:
       enabled: true
+    enableDiscoveryDaemon: true
+
