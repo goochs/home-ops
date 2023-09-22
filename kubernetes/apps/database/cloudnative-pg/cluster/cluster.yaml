@@ -5,23 +5,11 @@ kind: Cluster
 metadata:
   name: postgres
   namespace: database
-  annotations:
-    kyverno.io/ignore: "true"
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:14.9-3
   primaryUpdateStrategy: unsupervised
   storage:
     size: 10Gi
     storageClass: local-path
-  superuserSecret:
-    name: cloudnative-pg-secret
-  bootstrap:
-    recovery:
-      source: &previousCluster postgres-v3
-  postgresql:
-    parameters:
-      max_connections: "600"
-      shared_buffers: 512MB
   monitoring:
     enablePodMonitor: true
