@@ -19,3 +19,4 @@ resources:
   - ./stakater.yaml
   - ./weave-gitops.yaml
   - ./longhorn.yaml
+  - ./cloudnative-pg.yaml
