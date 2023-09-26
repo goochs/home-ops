@@ -9,4 +9,8 @@ parameters:
   share: /mnt/user/hoard
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
-mountOptions: ["hard", "noatime"]
+mountOptions:
+  - nfsvers=4.2
+  - nconnect=16
+  - hard
+  - noatime
