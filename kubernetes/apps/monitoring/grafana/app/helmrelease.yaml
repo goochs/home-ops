@@ -168,7 +168,7 @@ spec:
         - hosts:
             - *host
     persistence:
-      enabled: true
+      enabled: false
       storageClassName: longhorn
     testFramework:
       enabled: false
