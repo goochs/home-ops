@@ -62,11 +62,11 @@ spec:
         enabled: true
         existingClaim: jellyfin-config
         mountPath: /config
-      hoard:
-        enabled: true
-        existingClaim: hoard-nfs
-        mountPath: /hoard
-        readOnly: true
+      # hoard:
+      #   enabled: true
+      #   existingClaim: hoard-nfs
+      #   mountPath: /hoard
+      #   readOnly: true
       transcode:
         enabled: true
         type: emptyDir
