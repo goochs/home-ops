@@ -7,7 +7,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-longhorn
-    - name: cluster-apps-csi-driver-nfs
   path: ./kubernetes/apps/media/jellyfin/app
   prune: true
   sourceRef:
