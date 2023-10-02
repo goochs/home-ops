@@ -5,7 +5,7 @@ metadata:
   name: storepod-hoard
 provisioner: nfs.csi.k8s.io
 parameters:
-  server: 10.0.10.10
+  server: ${STORAGE_ADDR}
   share: /mnt/user/hoard
 reclaimPolicy: Delete
 volumeBindingMode: Immediate

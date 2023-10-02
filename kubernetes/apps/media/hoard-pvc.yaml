@@ -20,6 +20,7 @@ spec:
     volumeAttributes:
       server: ${STORAGE_ADDR}
       share: /mnt/storage/hoard
+      
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
