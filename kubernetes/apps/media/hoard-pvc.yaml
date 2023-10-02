@@ -5,7 +5,7 @@ metadata:
   name: hoard-nfs
 spec:
   capacity:
-    storage: 36T
+    storage: 22T
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Delete
@@ -34,4 +34,4 @@ spec:
   storageClassName: ""
   resources:
     requests:
-      storage: 36T
+      storage: 22T
