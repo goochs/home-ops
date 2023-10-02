@@ -19,9 +19,8 @@ spec:
     readOnly: false
     volumeHandle: media-nfs-storage-hoard
     volumeAttributes:
-      server: 10.0.10.10
-      share: /mnt/user/hoard
-
+      server: ${STORAGE_ADDR}
+      share: /mnt/storage/hoard
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
