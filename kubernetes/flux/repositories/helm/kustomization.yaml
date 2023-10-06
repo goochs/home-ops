@@ -20,3 +20,4 @@ resources:
   - ./weave-gitops.yaml
   - ./longhorn.yaml
   - ./cloudnative-pg.yaml
+  - ./node-feature-discovery.yaml
