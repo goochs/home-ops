@@ -25,17 +25,21 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    master:
-      resources:
-        requests:
-          cpu: 20m
-          memory: 50Mi
-        limits:
-          memory: 100Mi
+    nodeFeatureRule:
+      createCRD: true
     worker:
-      resources:
-        requests:
-          cpu: 5m
-          memory: 50Mi
-        limits:
-          memory: 100Mi
+      nodeSelector:
+        node-role.kubernetes.io/worker: "true"
+      config:
+        core:
+          sources:
+            - custom
+            - pci
+            - usb
+        sources:
+          custom:
+            - name: intel-gpu
+              matchOn:
+                - pciId:
+                    class: ["0300"]
+                    vendor: ["8086"]
