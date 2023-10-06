@@ -28,14 +28,9 @@ spec:
     nodeFeatureRule:
       createCRD: true
     worker:
-      nodeSelector:
-        node-role.kubernetes.io/worker: "true"
       config:
         core:
-          sources:
-            - custom
-            - pci
-            - usb
+          sources: ["custom", "pci"]
         sources:
           custom:
             - name: intel-gpu
