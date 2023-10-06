@@ -24,11 +24,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: intel-device-plugin-gpu
-      namespace: system
-    - name: longhorn
-      namespace: longhorn-system
+
   values:
     controller:
       type: statefulset
