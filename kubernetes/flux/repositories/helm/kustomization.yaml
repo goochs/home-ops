@@ -21,3 +21,4 @@ resources:
   - ./longhorn.yaml
   - ./cloudnative-pg.yaml
   - ./node-feature-discovery.yaml
+  - ./intel.yaml
