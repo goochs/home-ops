@@ -28,17 +28,39 @@ spec:
   values:
     controller:
       type: statefulset
+      statefulset: 
+        volumeClaimTemplates:
+          - name: config
+            mountPath: /config
+            accessMode: ReadWriteOnce
+            size: 10Gi
+            storageClass: longhorn
 
-    image:
-      repository: ghcr.io/onedr0p/sonarr-develop
-      tag: rolling@sha256:651261e5fdcc5399edda1bff312a50cad131a36d6a8f8dc39e43a352f4f2e0c3
+      containers:
+        main:
+          image:
+            repository: ghcr.io/onedr0p/sonarr-develop
+            tag: rolling@sha256:651261e5fdcc5399edda1bff312a50cad131a36d6a8f8dc39e43a352f4f2e0c3
+          env:
+            TZ: ${TIMEZONE}
+            SONARR__INSTANCE_NAME: Sonarr
+            SONARR__PORT: &port 80
+            SONARR__APPLICATION_URL: "https://sonarr.${SECRET_DOMAIN}"
+            SONARR__LOG_LEVEL: info
+            SONARR__THEME: dark
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 1000Mi
 
-    env:
-      TZ: ${TIMEZONE}
-      SONARR__INSTANCE_NAME: Sonarr
-      SONARR__PORT: &port 80
-      SONARR__APPLICATION_URL: "https://sonarr.${SECRET_DOMAIN}"
-      SONARR__LOG_LEVEL: info
+      pod:
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+          fsGroup: 568
+          fsGroupChangePolicy: "OnRootMismatch"
 
     service:
       main:
@@ -49,24 +71,21 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        className: internal
         annotations:
-          hajimari.io/icon: simple-icons:jellyfin
+          hajimari.io/icon: mdi:television-box
         hosts:
           - host: &host "sonarr.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
-          - hosts:
+          - secretName: *host
+            hosts:
               - *host
-
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-
+        
     persistence:
       hoard:
         enabled: true
@@ -74,16 +93,3 @@ spec:
         mountPath: /hoard
         readOnly: false
 
-    volumeClaimTemplate:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        storageClass: longhorn
-
-    resources:
-      requests:
-        cpu: 25m
-        memory: 350Mi
-      limits:
-        memory: 4Gi
