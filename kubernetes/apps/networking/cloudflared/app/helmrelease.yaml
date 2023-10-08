@@ -24,6 +24,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: nginx-external
+      namespace: networking
   values:
     controller:
       replicas: 1
