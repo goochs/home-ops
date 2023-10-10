@@ -1,0 +1,90 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prowlarr
+  namespace: media
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      main:
+        type: statefulset
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: longhorn
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/prowlarr-develop
+              tag: 4.0.0.695@sha256:9a175bd657503c1fdb2462e1b1ca04f1c30f027323ece9a3e08b308b6041562d
+              pullPolicy: IfNotPresent
+            env:
+              TZ: ${TIMEZONE}
+              PROWLARR__INSTANCE_NAME: Prowlarr
+              PROWLARR__PORT: &port 80
+              PROWLARR__APPLICATION_URL: "https://prowlarr.${SECRET_DOMAIN}"
+              PROWLARR__LOG_LEVEL: info
+            resources:
+              requests:
+                cpu: 50m
+                memory: 100Mi
+              limits:
+                memory: 1000Mi
+
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        annotations:
+          hajimari.io/icon: mdi:television-box
+        hosts:
+          - host: &host "prowlarr.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - secretName: *host
+            hosts:
+              - *host
+
+
