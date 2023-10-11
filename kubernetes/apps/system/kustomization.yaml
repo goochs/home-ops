@@ -5,4 +5,3 @@ resources:
   - ./namespace.yaml
   - ./node-feature-discovery/ks.yaml
   - ./intel-device-plugins/ks.yaml
-  - ./external-secrets/ks.yaml
