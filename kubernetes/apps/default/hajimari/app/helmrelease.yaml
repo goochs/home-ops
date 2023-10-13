@@ -26,12 +26,12 @@ spec:
     keepHistory: false
   values:
     hajimari:
-      title: Apps
+      title: Hajimari
       darkTheme: espresso
       alwaysTargetBlank: true
       showGreeting: false
-      showAppGroups: false
-      showAppStatus: false
+      showAppGroups: true
+      showAppStatus: true
       showBookmarkGroups: false
       showGlobalBookmarks: false
       showAppUrls: false
@@ -41,7 +41,6 @@ spec:
           - default
           - monitoring
           - media
-          - longhorn-system
     ingress:
       main:
         enabled: true

@@ -39,6 +39,8 @@ spec:
       enabled: true
       ingressClassName: internal
       annotations:
+        hajimari.io/enable: true
         hajimari.io/icon: simple-icons:rancher
+        hajimari.io/appName: longhorn
       host: longhorn.${SECRET_DOMAIN}
       tls: true
