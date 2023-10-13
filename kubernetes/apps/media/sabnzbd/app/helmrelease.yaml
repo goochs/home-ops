@@ -52,7 +52,7 @@ spec:
                 sabnzbd.downloads.svc,
                 sabnzbd.downloads.svc.cluster,
                 sabnzbd.downloads.svc.cluster.local,
-                sab.serek.io
+                sab.${SECRET_DOMAIN}
             resources:
               requests:
                 cpu: 50m
@@ -78,7 +78,7 @@ spec:
         enabled: true
         className: internal
         annotations:
-          hajimari.io/icon: mdi:television-box
+          hajimari.io/icon: mdi:download
         hosts:
           - host: &host "sab.${SECRET_DOMAIN}"
             paths:

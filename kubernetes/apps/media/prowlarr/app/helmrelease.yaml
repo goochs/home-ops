@@ -74,7 +74,7 @@ spec:
         enabled: true
         className: internal
         annotations:
-          hajimari.io/icon: mdi:television-box
+          hajimari.io/icon: mdi:movie-search
         hosts:
           - host: &host "prowlarr.${SECRET_DOMAIN}"
             paths:
