@@ -40,6 +40,8 @@ spec:
         matchNames:
           - default
           - monitoring
+          - media
+          - longhorn-system
     ingress:
       main:
         enabled: true
