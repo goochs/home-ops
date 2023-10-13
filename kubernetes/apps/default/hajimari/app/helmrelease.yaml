@@ -35,12 +35,7 @@ spec:
       showBookmarkGroups: false
       showGlobalBookmarks: false
       showAppUrls: false
-      defaultEnable: true
-      namespaceSelector:
-        matchNames:
-          - default
-          - monitoring
-          - media
+      defaultEnable: false
     ingress:
       main:
         enabled: true

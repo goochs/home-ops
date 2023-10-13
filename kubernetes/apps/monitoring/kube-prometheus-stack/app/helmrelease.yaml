@@ -115,6 +115,7 @@ spec:
         enabled: true
         ingressClassName: internal
         annotations:
+          hajimari.io/enable: true
           hajimari.io/appName: Prometheus
           hajimari.io/icon: simple-icons:prometheus
         pathType: Prefix
