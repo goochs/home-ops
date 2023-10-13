@@ -33,7 +33,7 @@ spec:
       enabled: true
       className: internal
       annotations:
-        hajimari.io/enable: true
+        hajimari.io/enable: "true"
         hajimari.io/icon: sawtooth-wave
       hosts:
         - host: &host "weave.${SECRET_DOMAIN}"

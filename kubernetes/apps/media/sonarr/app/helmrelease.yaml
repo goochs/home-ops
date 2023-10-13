@@ -75,7 +75,7 @@ spec:
         enabled: true
         className: internal
         annotations:
-          hajimari.io/enable: true
+          hajimari.io/enable: "true"
           hajimari.io/icon: mdi:filmstrip
         hosts:
           - host: &host "sonarr.${SECRET_DOMAIN}"
