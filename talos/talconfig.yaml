@@ -1,0 +1,105 @@
+---
+clusterName: home-cluster
+talosVersion: v1.5.3
+kubernetesVersion: v1.28.2
+endpoint: https://10.0.10.30:6443
+allowSchedulingOnMasters: true
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: knode1
+    ipAddress: 10.0.10.31
+    controlPlane: true
+    installDisk: /dev/nvme0n1
+    nameservers:
+      - 10.0.10.53
+    networkInterfaces:
+      - interface: bond0
+        dhcp: true
+        bond:
+          mode: balance-alb
+          interfaces:
+            - enp0s31f6
+            - enp1s0f0
+            - enp1s0f1
+        vip:
+          ip: 10.0.10.30
+
+  - hostname: knode2
+    ipAddress: 10.0.10.32
+    controlPlane: true
+    installDisk: /dev/nvme0n1
+    nameservers:
+      - 10.0.10.53
+    networkInterfaces:
+      - interface: bond0
+        dhcp: true
+        bond:
+          mode: balance-alb
+          interfaces:
+            - enp0s31f6
+            - enp1s0f0
+            - enp1s0f1
+        vip:
+          ip: 10.0.10.30
+
+
+  - hostname: knode3
+    ipAddress: 10.0.10.33
+    controlPlane: true
+    installDisk: /dev/nvme0n1
+    nameservers:
+      - 10.0.10.53
+    networkInterfaces:
+      - interface: bond0
+        dhcp: true
+        bond:
+          mode: balance-alb
+          interfaces:
+            - enp0s31f6
+            - enp1s0f0
+            - enp1s0f1
+        vip:
+          ip: 10.0.10.30
+
+controlPlane:
+  patches:
+    - |-
+      - op: add
+        path: /machine/kubelet/extraArgs
+        value:
+          rotate-server-certificates: "true"
+          feature-gates: GracefulNodeShutdown=true
+      - op: add
+        path: /cluster/controllerManager/extraArgs
+        value:
+          bind-address: 0.0.0.0
+      - op: add
+        path: /cluster/scheduler/extraArgs
+        value:
+          bind-address: 0.0.0.0
+      - op: add
+        path: /cluster/proxy/extraArgs
+        value:
+          bind-address: 0.0.0.0
+    - |-
+      machine:
+        time:
+          disabled: false
+          servers:
+            - 10.0.10.1
+worker:
+  patches:
+    - |-
+      - op: add
+        path: /machine/kubelet/extraArgs
+        value:
+          rotate-server-certificates: "true"
+          feature-gates: GracefulNodeShutdown=true
+    - |-
+      machine:
+        time:
+          disabled: false
+          servers:
+            - 10.0.10.1
