@@ -30,7 +30,6 @@ spec:
     cmdOptions:
       v: 3
     deschedulerPolicy:
-
       strategies:
         RemoveDuplicates:
           enabled: true
