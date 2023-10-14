@@ -15,14 +15,8 @@ nodes:
     nameservers:
       - 10.0.10.53
     networkInterfaces:
-      - interface: bond0
+      - interface: enp1s0f1
         dhcp: true
-        bond:
-          mode: balance-alb
-          interfaces:
-            - enp0s31f6
-            - enp1s0f0
-            - enp1s0f1
         vip:
           ip: 10.0.10.30
 
@@ -33,14 +27,8 @@ nodes:
     nameservers:
       - 10.0.10.53
     networkInterfaces:
-      - interface: bond0
+      - interface: enp1s0f1
         dhcp: true
-        bond:
-          mode: balance-alb
-          interfaces:
-            - enp0s31f6
-            - enp1s0f0
-            - enp1s0f1
         vip:
           ip: 10.0.10.30
 
@@ -52,14 +40,8 @@ nodes:
     nameservers:
       - 10.0.10.53
     networkInterfaces:
-      - interface: bond0
+      - interface: enp1s0f1
         dhcp: true
-        bond:
-          mode: balance-alb
-          interfaces:
-            - enp0s31f6
-            - enp1s0f0
-            - enp1s0f1
         vip:
           ip: 10.0.10.30
 
