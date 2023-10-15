@@ -74,7 +74,7 @@ tasks:
   wipe-data:
     desc: Wipe all remnants of rook-ceph from a given disk (ex. task rook:wipe-data node=knode1)
     silent: true
-    internal: true
+    internal: false
     cmds:
       - envsubst < <(cat {{.wipeRookDataJobTemplate}}) | kubectl apply -f -
       - bash {{.waitForJobScript}} {{.wipeRookDataJobName}} default
