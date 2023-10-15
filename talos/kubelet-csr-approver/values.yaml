@@ -1,2 +1,4 @@
 ---
-providerRegex: ^k(master|worker)\d\d?$
+providerRegex: ^knode\d$
+bypassDnsResolution: true
+loggingLevel: 10

@@ -1,0 +1,20 @@
+---
+version: "3"
+
+vars:
+  TALOS_CONFIG_DIR: "{{.TALOS_DIR}}/clusterconfig"
+
+tasks:
+
+  genconfig:
+    desc: Generate Talos configuration based on talconfig.yaml
+    dir: "{{.TALOS_DIR}}"
+    cmd: talhelper genconfig
+
+  apply-initial:
+    desc: Apply Talos configuration to the nodes
+    dir: "{{.TALOS_DIR}}"
+    cmd: |
+      talosctl apply-config --file ./clusterconfig/home-cluster-knode1.yaml -n 10.0.10.31 --insecure
+      talosctl apply-config --file ./clusterconfig/home-cluster-knode2.yaml -n 10.0.10.32 --insecure
+      talosctl apply-config --file ./clusterconfig/home-cluster-knode3.yaml -n 10.0.10.33 --insecure

@@ -6,6 +6,10 @@ endpoint: https://10.0.10.30:6443
 allowSchedulingOnMasters: true
 cniConfig:
   name: none
+clusterPodNets:
+  - 10.43.0.0/16
+clusterSvcNets:
+  - 10.44.0.0/16
 
 nodes:
   - hostname: knode1
@@ -48,11 +52,15 @@ nodes:
 controlPlane:
   patches:
     - |-
+      cluster:
+        proxy:
+          disabled: true
+    - |-
       - op: add
         path: /machine/kubelet/extraArgs
         value:
           rotate-server-certificates: "true"
-          feature-gates: GracefulNodeShutdown=true
+          feature-gates: CronJobTimeZone=true,GracefulNodeShutdown=true
       - op: add
         path: /cluster/controllerManager/extraArgs
         value:
@@ -65,22 +73,13 @@ controlPlane:
         path: /cluster/proxy/extraArgs
         value:
           bind-address: 0.0.0.0
+      - op: remove
+        path: /cluster/apiServer/admissionControl
     - |-
       machine:
-        time:
-          disabled: false
-          servers:
-            - 10.0.10.1
-worker:
-  patches:
-    - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          rotate-server-certificates: "true"
-          feature-gates: GracefulNodeShutdown=true
-    - |-
-      machine:
+        sysctls:
+          fs.inotify.max_user_watches: "1048576"
+          fs.inotify.max_user_instances: "8192"
         time:
           disabled: false
           servers:
