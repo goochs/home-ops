@@ -54,7 +54,7 @@ tasks:
   wipe-disk:
     desc: Wipe all remnants of rook-ceph from a given disk (ex. task rook:wipe-disk node=knode1 ceph_disk="/dev/nvme0n1")
     silent: true
-    internal: true
+    internal: false
     cmds:
       - envsubst < <(cat {{.wipeRookDiskJobTemplate}}) | kubectl apply -f -
       - bash {{.waitForJobScript}} {{.wipeCephDiskJobName}} default
@@ -64,7 +64,7 @@ tasks:
     vars:
       node: '{{ or .node (fail "`node` is required") }}'
       ceph_disk: '{{ or .ceph_disk (fail "`ceph_disk` is required") }}'
-      jobName: 'wipe-{{- .node -}}-{{- .ceph_disk | splitList "/" | last | replace replace "/" "-" }}-{{- .ts -}}'
+      jobName: 'wipe-{{- .node -}}-{{- .ceph_disk | splitList "/" | last | replace "_" "-" -}}-{{- .ts -}}'
       wipeRookDiskJobTemplate: "WipeDiskJob.tmpl.yaml"
     env: *task-vars
     preconditions:
