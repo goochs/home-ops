@@ -19,6 +19,16 @@ spec:
     toolbox:
       enabled: false
 
+    ingress:
+      dashboard:
+        ingressClassName: internal
+        host:
+          name: &host "rook.${SECRET_DOMAIN}"
+          path: /
+        tls:
+          - hosts:
+              - *host
+
     monitoring:
       enabled: true
       createPrometheusRules: true
@@ -40,16 +50,6 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-
-      ingress:
-        dashboard:
-          ingressClassName: internal
-          host:
-            name: &host "rook.${SECRET_DOMAIN}"
-            path: /
-          tls:
-            - hosts:
-                - *host
 
       storage:
         useAllNodes: false
