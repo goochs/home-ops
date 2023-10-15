@@ -42,14 +42,14 @@ spec:
         ssl: false
 
       ingress:
-      dashboard:
-        ingressClassName: internal
-        host:
-          name: &host "rook.${SECRET_DOMAIN}"
-          path: /
-        tls:
-          - hosts:
-              - *host
+        dashboard:
+          ingressClassName: internal
+          host:
+            name: &host "rook.${SECRET_DOMAIN}"
+            path: /
+          tls:
+            - hosts:
+                - *host
 
       storage:
         useAllNodes: false
