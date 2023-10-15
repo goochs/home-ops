@@ -43,7 +43,7 @@ spec:
 
       ingress:
         dashboard:
-          ingressClassName: internal
+          ingressClassName: external
           host:
             name: &host "rook.${SECRET_DOMAIN}"
             path: /
