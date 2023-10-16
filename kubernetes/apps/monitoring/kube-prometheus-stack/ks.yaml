@@ -10,7 +10,9 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: false
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  dependsOn:
+    - name: cluster-apps-rook-ceph-cluster
