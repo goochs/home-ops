@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-intel-device-plugin-operator
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/system/intel-device-plugins/operator
+  path: ./kubernetes/apps/kube-system/intel-device-plugins/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -21,7 +21,7 @@ metadata:
   name: cluster-apps-intel-device-plugin-gpu
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/system/intel-device-plugins/gpu
+  path: ./kubernetes/apps/kube-system/intel-device-plugins/gpu
   prune: true
   sourceRef:
     kind: GitRepository
@@ -37,7 +37,7 @@ metadata:
   name: cluster-apps-intel-device-plugin-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/system/intel-device-plugins/exporter
+  path: ./kubernetes/apps/kube-system/intel-device-plugins/exporter
   prune: true
   sourceRef:
     kind: GitRepository
