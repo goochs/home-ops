@@ -40,6 +40,11 @@ spec:
       osd_class_update_on_start = false
 
     cephClusterSpec:
+      mgr:
+        modules:
+          - name: rook
+            enabled: true
+            
       network:
         provider: host
 
