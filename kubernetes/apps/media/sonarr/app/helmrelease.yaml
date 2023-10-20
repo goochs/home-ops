@@ -87,7 +87,6 @@ spec:
         enabled: true
         existingClaim: sonarr-config
       hoard:
-        enabled: true
         existingClaim: hoard-nfs
-        mountPath: /hoard
-        readOnly: false
+        globalMounts:
+          - path: /hoard

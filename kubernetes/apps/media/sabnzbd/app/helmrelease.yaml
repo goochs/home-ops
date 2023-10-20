@@ -32,10 +32,14 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: config
-              mountPath: /config
               accessMode: ReadWriteOnce
-              size: 10Gi
-              storageClass: longhorn
+              size: 1Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
+
+        annotations:
+          reloader.stakater.com/auto: "true"
 
         containers:
           main:
@@ -45,7 +49,7 @@ spec:
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
-              SABNZBD__PORT: &port 80
+              SABNZBD__PORT: &port 8080
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
                 sabnzbd,
                 sabnzbd.downloads,
@@ -81,7 +85,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: mdi:download
         hosts:
-          - host: &host "sab.${SECRET_DOMAIN}"
+          - host: &host "sabnzbd.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
@@ -93,7 +97,6 @@ spec:
 
     persistence:
       hoard:
-        enabled: true
         existingClaim: hoard-nfs
-        mountPath: /hoard
-        readOnly: false
+        globalMounts:
+          - path: /hoard
