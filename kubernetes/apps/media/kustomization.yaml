@@ -6,6 +6,6 @@ resources:
   - ./hoard-pvc.yaml
   # - ./jellyfin/ks.yaml
   # - ./sabnzbd/ks.yaml
-  # - ./radarr/ks.yaml
-  # - ./sonarr/ks.yaml
-  # - ./prowlarr/ks.yaml
+  - ./radarr/ks.yaml
+  - ./sonarr/ks.yaml
+  - ./prowlarr/ks.yaml
