@@ -9,4 +9,4 @@ resources:
   - ./radarr/ks.yaml
   - ./sonarr/ks.yaml
   - ./prowlarr/ks.yaml
-  - ./plex
+  - ./plex/ks.yaml
