@@ -34,7 +34,7 @@ spec:
             - name: config
               accessMode: ReadWriteOnce
               size: 50Gi
-              storageClass: ceph-block
+              storageClass: democratic-nfs
               globalMounts:
                 - path: /config
 
@@ -49,16 +49,16 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                gpu.intel.com/i915: 1
+                # gpu.intel.com/i915: 1
                 memory: 4000Mi
               limits:
-                gpu.intel.com/i915: 1
+                # gpu.intel.com/i915: 1
                 memory: 8000Mi
 
         pod:
           enableServiceLinks: false
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
+          # nodeSelector:
+            # intel.feature.node.kubernetes.io/gpu: "true"
           securityContext:
             runAsUser: 568
             runAsGroup: 568
