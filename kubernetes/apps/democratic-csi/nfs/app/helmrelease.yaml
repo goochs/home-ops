@@ -42,10 +42,6 @@ spec:
         - nconnect=16
         - hard
         - noatime
-    volumeSnapshotClasses:
-    - name: nfs
-      parameters:
-        detachedSnapshots: "true"
     driver:
       config:
         driver: freenas-api-nfs
