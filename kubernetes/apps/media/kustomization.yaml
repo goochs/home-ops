@@ -5,8 +5,8 @@ resources:
   - ./namespace.yaml
   - ./hoard-pvc.yaml
   # - ./jellyfin/ks.yaml
-  # - ./sabnzbd/ks.yaml
+  - ./sabnzbd/ks.yaml
   # - ./radarr/ks.yaml
-  # - ./sonarr/ks.yaml
-  # - ./prowlarr/ks.yaml
+  - ./sonarr/ks.yaml
+  - ./prowlarr/ks.yaml
   - ./plex/ks.yaml
