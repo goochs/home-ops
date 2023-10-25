@@ -105,14 +105,14 @@ spec:
         scrapeConfigSelectorNilUsesHelmValues: false
         enableAdminAPI: true
         walCompression: true
-        retentionSize: 16GB
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: ceph-block
-              resources:
-                requests:
-                  storage: 20Gi
+        # retentionSize: 16GB
+        # storageSpec:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: ceph-block
+        #       resources:
+        #         requests:
+        #           storage: 20Gi
     grafana:
       enabled: false
       forceDeployDashboards: true
