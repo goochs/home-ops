@@ -13,7 +13,7 @@ ipam:
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 ipv4NativeRoutingCIDR: 10.42.0.0/16
-k8sServiceHost: 10.0.10.30
+k8sServiceHost: 10.0.10.20
 k8sServicePort: 6443
 l2announcements:
   enabled: true

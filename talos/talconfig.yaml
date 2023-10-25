@@ -2,8 +2,7 @@
 clusterName: home-cluster
 talosVersion: v1.5.3
 kubernetesVersion: v1.28.2
-endpoint: https://10.0.10.30:6443
-allowSchedulingOnMasters: true
+endpoint: https://10.0.10.20:6443
 cniConfig:
   name: none
 clusterPodNets:
@@ -12,42 +11,77 @@ clusterSvcNets:
   - 10.44.0.0/16
 
 nodes:
-  - hostname: knode1
+  - hostname: kmaster1
+    ipAddress: 10.0.10.21
+    controlPlane: true
+    installDisk: /dev/sda
+    nameservers:
+      - 10.0.10.53
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "aa:bb:*"
+        dhcp: true
+        vip:
+          ip: 10.0.10.20
+
+  - hostname: kmaster2
+    ipAddress: 10.0.10.22
+    controlPlane: true
+    installDisk: /dev/sda
+    nameservers:
+      - 10.0.10.53
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "aa:bb:*"
+        dhcp: true
+        vip:
+          ip: 10.0.10.20
+
+  - hostname: kmaster3
+    ipAddress: 10.0.10.23
+    controlPlane: true
+    installDisk: /dev/sda
+    nameservers:
+      - 10.0.10.53
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "aa:bb:*"
+        dhcp: true
+        vip:
+          ip: 10.0.10.20
+
+  - hostname: kworker1
     ipAddress: 10.0.10.31
-    controlPlane: true
-    installDisk: /dev/nvme0n1
+    controlPlane: false
+    installDisk: /dev/sda
     nameservers:
       - 10.0.10.53
     networkInterfaces:
-      - interface: enp1s0f1
+      - deviceSelector:
+          hardwareAddr: "aa:bb:*"
         dhcp: true
-        vip:
-          ip: 10.0.10.30
 
-  - hostname: knode2
+  - hostname: kworker2
     ipAddress: 10.0.10.32
-    controlPlane: true
-    installDisk: /dev/nvme0n1
+    controlPlane: false
+    installDisk: /dev/sda
     nameservers:
       - 10.0.10.53
     networkInterfaces:
-      - interface: enp1s0f1
+      - deviceSelector:
+          hardwareAddr: "aa:bb:*"
         dhcp: true
-        vip:
-          ip: 10.0.10.30
 
-
-  - hostname: knode3
+  - hostname: kworker3
     ipAddress: 10.0.10.33
-    controlPlane: true
-    installDisk: /dev/nvme0n1
+    controlPlane: false
+    installDisk: /dev/sda
     nameservers:
       - 10.0.10.53
     networkInterfaces:
-      - interface: enp1s0f1
+      - deviceSelector:
+          hardwareAddr: "aa:bb:*"
         dhcp: true
-        vip:
-          ip: 10.0.10.30
 
 controlPlane:
   patches:

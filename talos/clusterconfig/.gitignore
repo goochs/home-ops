@@ -1,4 +1,7 @@
-home-cluster-knode1.yaml
-home-cluster-knode2.yaml
-home-cluster-knode3.yaml
+home-cluster-kmaster1.yaml
+home-cluster-kmaster2.yaml
+home-cluster-kmaster3.yaml
+home-cluster-kworker1.yaml
+home-cluster-kworker2.yaml
+home-cluster-kworker3.yaml
 talosconfig
