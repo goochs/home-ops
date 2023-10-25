@@ -44,14 +44,12 @@ spec:
         - noatime
     driver:
       config:
-        driver: freenas-api-nfs
-        instance_id:
-        httpConnection:
-          protocol: https
+        driver: zfs-generic-nfs
+        sshConnection:
           host: ${STORAGE_ADDR}
-          port: 443
-          apiKey: ${TRUENAS_API_KEY}
-          allowInsecure: true
+          port: 22
+          username: root
+          password: ${STORAGE_PASS}
         zfs:
           datasetParentName: storage/democratic/nfs/data
           detachedSnapshotsDatasetParentName: storage/democratic/nfs/snapshots
@@ -62,10 +60,8 @@ spec:
           datasetPermissionsGroup: 0
         nfs:
           shareHost: ${STORAGE_ADDR}
-          shareAlldirs: false
-          shareAllowedHosts: []
-          shareAllowedNetworks: []
-          shareMaprootUser: root
-          shareMaprootGroup: root
-          shareMapallUser: ""
-          shareMapallGroup: ""
+          shareStrategy: "setDatasetProperties"
+          shareStrategySetDatasetProperties:
+            properties:
+              sharenfs: "on"
+
