@@ -25,3 +25,4 @@ resources:
   - ./external-secrets.yaml
   - ./descheduler.yaml
   - ./rook-ceph.yaml
+  - ./democratic-csi.yaml
