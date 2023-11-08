@@ -46,4 +46,4 @@ spec:
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-cloudflare-secret
+      secret.reloader.stakater.com/reload: external-dns-secret
