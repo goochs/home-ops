@@ -8,6 +8,6 @@ kubeconfig
 *.agekey
 *.pub
 *.key
-test*
+test*.yaml
 # Ansible
 .venv*
