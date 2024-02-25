@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: 1.32.8.7639-fb6452ebf@sha256:0d511e47c8fbd7df5e67472936841f19601610c623e219ee0b978fbb1ce99d30
+              tag: 1.32.8.7639-fb6452ebf@sha256:9c15c8d0dc5fc1c734c97b38b66cdbee126c2b1d9bce8605c73bf06c17ff1e32
             resources:
               requests:
                 cpu: 100m
