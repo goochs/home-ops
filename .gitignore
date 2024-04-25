@@ -11,3 +11,6 @@ kubeconfig
 test*.yaml
 # Ansible
 .venv*
+
+
+.envrc.secret
