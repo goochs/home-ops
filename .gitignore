@@ -3,14 +3,17 @@
 Thumbs.db
 # k8s
 kubeconfig
+talosconfig
 .decrypted~*.yaml
 .config.env
 *.agekey
 *.pub
 *.key
-test*.yaml
+# Private
+.private
+.bin
+.envrc.secret
 # Ansible
 .venv*
-
-
-.envrc.secret
+# Taskfile
+.task
