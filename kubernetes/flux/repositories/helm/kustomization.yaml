@@ -26,3 +26,5 @@ resources:
   - ./descheduler.yaml
   - ./rook-ceph.yaml
   - ./democratic-csi.yaml
+  - ./postfinance.yaml
+  - ./spegel.yaml
