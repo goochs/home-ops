@@ -2,19 +2,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: nginx-external
-  namespace: networking
+  name: ingress-nginx-external
 spec:
   interval: 30m
   chart:
     spec:
       chart: ingress-nginx
-      version: 4.9.1
+      version: 4.10.0
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -22,16 +20,17 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
+  dependsOn:
+    - name: cloudflared
+      namespace: network
   values:
-    fullnameOverride: nginx-external
+    fullnameOverride: ingress-nginx-external
     controller:
       replicaCount: 1
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
-          io.cilium/lb-ipam-ips: "10.0.10.42"
+          io.cilium/lb-ipam-ips: "10.60.50.42"
         externalTrafficPolicy: Cluster
       ingressClassResource:
         name: external
@@ -66,23 +65,22 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: networking
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app.kubernetes.io/name: nginx-external
+              app.kubernetes.io/name: ingress-nginx
+              app.kubernetes.io/instance: ingress-nginx-external
               app.kubernetes.io/component: controller
       resources:
         requests:
-          cpu: 10m
-          memory: 250Mi
+          cpu: 100m
         limits:
           memory: 500Mi
     defaultBackend:
