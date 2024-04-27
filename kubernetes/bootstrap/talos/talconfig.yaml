@@ -6,13 +6,13 @@ talosVersion: v1.7.0
 kubernetesVersion: v1.30.0
 
 clusterName: &cluster homeprod
-endpoint: https://10.0.30.60:6443
+endpoint: https://10.0.30.30:6443
 clusterPodNets:
-  - "10.68.0.0/16"
+  - "10.11.0.0/16"
 clusterSvcNets:
-  - "10.69.0.0/16"
+  - "10.12.0.0/16"
 additionalApiServerCertSans: &sans
-  - "10.0.30.60"
+  - "10.0.30.30"
   - 127.0.0.1 # KubePrism
   - "kube.goochs.us"
 additionalMachineCertSans: *sans
@@ -20,102 +20,71 @@ cniConfig:
   name: none
 
 nodes:
-  - hostname: "kmaster1"
-    ipAddress: "10.0.30.61"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+  - hostname: kmaster1
+    ipAddress: 10.0.30.31
+    installDisk: /dev/disk/by-id/nvme-BC901_NVMe_SK_hynix_256GB____4YBAN02681860B265
     controlPlane: true
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230711NV01KG23208
+        partitions:
+          - mountpoint: /var/lib/longhorn
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "aa:bb:cc:00:01:01"
-        dhcp: false
+      - interface: bond0
         addresses:
-          - "10.0.30.61/24"
-        mtu: 1500
+          - 10.0.30.31/24
+        dhcp: false
+        bond: &bondconfig
+          mode: active-backup
+          primary: enp1s0f1
+          interfaces:
+            - enp0s31f6
+            - enp1s0f0
+            - enp1s0f1
         routes:
           - network: 0.0.0.0/0
-            gateway: "10.0.30.1"
+            gateway: 10.0.30.1
         vip:
-          ip: "10.0.30.60"
-  - hostname: "kmaster2"
-    ipAddress: "10.0.30.62"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+          ip: 10.0.30.30
+
+  - hostname: kmaster2
+    ipAddress: 10.0.30.32
+    installDisk: /dev/nvme0n1
     controlPlane: true
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG03651
+        partitions:
+          - mountpoint: /var/lib/longhorn
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "aa:bb:cc:00:01:02"
-        dhcp: false
+      - interface: bond0
         addresses:
-          - "10.0.30.62/24"
-        mtu: 1500
+          - 10.0.30.32/24
+        dhcp: false
+        bond: *bondconfig
         routes:
           - network: 0.0.0.0/0
-            gateway: "10.0.30.1"
+            gateway: 10.0.30.1
         vip:
-          ip: "10.0.30.60"
-  - hostname: "kmaster3"
-    ipAddress: "10.0.30.63"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+          ip: 10.0.30.30
+
+  - hostname: kmaster3
+    ipAddress: 10.0.30.33
+    installDisk: /dev/disk/by-id/nvme-PC_SN740_NVMe_WD_256GB_22358V447822
     controlPlane: true
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG04096
+        partitions:
+          - mountpoint: /var/lib/longhorn
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "aa:bb:cc:00:01:03"
-        dhcp: false
+      - interface: bond0
         addresses:
-          - "10.0.30.63/24"
-        mtu: 1500
+          - 10.0.30.33/24
+        dhcp: false
+        bond: *bondconfig
         routes:
           - network: 0.0.0.0/0
-            gateway: "10.0.30.1"
+            gateway: 10.0.30.1
         vip:
-          ip: "10.0.30.60"
-  - hostname: "kworker1"
-    ipAddress: "10.0.30.71"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
-    controlPlane: false
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "aa:bb:cc:00:02:01"
-        dhcp: false
-        addresses:
-          - "10.0.30.71/24"
-        mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.0.30.1"
-  - hostname: "kworker2"
-    ipAddress: "10.0.30.72"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
-    controlPlane: false
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "aa:bb:cc:00:02:02"
-        dhcp: false
-        addresses:
-          - "10.0.30.72/24"
-        mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.0.30.1"
-  - hostname: "kworker3"
-    ipAddress: "10.0.30.73"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
-    controlPlane: false
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "aa:bb:cc:00:02:03"
-        dhcp: false
-        addresses:
-          - "10.0.30.73/24"
-        mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.0.30.1"
+          ip: 10.0.30.30
 
 patches:
   # Configure containerd
@@ -163,14 +132,14 @@ patches:
     machine:
       network:
         nameservers:
-          - 10.0.30.53
+          - 10.0.30.1
 
   # Configure NTP
   - |-
     machine:
       time:
         disabled: false
-        servers: ["time.cloudflare.com"]
+        servers: ["10.0.30.1"]
 
   # Custom sysctl settings
   - |-
@@ -182,19 +151,28 @@ patches:
         net.core.rmem_max: "2500000"
         net.core.wmem_max: "2500000"
 
-  # Mount openebs-hostpath in kubelet
+  # Mount Longhorn disk in kubelet
   - |-
     machine:
       kubelet:
         extraMounts:
-          - destination: /var/openebs/local
+          - destination: /var/lib/longhorn
             type: bind
-            source: /var/openebs/local
+            source: /var/lib/longhorn
             options: ["bind", "rshared", "rw"]
 
 
 
 controlPlane:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ucode
+          - siderolabs/i915-ucode
+          - siderolabs/util-linux-tools
+          - siderolabs/iscsi-tools
+
   patches:
     # Cluster configuration
     - |-
