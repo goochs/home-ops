@@ -165,8 +165,8 @@ spec:
       tls:
         - hosts:
             - *host
-    # persistence:
-      # enabled: true
-      # storageClassName: ceph-block
+    persistence:
+      enabled: true
+      storageClassName: longhorn
     testFramework:
       enabled: false

@@ -34,7 +34,7 @@ spec:
             - name: config
               accessMode: ReadWriteOnce
               size: 50Gi
-              storageClass: democratic-nfs
+              storageClass: longhorn
               globalMounts:
                 - path: /config
 
