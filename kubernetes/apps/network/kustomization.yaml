@@ -5,4 +5,4 @@ resources:
   - ./namespace.yaml
   - ./echo-server/ks.yaml
   - ./k8s-gateway/ks.yaml
-  - ./nginx/ks.yaml
+  - ./ingress-nginx/ks.yaml
