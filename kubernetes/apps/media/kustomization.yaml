@@ -5,7 +5,7 @@ resources:
   - ./namespace.yaml
   - ./hoard-pvc.yaml
   # - ./sabnzbd/ks.yaml
-  # - ./radarr/ks.yaml
+  - ./radarr/ks.yaml
   # - ./sonarr/ks.yaml
   - ./prowlarr/ks.yaml
   # - ./plex/ks.yaml
