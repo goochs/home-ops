@@ -22,7 +22,7 @@ cniConfig:
 nodes:
   - hostname: kmaster1
     ipAddress: 10.0.30.31
-    installDisk: /dev/disk/by-id/nvme-BC901_NVMe_SK_hynix_256GB____4YBAN02681860B265
+    installDisk: /dev/nvme0n1
     controlPlane: true
     machineDisks:
       - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230711NV01KG23208
