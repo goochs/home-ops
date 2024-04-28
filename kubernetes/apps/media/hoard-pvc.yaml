@@ -20,7 +20,7 @@ spec:
     volumeHandle: media-nfs-storage-hoard
     volumeAttributes:
       server: ${STORAGE_ADDR}
-      share: /mnt/storage/hoard
+      share: /hoard
 
 ---
 apiVersion: v1
