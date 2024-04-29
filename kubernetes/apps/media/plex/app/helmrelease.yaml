@@ -44,8 +44,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/plex
-              tag: 1.32.8.7639-fb6452ebf@sha256:9c15c8d0dc5fc1c734c97b38b66cdbee126c2b1d9bce8605c73bf06c17ff1e32
+              repository: ghcr.io/onedr0p/plex-beta
+              tag: 1.40.2.8395-c67dce28e@sha256:a4d5591c7d1bd424ce834d99037d9b071d59ab39ab1204a49de81e470e0401fd
             resources:
               requests:
                 cpu: 100m
