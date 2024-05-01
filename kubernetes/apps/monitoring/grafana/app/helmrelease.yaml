@@ -161,10 +161,7 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:grafana
       hosts:
-        - &host "grafana.${SECRET_DOMAIN}"
-      tls:
-        - hosts:
-            - *host
+        - "grafana.${SECRET_DOMAIN}"
     persistence:
       enabled: true
       storageClassName: longhorn
