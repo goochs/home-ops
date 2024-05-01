@@ -36,8 +36,10 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: mdi:kubernetes
       hosts:
-        - "kubernetes.${SECRET_DOMAIN}"
+        - &host "kubernetes.${SECRET_DOMAIN}"
       tls:
         - secretName: kubernetes-dashboard-tls
+          hosts:
+            - *host
     metricsScraper:
       enabled: true
