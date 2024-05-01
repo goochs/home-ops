@@ -72,15 +72,12 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: mdi:television-box
         hosts:
-          - host: &host "radarr.${SECRET_DOMAIN}"
+          - host: "radarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   name: main
                   port: http
-        tls:
-          - hosts:
-              - *host
 
     persistence:
       config:

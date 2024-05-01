@@ -24,6 +24,7 @@ spec:
     cleanupOnFail: true
     crds: CreateReplace
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
@@ -32,7 +33,11 @@ spec:
       enabled: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      enabled: true
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - "alertmanager.${SECRET_DOMAIN}"
     kube-state-metrics:
       metricLabelsAllowlist:
         - "deployments=[*]"
@@ -93,10 +98,7 @@ spec:
           hajimari.io/icon: simple-icons:prometheus
         pathType: Prefix
         hosts:
-          - &host "prometheus.${SECRET_DOMAIN}"
-        tls:
-          - hosts:
-              - *host
+          - "prometheus.${SECRET_DOMAIN}"
       prometheusSpec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false

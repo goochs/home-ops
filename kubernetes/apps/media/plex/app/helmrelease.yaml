@@ -85,15 +85,12 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: mdi:plex
         hosts:
-          - host: &host "plex.${SECRET_DOMAIN}"
+          - host: "plex.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   name: main
                   port: http
-        tls:
-          - hosts:
-              - *host
 
     persistence:
       hoard:
