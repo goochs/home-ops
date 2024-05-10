@@ -19,6 +19,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     providerRegex: ^(kmaster1|kmaster2|kmaster3|kworker1|kworker2|kworker3)$
