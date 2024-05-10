@@ -9,7 +9,7 @@ spec:
     matchLabels:
       kubernetes.io/os: linux
   virtualRouters:
-    - localASN: 64569
+    - localASN: 64568
       neighbors:
         - peerAddress: "10.0.30.1/32"
           peerASN: 64569
