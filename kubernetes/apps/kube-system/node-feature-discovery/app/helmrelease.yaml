@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: node-feature-discovery
         namespace: flux-system
-  maxHistory: 2
   install:
     crds: CreateReplace
     remediation:
@@ -23,9 +22,8 @@ spec:
     crds: CreateReplace
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
-    nodeFeatureRule:
-      createCRD: true
+    prometheus:
+      enabled: true

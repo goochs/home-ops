@@ -5,7 +5,8 @@ metadata:
   name: intel-gpu-device
 spec:
   rules:
-    - labels:
+    - name: intel.gpu
+      labels:
         intel.feature.node.kubernetes.io/gpu: "true"
       matchFeatures:
         - feature: pci.device
@@ -20,4 +21,3 @@ spec:
               op: In
               value:
                 - "8086"
-      name: intel.gpu
