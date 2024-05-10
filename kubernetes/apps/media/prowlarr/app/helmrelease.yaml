@@ -69,15 +69,12 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: mdi:movie-search
         hosts:
-          - host: &host "prowlarr.${SECRET_DOMAIN}"
+          - host: "prowlarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   name: main
                   port: http
-        tls:
-          - hosts:
-              - *host
 
     persistence:
       config:
