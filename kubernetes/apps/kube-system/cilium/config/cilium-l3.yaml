@@ -13,6 +13,7 @@ spec:
       neighbors:
         - peerAddress: "10.0.30.1/32"
           peerASN: 64569
+          eBGPMultihopTTL: 4
       serviceSelector:
         matchExpressions:
           - {key: somekey, operator: NotIn, values: ['never-used-value']}
