@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/radarr-develop
-              tag: 5.5.2.8781@sha256:56d7678d84e9ae04aada1d3190a35dce6c595020ca04611ef1c9cc05f787b8f3
+              tag: 5.6.0.8846@sha256:e5c868ea61be78a10a3294aa0cac2cb02c0eabe23e126f6db772ddf8c3155a19
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
