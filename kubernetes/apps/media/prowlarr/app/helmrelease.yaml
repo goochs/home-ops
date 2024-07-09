@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.18.0.4543@sha256:563ca1f28815db564116b2258ae5b1db30dba4f0bafc8115f51257e9672fc45a
+              tag: 1.20.1.4603@sha256:14577f7cd78d1ee9c9bc606ff96a9bdefde83c5fe93dc163b6c74c83ef5b1085
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
