@@ -31,8 +31,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.8.2208@sha256:901204d1b85a07938c3e892de2676184716e577fea6622befecef3090d2e5465
+              repository: ghcr.io/onedr0p/sonarr
+              tag: 4.0.9@sha256:d989f2494182882b01803269bffe7610718f545474898f8a14827367a9cc733e
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}

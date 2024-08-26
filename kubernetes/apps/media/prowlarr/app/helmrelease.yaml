@@ -31,8 +31,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.21.2.4649@sha256:d82c09f83e1f7ec200eb99832d3eb05cbb6b59da9c5d819abe648b4199d102c5
+              repository: ghcr.io/onedr0p/prowlarr
+              tag: 1.21.2.4649@sha256:f04764d37c211cb0c7161cf417d9ca5f117f4cb22c19309e75fca7880309846d
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
