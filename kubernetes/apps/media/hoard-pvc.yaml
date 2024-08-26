@@ -20,7 +20,7 @@ spec:
     volumeHandle: media-nfs-storage-hoard
     volumeAttributes:
       server: ${STORAGE_ADDR}
-      share: /hoard
+      share: /mnt/storage/hoard
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
