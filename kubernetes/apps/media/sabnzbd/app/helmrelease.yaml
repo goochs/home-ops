@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/sabnzbd
-              tag: 4.3.3@sha256:c8a03bbe260ba1646fd0e58f9b45dfda8f0a0c9f1f9b5f6f92440cd689cdf353
+              tag: 4.3.3@sha256:86c645db93affcbf01cc2bce2560082bfde791009e1506dba68269b9c50bc341
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
