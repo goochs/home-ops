@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/sonarr
-              tag: 4.0.9@sha256:a3e0123ea3a50380de801a1157110ac630b2100aff590519740c2cf23e9bf65a
+              tag: 4.0.10@sha256:17b05e619b07854182bc47295efca2348fadde0a927de1797b55dc01dcd5f58c
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
