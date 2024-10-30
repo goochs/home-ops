@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,6 +23,19 @@ spec:
       retries: 3
 
   values:
+    defaultPodOptions:
+      enableServiceLinks: false
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups:
+          - 44
+          - 109
+          
     controllers:
       main:
         type: statefulset
@@ -39,33 +52,23 @@ spec:
           reloader.stakater.com/auto: "true"
 
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/plex-beta
               tag: 1.40.5.8854-f36c552fd@sha256:c6e59a29061da149afd5538ca28fc535d7cbe47f46a5403f181e75dfc81db9df
             resources:
               requests:
-                cpu: 100m
+                cpu: 1
+                memory: 1Gi
                 gpu.intel.com/i915: 1
               limits:
-                gpu.intel.com/i915: 1
+                cpu: 4
                 memory: 10Gi
-
-        pod:
-          enableServiceLinks: false
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 44
-              - 109
+                gpu.intel.com/i915: 1
 
     service:
-      main:
+      app:
+        controller: main
         type: LoadBalancer
         externalTrafficPolicy: Cluster
         annotations:
@@ -75,7 +78,7 @@ spec:
             port: 32400
 
     ingress:
-      main:
+      app:
         enabled: true
         className: external
         annotations:
@@ -86,7 +89,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  idenfitier: app
                   port: http
 
     persistence:
