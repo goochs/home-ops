@@ -24,7 +24,6 @@ spec:
 
   values:
     defaultPodOptions:
-      enableServiceLinks: true
       securityContext:
         runAsUser: 568
         runAsGroup: 568

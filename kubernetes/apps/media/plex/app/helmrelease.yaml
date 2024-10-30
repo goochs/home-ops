@@ -35,7 +35,7 @@ spec:
         supplementalGroups:
           - 44
           - 109
-          
+
     controllers:
       main:
         type: statefulset
@@ -89,7 +89,7 @@ spec:
             paths:
               - path: /
                 service:
-                  idenfitier: app
+                  identifier: app
                   port: http
 
     persistence:
