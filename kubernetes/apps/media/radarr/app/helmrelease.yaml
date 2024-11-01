@@ -72,7 +72,7 @@ spec:
       config:
         existingClaim: radarr-config
       tmp:
-        type: EmptyDir
+        type: emptyDir
       hoard:
         type: nfs
         server: ${STORAGE_ADDR}
