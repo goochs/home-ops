@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -21,66 +21,61 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
   values:
     controllers:
-      main:
+      radarr:
         annotations:
           reloader.stakater.com/auto: "true"
-
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/radarr
               tag: 5.14.0@sha256:48e094d0eb3e78a88a2fe1f4b41f9eb2356d19bd01a3f95d701455097db8d5ff
-              pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
-              RADARR__INSTANCE_NAME: Radarr
-              RADARR__PORT: &port 7878
-              RADARR__APPLICATION_URL: "https://radarr.${SECRET_DOMAIN}"
-              RADARR__LOG_LEVEL: info
-              RADARR__THEME: dark
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: dark
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 7878
             resources:
               requests:
-                cpu: 20m
-                memory: 500Mi
+                cpu: 100m
               limits:
-                memory: 1000Mi
-
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: "OnRootMismatch"
-
+                memory: 4Gi
+    DefaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
+      app:
+        controller: radarr
         ports:
           http:
             port: *port
-
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: mdi:television-box
         hosts:
           - host: "radarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-
     persistence:
       config:
-        enabled: true
         existingClaim: radarr-config
+      tmp:
+        type: EmptyDir
       hoard:
-        existingClaim: hoard-nfs
+        type: nfs
+        server: ${STORAGE_ADDR}
+        path: /mnt/storage/hoard
         globalMounts:
           - path: /hoard
