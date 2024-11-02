@@ -39,6 +39,9 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: {drop: [ALL]}
+    serviceAccount:
+      create: true
+      name: *app
     service:
       app:
         controller: *app
