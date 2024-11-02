@@ -19,7 +19,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: uninstall
+      strategy: rollback
       retries: 3
   dependsOn:
     - name: longhorn
@@ -45,6 +45,10 @@ spec:
                 cpu: 100m
               limits:
                 memory: 4Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     DefaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -53,9 +57,6 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        capabilities: { drop: ["ALL"] }
     service:
       app:
         controller: radarr
