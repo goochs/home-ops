@@ -62,7 +62,7 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-    detaultPodOptions:
+    defaultPodOptions:
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
