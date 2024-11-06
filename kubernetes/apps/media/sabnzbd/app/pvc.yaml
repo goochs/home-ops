@@ -10,6 +10,3 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: longhorn
-  dataSource:
-    kind: PersistentVolumeClaim
-    name: config-sabnzbd-0
