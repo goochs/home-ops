@@ -1,3 +1,5 @@
 package kube
 
-namespace: "kube-system": {}
+#namespace & {
+	_name: "kube-system"
+}

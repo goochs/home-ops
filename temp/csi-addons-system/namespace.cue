@@ -1,3 +1,5 @@
 package kube
 
-namespace: "csi-addons-system": {}
+#namespace & {
+	_name: "csi-addons-system"
+}

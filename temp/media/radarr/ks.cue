@@ -1,3 +1,7 @@
 package kube
 
-kustomization: radarr: spec: targetNamespace: "media"
+_type: "kustomization"
+[...{
+	_name: "radarr"
+	spec: targetNamespace: "media"
+}]

@@ -2,6 +2,8 @@ package kube
 
 helmRelease: capacitor: spec: {
 	_appTemplate: true
+	_appName:     "helmRelease.[_]"
+	_appPort:     9000
 	values: {
 		controllers: capacitor: containers: app: {
 			image: {
@@ -20,7 +22,7 @@ helmRelease: capacitor: spec: {
 			create: true
 			name:   "capacitor"
 		}
-		service: app: ports: http: port: 9000
+		service: app: ports: http: port: (_appPort)
 		ingress: app: hosts: [{
 			host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
 		}]

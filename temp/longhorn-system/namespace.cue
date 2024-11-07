@@ -1,3 +1,5 @@
 package kube
 
-namespace: "longhorn-system": {}
+#namespace & {
+	_name: "longhorn-system"
+}

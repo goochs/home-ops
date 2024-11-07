@@ -4,6 +4,9 @@ helmRelease: sonarr: spec: {
 	_appTemplate: true
 	_longhorn:    true
 	_nfs:         true
+	_probes:      true
+	_appName:     "helmRelease.[_]"
+	_appPort:     8989
 	values: {
 		controllers: sonarr: {
 			annotations: "reloader.stakater.com/auto": "true"
@@ -16,7 +19,7 @@ helmRelease: sonarr: spec: {
 					SONARR__APP__INSTANCENAME: "Sonarr"
 					SONARR__APP__THEME:        "dark"
 					SONARR__LOG__LEVEL:        "info"
-					SONARR__SERVER__PORT:      8989
+					SONARR__SERVER__PORT:      (_appPort)
 				}
 				resources: {
 					requests: cpu:  "100m"
@@ -25,16 +28,16 @@ helmRelease: sonarr: spec: {
 				probes: {
 					liveness: spec: httpGet: {
 						path: "/ping"
-						port: 8989
+						port: (_appPort)
 					}
 					readiness: spec: httpGet: {
 						path: "/ping"
-						port: 8989
+						port: (_appPort)
 					}
 				}
 			}
 		}
-		service: app: ports: http: port: 8989
+		service: app: ports: http: port: (_appPort)
 		persistence: {
 			config: existingClaim: "sonarr-config"
 			tmp: type:             "emptyDir"

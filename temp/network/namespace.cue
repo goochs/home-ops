@@ -1,3 +1,5 @@
 package kube
 
-namespace: network: {}
+#namespace & {
+	_name: "network"
+}

@@ -1,3 +1,5 @@
 package kube
 
-namespace: database: {}
+#namespace & {
+	_name: "database"
+}

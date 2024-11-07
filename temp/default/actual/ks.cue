@@ -1,3 +1,3 @@
 package kube
 
-kustomization: actual: spec: targetNamespace: "default"
+kustomization: actual: spec: {}

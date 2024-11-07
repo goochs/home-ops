@@ -3,6 +3,10 @@ package kube
 helmRelease: actual: spec: {
 	_appTemplate: true
 	_longhorn:    true
+
+	_appName: "helmRelease.[_]"
+	_appPort: 5006
+
 	values: {
 		controllers: actual: {
 			annotations: "reloader.stakater.com/auto": "true"
@@ -11,7 +15,7 @@ helmRelease: actual: spec: {
 					repository: "ghcr.io/actualbudget/actual-server"
 					tag:        "24.11.0"
 				}
-				env: ACTUAL_PORT: 5006
+				env: ACTUAL_PORT: (_appPort)
 				resources: {
 					requests: {
 						cpu:    "100m"
@@ -21,7 +25,7 @@ helmRelease: actual: spec: {
 				}
 				probes: readiness: spec: httpGet: {
 					path: "/"
-					port: 5006
+					port: (_appPort)
 				}
 			}
 		}
@@ -33,7 +37,7 @@ helmRelease: actual: spec: {
 			fsGroupChangePolicy: "OnRootMismatch"
 			seccompProfile: type: "RuntimeDefault"
 		}
-		service: app: ports: http: port: 5006
+		service: app: ports: http: port: (_appPort)
 		ingress: app: hosts: [{
 			host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
 		}]

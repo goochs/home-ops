@@ -1,3 +1,5 @@
 package kube
 
-namespace: default: {}
+#namespace & {
+	_name: "default"
+}

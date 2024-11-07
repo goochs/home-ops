@@ -4,6 +4,7 @@ go 1.23.2
 
 require (
 	github.com/fluxcd/helm-controller/api v1.1.0 // indirect
+	github.com/fluxcd/kustomize-controller/api v1.4.0 // indirect
 	github.com/fluxcd/pkg/apis/kustomize v1.6.1 // indirect
 	github.com/fluxcd/pkg/apis/meta v1.6.1 // indirect
 	github.com/fxamacker/cbor/v2 v2.7.0 // indirect

@@ -1,3 +1,5 @@
 package kube
 
-namespace: monitoring: {}
+#namespace & {
+	_name: "monitoring"
+}

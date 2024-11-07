@@ -2,6 +2,9 @@ package kube
 
 helmRelease: "echo-server": spec: {
 	_appTemplate: true
+	_probes:      true
+	_appName:     "helmRelease.[_]"
+	_appPort:     8080
 	values: {
 		controllers: "echo-server": {
 			strategy: "RollingUpdate"
@@ -11,7 +14,7 @@ helmRelease: "echo-server": spec: {
 					tag:        35
 				}
 				env: {
-					HTTP_PORT:           8080
+					HTTP_PORT:           (_appPort)
 					LOG_WITHOUT_NEWLINE: true
 					LOG_IGNORE_PATH:     "/healthz"
 					PROMETHEUS_ENABLED:  true
@@ -19,11 +22,11 @@ helmRelease: "echo-server": spec: {
 				probes: {
 					liveness: spec: httpGet: {
 						path: "/healthz"
-						port: 8080
+						port: (_appPort)
 					}
 					readiness: spec: httpGet: {
 						path: "/healthz"
-						port: 8080
+						port: (_appPort)
 					}
 				}
 				resources: {
@@ -36,7 +39,7 @@ helmRelease: "echo-server": spec: {
 			runAsUser:  65534
 			runAsGroup: 65534
 		}
-		service: app: ports: http: port: 8080
+		service: app: ports: http: port: (_appPort)
 		serviceMonitor: app: {
 			serviceName: "echo-server"
 			endpoints: [{
