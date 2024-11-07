@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: radarr
+  name: &app radarr
 spec:
   interval: 30m
   chart:
@@ -49,7 +49,20 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-    DefaultPodOptions:
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+    defaultPodOptions:
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
@@ -59,7 +72,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: radarr
+        controller: *app
         ports:
           http:
             port: *port
