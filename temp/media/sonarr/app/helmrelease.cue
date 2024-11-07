@@ -2,64 +2,98 @@ package kube
 
 helmRelease: sonarr: spec: {
 	_appTemplate: true
+	dependsOn: [{
+		name:      "longhorn"
+		namespace: "longhorn-system"
+	}]
 	values: {
-		controllers: main: {
+		controllers: sonarr: {
 			annotations: "reloader.stakater.com/auto": "true"
-			containers: main: {
+			containers: app: {
 				image: {
 					repository: "ghcr.io/onedr0p/sonarr"
 					tag:        "4.0.10@sha256:17b05e619b07854182bc47295efca2348fadde0a927de1797b55dc01dcd5f58c"
-					pullPolicy: "IfNotPresent"
 				}
 				env: {
-					TZ:                      "${TIMEZONE}"
-					SONARR__INSTANCE_NAME:   "Sonarr"
-					SONARR__PORT:            8989
-					SONARR__APPLICATION_URL: "https://sonarr.${SECRET_DOMAIN}"
-					SONARR__LOG_LEVEL:       "info"
-					SONARR__THEME:           "dark"
+					TZ:                        "${TIMEZONE}"
+					SONARR__APP__INSTANCENAME: "Sonarr"
+					SONARR__APP__THEME:        "dark"
+					SONARR__LOG__LEVEL:        "info"
+					SONARR__SERVER__PORT:      8989
 				}
 				resources: {
-					requests: {
-						cpu:    "20m"
-						memory: "500Mi"
+					requests: cpu:  "100m"
+					limits: memory: "4Gi"
+				}
+				securityContext: {
+					allowPrivilegeEscalation: false
+					readOnlyRootFilesystem:   true
+					capabilities: drop: ["ALL"]
+				}
+				probes: {
+					liveness: {
+						enabled: true
+						custom:  true
+						spec: {
+							httpGet: {
+								path: "/ping"
+								port: 8989
+							}
+							initialDelaySeconds: 0
+							periodSeconds:       10
+							timeoutSeconds:      1
+							failureThreshold:    3
+						}
 					}
-					limits: memory: "1000Mi"
+					readiness: {
+						enabled: true
+						custom:  true
+						spec: {
+							httpGet: {
+								path: "/ping"
+								port: 8989
+							}
+							initialDelaySeconds: 0
+							periodSeconds:       10
+							timeoutSeconds:      1
+							failureThreshold:    3
+						}
+					}
 				}
 			}
-			pod: securityContext: {
-				runAsUser:           568
-				runAsGroup:          568
-				fsGroup:             568
-				fsGroupChangePolicy: "OnRootMismatch"
-			}
 		}
-		service: main: ports: http: port: 8989
-		ingress: main: {
-			enabled:   true
+		defaultPodOptions: securityContext: {
+			runAsNonRoot:        true
+			runAsUser:           568
+			runAsGroup:          568
+			fsGroup:             568
+			fsGroupChangePolicy: "OnRootMismatch"
+			seccompProfile: type: "RuntimeDefault"
+		}
+		service: app: {
+			controller: "sonarr"
+			ports: http: port: 8989
+		}
+		ingress: app: {
 			className: "internal"
-			annotations: {
-				"hajimari.io/enable": "true"
-				"hajimari.io/icon":   "mdi:filmstrip"
-			}
 			hosts: [{
 				host: "sonarr.${SECRET_DOMAIN}"
 				paths: [{
 					path: "/"
 					service: {
-						name: "main"
-						port: "http"
+						identifier: "app"
+						port:       "http"
 					}
 				}]
 			}]
 		}
 		persistence: {
-			config: {
-				enabled:       true
-				existingClaim: "sonarr-config"
-			}
+			config: existingClaim: "sonarr-config"
+			tmp: type:             "emptyDir"
 			hoard: {
-				existingClaim: "hoard-nfs"
+				type:   "nfs"
+				server: "${STORAGE_ADDR}"
+				path:   "/mnt/storage/hoard"
 				globalMounts: [{path: "/hoard"}]
 			}
 		}

@@ -30,9 +30,39 @@ helmRelease: radarr: spec: {
 					readOnlyRootFilesystem:   true
 					capabilities: drop: ["ALL"]
 				}
+				probes: {
+					liveness: {
+						enabled: true
+						custom:  true
+						spec: {
+							httpGet: {
+								path: "/ping"
+								port: 7878
+							}
+							initialDelaySeconds: 0
+							periodSeconds:       10
+							timeoutSeconds:      1
+							failureThreshold:    3
+						}
+					}
+					readiness: {
+						enabled: true
+						custom:  true
+						spec: {
+							httpGet: {
+								path: "/ping"
+								port: 7878
+							}
+							initialDelaySeconds: 0
+							periodSeconds:       10
+							timeoutSeconds:      1
+							failureThreshold:    3
+						}
+					}
+				}
 			}
 		}
-		DefaultPodOptions: securityContext: {
+		defaultPodOptions: securityContext: {
 			runAsNonRoot:        true
 			runAsUser:           568
 			runAsGroup:          568
