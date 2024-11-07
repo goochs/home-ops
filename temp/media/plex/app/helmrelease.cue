@@ -2,21 +2,15 @@ package kube
 
 helmRelease: plex: spec: {
 	_appTemplate: true
+	_longhorn:    true
+	_nfs:         true
 	values: {
 		defaultPodOptions: {
 			nodeSelector: "intel.feature.node.kubernetes.io/gpu": "true"
-			securityContext: {
-				runAsNonRoot:        true
-				runAsUser:           568
-				runAsGroup:          568
-				fsGroup:             568
-				fsGroupChangePolicy: "OnRootMismatch"
-				supplementalGroups: [
-					44,
-					109,
-				]
-				seccompProfile: type: "RuntimeDefault"
-			}
+			securityContext: supplementalGroups: [
+				44,
+				109,
+			]
 		}
 		controllers: plex: {
 			type: "statefulset"
@@ -40,40 +34,14 @@ helmRelease: plex: spec: {
 						"gpu.intel.com/i915": 1
 					}
 				}
-				securityContext: {
-					allowPrivilegeEscalation: false
-					readOnlyRootFilesystem:   true
-					capabilities: drop: ["ALL"]
-				}
-				env: TZ: "${TIMEZONE}"
 				probes: {
-					liveness: {
-						enabled: true
-						custom:  true
-						spec: {
-							httpGet: {
-								path: "/identity"
-								port: 32400
-							}
-							initialDelaySeconds: 0
-							periodSeconds:       10
-							timeoutSeconds:      1
-							failureThreshold:    3
-						}
+					liveness: spec: httpGet: {
+						path: "/identity"
+						port: 32400
 					}
-					readiness: {
-						enabled: true
-						custom:  true
-						spec: {
-							httpGet: {
-								path: "/identity"
-								port: 32400
-							}
-							initialDelaySeconds: 0
-							periodSeconds:       10
-							timeoutSeconds:      1
-							failureThreshold:    3
-						}
+					readiness: spec: httpGet: {
+						path: "/identity"
+						port: 32400
 					}
 					startup: {
 						enabled: true
@@ -86,36 +54,15 @@ helmRelease: plex: spec: {
 			}
 		}
 		service: app: {
-			controller:            "plex"
 			type:                  "LoadBalancer"
 			externalTrafficPolicy: "Cluster"
 			annotations: "io.cilium/lb-ipam-ips": "10.20.30.45"
 			ports: http: port: 32400
 		}
-		ingress: app: {
-			className: "external"
-			hosts: [{
-				host: "plex.${SECRET_DOMAIN}"
-				paths: [{
-					path: "/"
-					service: {
-						identifier: "app"
-						port:       "http"
-					}
-				}]
-			}]
-		}
-		persistence: {
-			hoard: {
-				type:   "nfs"
-				server: "${STORAGE_ADDR}"
-				path:   "/mnt/storage/hoard"
-				globalMounts: [{path: "/hoard"}]
-			}
-			transcode: {
-				type: "emptyDir"
-				globalMounts: [{path: "/transcode"}]
-			}
+		ingress: app: className: "external"
+		persistence: transcode: {
+			type: "emptyDir"
+			globalMounts: [{path: "/transcode"}]
 		}
 	}
 }

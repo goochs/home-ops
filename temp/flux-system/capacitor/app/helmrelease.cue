@@ -15,32 +15,14 @@ helmRelease: capacitor: spec: {
 				}
 				limits: memory: "1Gi"
 			}
-			securityContext: {
-				allowPrivilegeEscalation: false
-				readOnlyRootFilesystem:   true
-				capabilities: drop: ["ALL"]
-			}
 		}
 		serviceAccount: {
 			create: true
 			name:   "capacitor"
 		}
-		service: app: {
-			controller: "capacitor"
-			ports: http: port: 9000
-		}
-		ingress: app: {
-			className: "internal"
-			hosts: [{
-				host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
-				paths: [{
-					path: "/"
-					service: {
-						identifier: "app"
-						port:       "http"
-					}
-				}]
-			}]
-		}
+		service: app: ports: http: port: 9000
+		ingress: app: hosts: [{
+			host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+		}]
 	}
 }

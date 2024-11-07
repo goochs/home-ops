@@ -3,13 +3,7 @@ package kube
 helmRelease: prowlarr: spec: {
 	_appTemplate: true
 	values: {
-		defaultPodOptions: securityContext: {
-			runAsUser:           568
-			runAsGroup:          568
-			fsGroup:             568
-			fsGroupChangePolicy: "OnRootMismatch"
-		}
-		controllers: main: {
+		controllers: prowlarr: {
 			annotations: "reloader.stakater.com/auto": "true"
 			containers: app: {
 				image: {
@@ -18,7 +12,6 @@ helmRelease: prowlarr: spec: {
 					pullPolicy: "IfNotPresent"
 				}
 				env: {
-					TZ:                          "${TIMEZONE}"
 					PROWLARR__INSTANCE_NAME:     "prowlarr"
 					PROWLARR__PORT:              9696
 					PROWLARR__APPLICATION_URL:   "https://prowlarr.${SECRET_DOMAIN}"
@@ -34,28 +27,7 @@ helmRelease: prowlarr: spec: {
 				}
 			}
 		}
-		service: app: {
-			controller: "main"
-			ports: http: port: 9696
-		}
-		ingress: app: {
-			enabled:   true
-			className: "internal"
-			annotations: {
-				"hajimari.io/enable": "true"
-				"hajimari.io/icon":   "mdi:movie-search"
-			}
-			hosts: [{
-				host: "prowlarr.${SECRET_DOMAIN}"
-				paths: [{
-					path: "/"
-					service: {
-						identifier: "app"
-						port:       "http"
-					}
-				}]
-			}]
-		}
+		service: app: ports: http: port: 9696
 		persistence: config: {
 			enabled:       true
 			existingClaim: "prowlarr-config"

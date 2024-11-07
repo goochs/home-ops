@@ -17,39 +17,14 @@ helmRelease: "echo-server": spec: {
 					PROMETHEUS_ENABLED:  true
 				}
 				probes: {
-					liveness: {
-						enabled: true
-						custom:  true
-						spec: {
-							httpGet: {
-								path: "/healthz"
-								port: 8080
-							}
-							initialDelaySeconds: 0
-							periodSeconds:       10
-							timeoutSeconds:      1
-							failureThreshold:    3
-						}
+					liveness: spec: httpGet: {
+						path: "/healthz"
+						port: 8080
 					}
-					readiness: {
-						enabled: true
-						custom:  true
-						spec: {
-							httpGet: {
-								path: "/healthz"
-								port: 8080
-							}
-							initialDelaySeconds: 0
-							periodSeconds:       10
-							timeoutSeconds:      1
-							failureThreshold:    3
-						}
+					readiness: spec: httpGet: {
+						path: "/healthz"
+						port: 8080
 					}
-				}
-				securityContext: {
-					allowPrivilegeEscalation: false
-					readOnlyRootFilesystem:   true
-					capabilities: drop: ["ALL"]
 				}
 				resources: {
 					requests: cpu:  "10m"
@@ -58,15 +33,10 @@ helmRelease: "echo-server": spec: {
 			}
 		}
 		defaultPodOptions: securityContext: {
-			runAsNonRoot: true
-			runAsUser:    65534
-			runAsGroup:   65534
-			seccompProfile: type: "RuntimeDefault"
+			runAsUser:  65534
+			runAsGroup: 65534
 		}
-		service: app: {
-			controller: "echo-server"
-			ports: http: port: 8080
-		}
+		service: app: ports: http: port: 8080
 		serviceMonitor: app: {
 			serviceName: "echo-server"
 			endpoints: [{
@@ -81,13 +51,6 @@ helmRelease: "echo-server": spec: {
 			className: "external"
 			hosts: [{
 				host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
-				paths: [{
-					path: "/"
-					service: {
-						identifier: "app"
-						port:       "http"
-					}
-				}]
 			}]
 		}
 	}

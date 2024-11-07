@@ -2,10 +2,7 @@ package kube
 
 helmRelease: actual: spec: {
 	_appTemplate: true
-	dependsOn: [{
-		name:      "longhorn"
-		namespace: "longhorn-system"
-	}]
+	_longhorn:    true
 	values: {
 		controllers: actual: {
 			annotations: "reloader.stakater.com/auto": "true"
@@ -22,22 +19,9 @@ helmRelease: actual: spec: {
 					}
 					limits: memory: "500Mi"
 				}
-				probes: {
-					liveness: enabled: true
-					readiness: {
-						enabled: true
-						custom:  true
-						spec: {
-							httpGet: {
-								path: "/"
-								port: 5006
-							}
-							initialDelaySeconds: 0
-							periodSeconds:       10
-							timeoutSeconds:      1
-							failureThreshold:    3
-						}
-					}
+				probes: readiness: spec: httpGet: {
+					path: "/"
+					port: 5006
 				}
 			}
 		}
@@ -49,23 +33,10 @@ helmRelease: actual: spec: {
 			fsGroupChangePolicy: "OnRootMismatch"
 			seccompProfile: type: "RuntimeDefault"
 		}
-		service: app: {
-			controller: "actual"
-			ports: http: port: 5006
-		}
-		ingress: app: {
-			className: "internal"
-			hosts: [{
-				host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
-				paths: [{
-					path: "/"
-					service: {
-						identifier: "app"
-						port:       "http"
-					}
-				}]
-			}]
-		}
+		service: app: ports: http: port: 5006
+		ingress: app: hosts: [{
+			host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+		}]
 		persistence: config: {
 			existingClaim: "actual-config"
 			advancedMounts: actual: app: [{path: "/data"}]
