@@ -2,13 +2,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sabnzbd
+  name: &app sabnzbd
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -21,29 +21,16 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-
   values:
     controllers:
-      main:
-        type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 5Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /config
-
+      sabnzbd:
         annotations:
           reloader.stakater.com/auto: "true"
-
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/sabnzbd
               tag: 4.3.3@sha256:86c645db93affcbf01cc2bce2560082bfde791009e1506dba68269b9c50bc341
-              pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
               SABNZBD__PORT: &port 8080
@@ -57,40 +44,57 @@ spec:
             resources:
               requests:
                 cpu: 50m
-                memory: 1000Mi
               limits:
-                memory: 8000Mi
-
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: "OnRootMismatch"
-
+                memory: 8Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api?mode=version
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: *port
-
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: mdi:download
         hosts:
           - host: "sabnzbd.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-
     persistence:
+      config:
+        existingClaim: sabnzbd-config
       hoard:
-        existingClaim: hoard-nfs
+        type: nfs
+        server: ${STORAGE_ADDR}
+        path: /mnt/storage/hoard
         globalMounts:
           - path: /hoard
+      tmp:
+        type: emptyDir
