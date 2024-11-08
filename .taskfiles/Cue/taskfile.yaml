@@ -37,10 +37,12 @@ tasks:
         cmd: cue trim {{.CUE_MAIN}} {{.ITEM}}
   clean:
     desc: Clean the CUE directory of YAML files
-    cmd: find {{.CUE_DIR}} -name "*.yaml" -delete
+    cmds:
+      - find {{.CUE_DIR}} -name "*.yaml" -delete
+      - find {{.KUBERNETES_DIR}}/apps -name "*.yaml" -delete
   clean_one:
     internal: true
-    cmd: find {{.CUE_DIR}} -name "$(basename {{.FILE_TYPE}} .cue | cut -d "_" -f 1)*.yaml" -delete
+    cmd: find {{.KUBERNETES_DIR}}/apps -name "$(basename {{.FILE_TYPE}} .cue | cut -d "_" -f 1)*.yaml" -delete
 
   _export:
     internal: true
@@ -116,10 +118,9 @@ tasks:
       - task: helm_only
 
   k8s_kustomization_prep:
-    silent: true
     internal: true
     cmd: |
-      output="$(echo {{.DEST_DIR}} | sed -r 's,\.?cue/?,,g')/kustomization.yaml"
+      output="{{.DEST_DIR}}/kustomization.yaml"
       echo "---" > $output
       yq -n '(.apiVersion="kustomize.config.k8s.io/v1beta1") | (.kind="Kustomization") | with(.resources; . ="" | . tag="!!null")' >> $output
 
@@ -128,9 +129,9 @@ tasks:
     desc: Rebuild kubernetes kustomizations
     vars:
       TOP_DIRS:
-        sh: find {{.CUE_DIR}} -depth 1 -type d
+        sh: find {{.KUBERNETES_DIR}}/apps -depth 1 -type d
       FLUXTOMIZATIONS:
-        sh: find {{.CUE_DIR}} -name "ks*yaml" | xargs -I {} rg -N --no-filename 'path.+(\.+)' {} -r '$1'
+        sh: find {{.KUBERNETES_DIR}}/apps -name "ks*yaml" | xargs -I {} rg -N --no-filename 'path.+(\.+)' {} -r '$1'
     cmds:
       - for: { var: TOP_DIRS }
         task: k8s_kustomization_prep

@@ -1,0 +1,12 @@
+---
+metadata:
+  name: sonarr-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: longhorn
+kind: PersistentVolumeClaim
+apiVersion: v1

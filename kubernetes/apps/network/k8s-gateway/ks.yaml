@@ -1,0 +1,20 @@
+---
+metadata:
+  name: k8s-gateway
+  namespace: flux-system
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: k8s-gateway
+  interval: 30m
+  retryInterval: 1m
+  path: ./kubernetes/apps/network/k8s-gateway/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  targetNamespace: network
+  timeout: 5m
+  wait: false
+kind: Kustomization
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
