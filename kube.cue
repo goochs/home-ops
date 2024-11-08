@@ -145,16 +145,18 @@ import (
 				}
 				ingress: app: {
 					className: *"internal" | "external"
-					hosts: {
+					hosts: [{
 						host: *"\(_config.name).goochs.us" | string
-						paths: {
+						paths: [{
 							path: *"/" | string
 							service: {
 								identifier: *"app" | string
 								port:       *"http" | string
 							}
-						}
-					}
+						},
+							...]
+					},
+						...]
 				}
 				if _config.appTemplate.nfs {
 					persistence: {

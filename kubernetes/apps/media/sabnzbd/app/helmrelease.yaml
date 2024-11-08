@@ -89,12 +89,12 @@ spec:
       app:
         className: internal
         hosts:
-          host: sabnzbd.goochs.us
-          paths:
-            path: /
-            service:
-              identifier: app
-              port: http
+          - host: sabnzbd.goochs.us
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: sabnzbd-config

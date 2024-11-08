@@ -106,12 +106,12 @@ spec:
       app:
         className: external
         hosts:
-          host: plex.goochs.us
-          paths:
-            path: /
-            service:
-              identifier: app
-              port: http
+          - host: plex.goochs.us
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       transcode:
         type: emptyDir

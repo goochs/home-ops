@@ -96,11 +96,11 @@ spec:
       app:
         className: external
         hosts:
-          host: echo-server.goochs.us
-          paths:
-            path: /
-            service:
-              identifier: app
-              port: http
+          - host: echo-server.goochs.us
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
 kind: HelmRelease
 apiVersion: helm.toolkit.fluxcd.io/v2

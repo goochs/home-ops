@@ -60,12 +60,12 @@ spec:
       app:
         className: internal
         hosts:
-          host: capacitor.goochs.us
-          paths:
-            path: /
-            service:
-              identifier: app
-              port: http
+          - host: capacitor.goochs.us
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     serviceAccount:
       create: true
       name: capacitor

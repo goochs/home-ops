@@ -91,12 +91,12 @@ spec:
       app:
         className: internal
         hosts:
-          host: sonarr.goochs.us
-          paths:
-            path: /
-            service:
-              identifier: app
-              port: http
+          - host: sonarr.goochs.us
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: sonarr-config

@@ -72,12 +72,12 @@ spec:
       app:
         className: internal
         hosts:
-          host: actual.goochs.us
-          paths:
-            path: /
-            service:
-              identifier: app
-              port: http
+          - host: actual.goochs.us
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: actual-config

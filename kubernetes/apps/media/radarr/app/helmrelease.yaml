@@ -90,12 +90,12 @@ spec:
       app:
         className: internal
         hosts:
-          host: radarr.goochs.us
-          paths:
-            path: /
-            service:
-              identifier: app
-              port: http
+          - host: radarr.goochs.us
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: radarr-config
