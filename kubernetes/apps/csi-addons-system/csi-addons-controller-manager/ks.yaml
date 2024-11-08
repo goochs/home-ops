@@ -1,20 +1,20 @@
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
 metadata:
-  name: &app csi-addons-controller-manager
+  name: csi-addons-controller-manager
   namespace: flux-system
 spec:
-  targetNamespace: csi-addons-system
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: csi-addons-controller-manager
+  interval: 30m
+  retryInterval: 1m
   path: ./deploy/controller
   prune: true
   sourceRef:
     kind: GitRepository
     name: kubernetes-csi-addons
-  wait: true
-  interval: 30m
-  retryInterval: 1m
+  targetNamespace: csi-addons-system
   timeout: 5m
+  wait: true
+kind: Kustomization
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2

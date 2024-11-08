@@ -3,8 +3,8 @@
 version: "3"
 
 vars:
-  CUE_DIR: "{{.ROOT_DIR}}/temp"
-  CUE_MAIN: "{{.CUE_DIR}}/kube.cue"
+  CUE_DIR: "{{.ROOT_DIR}}/kubernetes/apps"
+  CUE_MAIN: "{{.ROOT_DIR}}/kube.cue"
 
 tasks:
   rebuild:
@@ -105,3 +105,4 @@ tasks:
     cmds:
       - task: helm_only
 
+  

@@ -1,18 +1,16 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
 metadata:
   name: descheduler
 spec:
-  interval: 30m
   chart:
     spec:
       chart: descheduler
       version: 0.31.0
       sourceRef:
-        kind: HelmRepository
         name: descheduler
+        kind: HelmRepository
         namespace: flux-system
+  interval: 30m
   install:
     remediation:
       retries: 3
@@ -62,3 +60,5 @@ spec:
       enabled: true
     leaderElection:
       enabled: true
+kind: HelmRelease
+apiVersion: helm.toolkit.fluxcd.io/v2

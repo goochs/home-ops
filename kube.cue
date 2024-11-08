@@ -187,3 +187,5 @@ import (
 		labels: "kustomize.toolkit.fluxcd.io/prune": *"disabled" | "enabled"
 	}
 }
+
+#clusterIssuer: {...}

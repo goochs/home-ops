@@ -1,18 +1,19 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
 metadata:
-  name: &app sonarr
+  name: sonarr
 spec:
-  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 3.5.1
       sourceRef:
-        kind: HelmRepository
         name: bjw-s
+        kind: HelmRepository
         namespace: flux-system
+  interval: 30m
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
   install:
     remediation:
       retries: 3
@@ -21,10 +22,16 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: longhorn
-      namespace: longhorn-system
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       sonarr:
         annotations:
@@ -35,65 +42,71 @@ spec:
               repository: ghcr.io/onedr0p/sonarr
               tag: 4.0.10@sha256:17b05e619b07854182bc47295efca2348fadde0a927de1797b55dc01dcd5f58c
             env:
-              TZ: ${TIMEZONE}
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
               SONARR__LOG__LEVEL: info
-              SONARR__SERVER__PORT: &port 8989
+              TZ: ${TIMEZONE}
+              SONARR__SERVER__PORT: 8989
             resources:
               requests:
                 cpu: 100m
               limits:
                 memory: 4Gi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /ping
-                    port: *port
+                    port: 8989
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
-              readiness: *probes
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 8989
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
     service:
       app:
-        controller: *app
+        controller: sonarr
         ports:
           http:
-            port: *port
+            port: 8989
     ingress:
       app:
         className: internal
         hosts:
-          - host: "sonarr.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+          host: sonarr.${SECRET_DOMAIN}
+          paths:
+            path: /
+            service:
+              identifier: app
+              port: http
     persistence:
       config:
         existingClaim: sonarr-config
-      tmp:
-        type: emptyDir
       hoard:
         type: nfs
         server: ${STORAGE_ADDR}
         path: /mnt/storage/hoard
         globalMounts:
           - path: /hoard
+      tmp:
+        type: emptyDir
+kind: HelmRelease
+apiVersion: helm.toolkit.fluxcd.io/v2
