@@ -1,10 +1,11 @@
 package kube
 
-helmRelease: capacitor: spec: {
-	_appTemplate: true
-	_appName:     "helmRelease.[_]"
-	_appPort:     9000
-	values: {
+#helmRelease & {
+	_config: {
+		name: "capacitor"
+		appTemplate: port: 9000
+	}
+	spec: values: {
 		controllers: capacitor: containers: app: {
 			image: {
 				repository: "ghcr.io/gimlet-io/capacitor"
@@ -22,9 +23,6 @@ helmRelease: capacitor: spec: {
 			create: true
 			name:   "capacitor"
 		}
-		service: app: ports: http: port: (_appPort)
-		ingress: app: hosts: [{
-			host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
-		}]
+		ingress: app: hosts: host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
 	}
 }

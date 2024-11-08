@@ -1,13 +1,16 @@
 package kube
 
-helmRelease: sonarr: spec: {
-	_appTemplate: true
-	_longhorn:    true
-	_nfs:         true
-	_probes:      true
-	_appName:     "helmRelease.[_]"
-	_appPort:     8989
-	values: {
+#helmRelease & {
+	_config: {
+		name:     "sonarr"
+		longhorn: true
+		appTemplate: {
+			nfs:    true
+			probes: true
+			port:   8989
+		}
+	}
+	spec: values: {
 		controllers: sonarr: {
 			annotations: "reloader.stakater.com/auto": "true"
 			containers: app: {
@@ -19,25 +22,18 @@ helmRelease: sonarr: spec: {
 					SONARR__APP__INSTANCENAME: "Sonarr"
 					SONARR__APP__THEME:        "dark"
 					SONARR__LOG__LEVEL:        "info"
-					SONARR__SERVER__PORT:      (_appPort)
+					SONARR__SERVER__PORT:      _config.appTemplate.port
 				}
 				resources: {
 					requests: cpu:  "100m"
 					limits: memory: "4Gi"
 				}
 				probes: {
-					liveness: spec: httpGet: {
-						path: "/ping"
-						port: (_appPort)
-					}
-					readiness: spec: httpGet: {
-						path: "/ping"
-						port: (_appPort)
-					}
+					liveness: spec: httpGet: path:  "/ping"
+					readiness: spec: httpGet: path: "/ping"
 				}
 			}
 		}
-		service: app: ports: http: port: (_appPort)
 		persistence: {
 			config: existingClaim: "sonarr-config"
 			tmp: type:             "emptyDir"

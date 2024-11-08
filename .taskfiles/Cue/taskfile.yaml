@@ -7,7 +7,6 @@ vars:
   CUE_MAIN: "{{.CUE_DIR}}/kube.cue"
 
 tasks:
-
   rebuild:
     desc: Rebuild the CUE directory
     dir: "{{.CUE_DIR}}"
@@ -16,41 +15,41 @@ tasks:
       - task: namespace_only
       - task: kustomization_only
       - task: untemplated_only
-
+      - task: helm_only
   fmt:
     desc: Format CUE files
     dir: "{{.CUE_DIR}}"
     cmds:
-      - cue fmt ./...
-
+      - cue fmt -s ./...
   clean:
     desc: Clean up the CUE directory
-    deps: [clean-namespace, clean-kustomization, clean-untemplated]
-
+    deps: [clean-namespace, clean-kustomization, clean-untemplated, clean-helm]
   trim:
     desc: Trim the CUE directory
     dir: "{{.CUE_DIR}}"
     cmds:
       - find . -name "*.cue" -exec sh -c 'cue trim "{{.CUE_MAIN}}" {}' \;
-
   clean-namespace:
     desc: Clean up the CUE directory of namespace files
     dir: "{{.CUE_DIR}}"
     cmds:
       - find . -name "namespace*.yaml" -exec rm {} \;
-
   clean-kustomization:
     desc: Clean up the CUE directory of kustomization files
     dir: "{{.CUE_DIR}}"
     cmds:
       - find . -name "ks*.yaml" -exec rm {} \;
-
   clean-untemplated:
     aliases: [clean-misc]
     desc: Clean up the CUE directory of untemplated files
     dir: "{{.CUE_DIR}}"
     cmds:
       - find -E . ! -regex ".*(helm|ks|name).*yaml" -path "./*/*yaml" -exec rm {} \;
+  clean-helm:
+    desc: Clean up the CUE directory of helm files
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find . -name "helm*.yaml" -exec rm {} \;
 
   namespace_only:
     internal: true
@@ -92,3 +91,17 @@ tasks:
     desc: Create untemplated files
     cmds:
       - task: untemplated_only
+
+  helm_only:
+    internal: true
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find . -name "helm*.cue" -exec sh -c 'output=$(dirname {})/helmrelease.yaml; echo "---" >> $output; cue export -s "{{.CUE_MAIN}}" {} --out yaml >> $output || echo $output' \;
+
+  helm:
+    deps: [fmt, clean-helm]
+    dir: "{{.CUE_DIR}}"
+    desc: Create helmrelease files
+    cmds:
+      - task: helm_only
+

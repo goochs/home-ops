@@ -1,13 +1,12 @@
 package kube
 
-helmRelease: actual: spec: {
-	_appTemplate: true
-	_longhorn:    true
-
-	_appName: "helmRelease.[_]"
-	_appPort: 5006
-
-	values: {
+#helmRelease & {
+	_config: {
+		name:     "actual"
+		longhorn: true
+		appTemplate: port: 5006
+	}
+	spec: values: {
 		controllers: actual: {
 			annotations: "reloader.stakater.com/auto": "true"
 			containers: app: {
@@ -15,7 +14,7 @@ helmRelease: actual: spec: {
 					repository: "ghcr.io/actualbudget/actual-server"
 					tag:        "24.11.0"
 				}
-				env: ACTUAL_PORT: (_appPort)
+				env: ACTUAL_PORT: (_config.appTemplate.port)
 				resources: {
 					requests: {
 						cpu:    "100m"
@@ -25,7 +24,7 @@ helmRelease: actual: spec: {
 				}
 				probes: readiness: spec: httpGet: {
 					path: "/"
-					port: (_appPort)
+					port: _config.appTemplate.port
 				}
 			}
 		}
@@ -37,10 +36,7 @@ helmRelease: actual: spec: {
 			fsGroupChangePolicy: "OnRootMismatch"
 			seccompProfile: type: "RuntimeDefault"
 		}
-		service: app: ports: http: port: (_appPort)
-		ingress: app: hosts: [{
-			host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
-		}]
+		ingress: app: hosts: host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
 		persistence: config: {
 			existingClaim: "actual-config"
 			advancedMounts: actual: app: [{path: "/data"}]

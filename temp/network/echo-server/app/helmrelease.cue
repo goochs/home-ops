@@ -1,11 +1,14 @@
 package kube
 
-helmRelease: "echo-server": spec: {
-	_appTemplate: true
-	_probes:      true
-	_appName:     "helmRelease.[_]"
-	_appPort:     8080
-	values: {
+#helmRelease & {
+	_config: {
+		name: "echo-server"
+		appTemplate: {
+			probes: true
+			port:   8080
+		}
+	}
+	spec: values: {
 		controllers: "echo-server": {
 			strategy: "RollingUpdate"
 			containers: app: {
@@ -14,20 +17,14 @@ helmRelease: "echo-server": spec: {
 					tag:        35
 				}
 				env: {
-					HTTP_PORT:           (_appPort)
+					HTTP_PORT:           _config.appTemplate.port
 					LOG_WITHOUT_NEWLINE: true
 					LOG_IGNORE_PATH:     "/healthz"
 					PROMETHEUS_ENABLED:  true
 				}
 				probes: {
-					liveness: spec: httpGet: {
-						path: "/healthz"
-						port: (_appPort)
-					}
-					readiness: spec: httpGet: {
-						path: "/healthz"
-						port: (_appPort)
-					}
+					liveness: spec: httpGet: path:  "/healthz"
+					readiness: spec: httpGet: path: "/healthz"
 				}
 				resources: {
 					requests: cpu:  "10m"
@@ -39,7 +36,6 @@ helmRelease: "echo-server": spec: {
 			runAsUser:  65534
 			runAsGroup: 65534
 		}
-		service: app: ports: http: port: (_appPort)
 		serviceMonitor: app: {
 			serviceName: "echo-server"
 			endpoints: [{
@@ -52,9 +48,7 @@ helmRelease: "echo-server": spec: {
 		}
 		ingress: app: {
 			className: "external"
-			hosts: [{
-				host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
-			}]
+			hosts: host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
 		}
 	}
 }

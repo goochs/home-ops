@@ -1,21 +1,24 @@
 package kube
 
-helmRelease: longhorn: spec: {
-	timeout: "15m"
-	chart: spec: {
-		chart:   "longhorn"
-		version: "1.7.2"
-		sourceRef: name: "longhorn"
-	}
-	values: {
-		monitoring: {
-			enabled:               true
-			createPrometheusRules: true
+#helmRelease & {
+	_config: name: "longhorn"
+	spec: {
+		timeout: "15m"
+		chart: spec: {
+			chart:   "longhorn"
+			version: "1.7.2"
+			sourceRef: name: "longhorn"
 		}
-		ingress: {
-			enabled:          true
-			ingressClassName: "internal"
-			host:             "longhorn.${SECRET_DOMAIN}"
+		values: {
+			monitoring: {
+				enabled:               true
+				createPrometheusRules: true
+			}
+			ingress: {
+				enabled:          true
+				ingressClassName: "internal"
+				host:             "longhorn.${SECRET_DOMAIN}"
+			}
 		}
 	}
 }

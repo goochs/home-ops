@@ -1,14 +1,16 @@
 package kube
 
-helmRelease: plex: spec: {
-	_appTemplate: true
-	_longhorn:    true
-	_nfs:         true
-	_probes:      true
-	_appName:     "helmRelease.[_]"
-	_appPort:     32400
-
-	values: {
+#helmRelease & {
+	_config: {
+		name:     "plex"
+		longhorn: true
+		appTemplate: {
+			nfs:    true
+			probes: true
+			port:   32400
+		}
+	}
+	spec: values: {
 		defaultPodOptions: {
 			nodeSelector: "intel.feature.node.kubernetes.io/gpu": "true"
 			securityContext: supplementalGroups: [
@@ -39,21 +41,8 @@ helmRelease: plex: spec: {
 					}
 				}
 				probes: {
-					liveness: spec: httpGet: {
-						path: "/identity"
-						port: (_appPort)
-					}
-					readiness: spec: httpGet: {
-						path: "/identity"
-						port: (_appPort)
-					}
-					startup: {
-						enabled: true
-						spec: {
-							failureThreshold: 30
-							periodSeconds:    10
-						}
-					}
+					liveness: spec: httpGet: path:  "/identity"
+					readiness: spec: httpGet: path: "/identity"
 				}
 			}
 		}
@@ -61,7 +50,6 @@ helmRelease: plex: spec: {
 			type:                  "LoadBalancer"
 			externalTrafficPolicy: "Cluster"
 			annotations: "io.cilium/lb-ipam-ips": "10.20.30.45"
-			ports: http: port: (_appPort)
 		}
 		ingress: app: className: "external"
 		persistence: transcode: {

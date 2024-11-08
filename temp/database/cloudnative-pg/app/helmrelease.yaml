@@ -1,0 +1,33 @@
+---
+metadata:
+  name: cloudnative-pg
+spec:
+  chart:
+    spec:
+      chart: cloudnative-pg
+      version: 0.22.1
+      sourceRef:
+        name: cloudnative-pg
+        kind: HelmRepository
+        namespace: flux-system
+  interval: 30m
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    crds:
+      create: true
+    monitoring:
+      podMonitorEnabled: false
+      grafanaDashboard:
+        create: true
+kind: HelmRelease
+apiVersion: helm.toolkit.fluxcd.io/v2

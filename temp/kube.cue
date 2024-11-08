@@ -41,15 +41,20 @@ import (
 }
 
 #helmRelease: helmv2.#HelmRelease & {
-	_name: string
 	// variables for templating later
-	_appTemplate: *false | bool
-	_longhorn:    *false | bool
-	_nfs:         *false | bool
+	_config: {
+		name!:    string
+		longhorn: *false | bool
+		appTemplate?: {
+			port:   number
+			nfs:    *false | bool
+			probes: *false | bool
+		}
+	}
 
 	apiVersion: "helm.toolkit.fluxcd.io/v2"
 	kind:       "HelmRelease"
-	metadata: name: _name
+	metadata: name: _config.name
 	spec: {
 		// set defaults for the helm release, check types
 		interval: *"30m" | string
@@ -61,7 +66,7 @@ import (
 				kind:      "HelmRepository"
 				namespace: "flux-system"
 			}
-			if _appTemplate {
+			if _config.appTemplate != _|_ {
 				chart:   "app-template"
 				version: "3.5.1"
 				sourceRef: name: "bjw-s"
@@ -73,25 +78,31 @@ import (
 			remediation: {
 				strategy: *"rollback" | string
 				retries:  *3 | number
-			}}
+			}
+		}
+		if _config.longhorn {
+			dependsOn: [{
+				name:      "longhorn"
+				namespace: "longhorn-system"
+			}]
+		}
 
 		// set app template specific values
-		if _appTemplate {
-			// required values
-			_appName!: string
-			_appPort!: number
-			_probes:   *false | bool
-
+		if _config.appTemplate != _|_ {
 			values: {
-				defaultPodOptions: securityContext: {
-					runAsNonRoot:        *true | bool
-					runAsUser:           *568 | number
-					runAsGroup:          *568 | number
-					fsGroup:             *568 | number
-					fsGroupChangePolicy: "OnRootMismatch"
-					seccompProfile: type: "RuntimeDefault"
+				defaultPodOptions: {
+					securityContext: {
+						runAsNonRoot:        *true | bool
+						runAsUser:           *568 | number
+						runAsGroup:          *568 | number
+						fsGroup:             *568 | number
+						fsGroupChangePolicy: "OnRootMismatch"
+						seccompProfile: type: "RuntimeDefault"
+						...
+					}
+					...
 				}
-				controllers: (_name): {
+				controllers: (_config.name): {
 					containers: app: {
 						env: {
 							TZ: "${TIMEZONE}"
@@ -102,7 +113,7 @@ import (
 							readOnlyRootFilesystem:   *true | bool
 							capabilities: drop: ["ALL"]
 						}
-						if _probes {
+						if _config.appTemplate.probes {
 							for type in ["liveness", "readiness"] {
 								probes: "\(type)": {
 									enabled: *true | bool
@@ -110,15 +121,18 @@ import (
 									spec: {
 										httpGet: {
 											path: string
-											port: *_appPort | number
+											port: *_config.appTemplate.port | number
 										}
 										initialDelaySeconds: 0
 										periodSeconds:       10
 										timeoutSeconds:      1
 										failureThreshold:    3
 									}
+									...
 								}
+								...
 							}
+							...
 						}
 						...
 					}
@@ -126,41 +140,44 @@ import (
 				}
 
 				service: app: {
-					controller: _name
-					ports: http: port: _appPort
+					controller: _config.name
+					ports: http: port: _config.appTemplate.port
+					...
 				}
 				ingress: app: {
 					className: *"internal" | "external"
-					hosts: [...{
-						host: *"\(_name).${SECRET_DOMAIN}" | string
-						paths: [...{
+					hosts: {
+						host: *"\(_config.name).${SECRET_DOMAIN}" | string
+						paths: {
 							path: *"/" | string
 							service: {
 								identifier: *"app" | string
 								port:       *"http" | string
 							}
-						}]
-					}]
+						}
+					}
+				}
+				if _config.appTemplate.nfs {
+					persistence: {
+						hoard: {
+							type:   "nfs"
+							server: "${STORAGE_ADDR}"
+							path:   "/mnt/storage/hoard"
+							globalMounts: [{path: "/hoard"}]
+						}
+						...
+					}
+					...
 				}
 				...
 			}
-			if _longhorn {
-				dependsOn: [{
-					name:      "longhorn"
-					namespace: "longhorn-system"
-				}]
-			}
-			if _nfs {
-				values: persistence: hoard: {
-					type:   "nfs"
-					server: "${STORAGE_ADDR}"
-					path:   "/mnt/storage/hoard"
-					globalMounts: [{path: "/hoard"}]
-				}
-			}
+			...
 		}
+		...
 	}
+	...
 }
+
 #namespace: corev1.#Namespace & {
 	_name:      string
 	apiVersion: "v1"
