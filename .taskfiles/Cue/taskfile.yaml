@@ -1,0 +1,72 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  CUE_DIR: "{{.ROOT_DIR}}/temp"
+  CUE_MAIN: "{{.CUE_DIR}}/kube.cue"
+
+tasks:
+
+  rebuild:
+    desc: Rebuild the CUE directory
+    dir: "{{.CUE_DIR}}"
+    deps: [clean, fmt]
+    cmds:
+      - task: namespace_only
+      - task: kustomization_only
+
+  fmt:
+    desc: Format CUE files
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - cue fmt ./...
+
+  clean:
+    desc: Clean up the CUE directory
+    deps: [clean-namespace, clean-kustomization]
+
+  trim:
+    desc: Trim the CUE directory
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find . -name "*.cue" -exec sh -c 'cue trim "{{.CUE_MAIN}}" {}' \;
+
+  clean-namespace:
+    desc: Clean up the CUE directory of namespace files
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find . -name "namespace*.yaml" -exec rm {} \;
+
+  clean-kustomization:
+    desc: Clean up the CUE directory of kustomization files
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find . -name "ks*.yaml" -exec rm {} \;
+
+  namespace_only:
+    internal: true
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find . -name "namespace*.cue" -exec sh -c 'output=$(dirname {})/namespace.yaml; echo "---" >> $output; cue export -s "{{.CUE_MAIN}}" {} --out yaml >> $output' \;
+
+  namespace:
+    desc: Create namespace files
+    dir: "{{.CUE_DIR}}"
+    deps: [fmt, clean-namespace]
+    cmds:
+      - task: namespace_only
+
+  kustomization_only:
+    internal: true
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find . -name "ks*.cue" -exec sh -c 'output=$(dirname {})/ks.yaml; echo "---" >> $output; cue export -s "{{.CUE_MAIN}}" {} --out yaml >> $output' \;
+
+  kustomization:
+    aliases: [ks]
+    deps: [fmt, clean-kustomization]
+    dir: "{{.CUE_DIR}}"
+    desc: Create kustomization files
+    cmds:
+      - task: kustomization_only

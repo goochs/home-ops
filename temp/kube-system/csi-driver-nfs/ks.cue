@@ -1,6 +1,9 @@
 package kube
 
-kustomization: "csi-driver-nfs": spec: {
-	targetNamespace: "kube-system"
-	wait:            true
+#kustomization & {
+	_name: "csi-driver-nfs"
+	spec: {
+		targetNamespace: "kube-system"
+		wait:            true
+	}
 }

@@ -1,6 +1,9 @@
 package kube
 
-kustomization: "cloudnative-pg": spec: {
-	targetNamespace: "database"
-	wait:            true
+#kustomization & {
+	_name: "cloudnative-pg"
+	spec: {
+		targetNamespace: "database"
+		wait:            true
+	}
 }

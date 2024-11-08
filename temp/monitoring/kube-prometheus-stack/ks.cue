@@ -1,6 +1,9 @@
 package kube
 
-kustomization: "kube-prometheus-stack": spec: {
-	targetNamespace: "monitoring"
-	wait:            true
+#kustomization & {
+	_name: "kube-prometheus-stack"
+	spec: {
+		targetNamespace: "monitoring"
+		wait:            true
+	}
 }

@@ -6,12 +6,12 @@ import (
 	kustomizev1b2 "github.com/fluxcd/kustomize-controller/api/v1beta2"
 )
 
-_spec: {
-	_name:      string
-	apiVersion: string
-	kind:       string
-	metadata: name: _name
-}
+// _spec: {
+// 	_name:      string
+// 	apiVersion: string
+// 	kind:       string
+// 	metadata: name: _name
+// }
 
 #kustomization: kustomizev1b2.#Kustomization & {
 	_name:      string

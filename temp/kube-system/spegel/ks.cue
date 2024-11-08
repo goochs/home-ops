@@ -1,3 +1,6 @@
 package kube
 
-kustomization: spegel: spec: targetNamespace: "kube-system"
+#kustomization & {
+	_name: "spegel"
+	spec: targetNamespace: "kube-system"
+}

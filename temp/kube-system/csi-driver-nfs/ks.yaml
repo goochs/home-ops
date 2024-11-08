@@ -1,0 +1,20 @@
+---
+metadata:
+  name: csi-driver-nfs
+  namespace: flux-system
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: csi-driver-nfs
+  interval: 30m
+  retryInterval: 1m
+  path: ./kubernetes/apps/kube-system/csi-driver-nfs/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  targetNamespace: kube-system
+  timeout: 5m
+  wait: true
+kind: Kustomization
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2

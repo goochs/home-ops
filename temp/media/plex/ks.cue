@@ -1,3 +1,6 @@
 package kube
 
-kustomization: plex: spec: targetNamespace: "media"
+#kustomization & {
+	_name: "plex"
+	spec: targetNamespace: "media"
+}

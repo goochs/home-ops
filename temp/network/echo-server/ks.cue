@@ -1,3 +1,6 @@
 package kube
 
-kustomization: "echo-server": spec: targetNamespace: "network"
+#kustomization & {
+	_name: "echo-server"
+	spec: targetNamespace: "network"
+}

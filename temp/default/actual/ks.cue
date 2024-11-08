@@ -1,3 +1,5 @@
 package kube
 
-kustomization: actual: spec: {}
+#kustomization & {
+	_name: "actual"
+}

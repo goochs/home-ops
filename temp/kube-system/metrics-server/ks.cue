@@ -1,3 +1,6 @@
 package kube
 
-kustomization: "metrics-server": spec: targetNamespace: "kube-system"
+#kustomization & {
+	_name: "metrics-server"
+	spec: targetNamespace: "kube-system"
+}

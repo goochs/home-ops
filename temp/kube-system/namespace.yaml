@@ -1,3 +1,4 @@
+---
 metadata:
   name: kube-system
   labels:

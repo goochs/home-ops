@@ -1,3 +1,6 @@
 package kube
 
-kustomization: sabnzbd: spec: targetNamespace: "media"
+#kustomization & {
+	_name: "sabnzbd"
+	spec: targetNamespace: "media"
+}

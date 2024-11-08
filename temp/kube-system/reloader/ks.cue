@@ -1,3 +1,6 @@
 package kube
 
-kustomization: reloader: spec: targetNamespace: "kube-system"
+#kustomization & {
+	_name: "reloader"
+	spec: targetNamespace: "kube-system"
+}

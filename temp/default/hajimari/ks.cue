@@ -1,3 +1,5 @@
 package kube
 
-kustomization: hajimari: spec: {}
+#kustomization & {
+	_name: "hajimari"
+}
