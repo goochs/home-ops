@@ -5,104 +5,146 @@ version: "3"
 vars:
   CUE_DIR: "{{.ROOT_DIR}}/kubernetes/apps"
   CUE_MAIN: "{{.ROOT_DIR}}/kube.cue"
+  CUE_FILES:
+    sh: find {{.CUE_DIR}} -name "*.cue"
+  CUE_UNTEMPLATED:
+    sh: find -E {{.CUE_DIR}} ! -regex ".*(helmrelease|ks|namespace).*cue" -name "*.cue"
+  CUE_HELM:
+    sh: find {{.CUE_DIR}} -name "helmrelease*.cue"
+  CUE_KS:
+    sh: find {{.CUE_DIR}} -name "ks*.cue"
+  CUE_NAMESPACE:
+    sh: find {{.CUE_DIR}} -name "namespace*.cue"
 
 tasks:
   rebuild:
     desc: Rebuild the CUE directory
-    dir: "{{.CUE_DIR}}"
-    deps: [clean, fmt]
+    deps: [fmt, clean]
     cmds:
       - task: namespace_only
       - task: kustomization_only
       - task: untemplated_only
       - task: helm_only
+      - task: k8s-kustomization
   fmt:
     desc: Format CUE files
-    dir: "{{.CUE_DIR}}"
     cmds:
       - cue fmt -s ./...
-  clean:
-    desc: Clean up the CUE directory
-    deps: [clean-namespace, clean-kustomization, clean-untemplated, clean-helm]
   trim:
+    silent: true
     desc: Trim the CUE directory
-    dir: "{{.CUE_DIR}}"
     cmds:
-      - find . -name "*.cue" -exec sh -c 'cue trim "{{.CUE_MAIN}}" {}' \;
-  clean-namespace:
-    desc: Clean up the CUE directory of namespace files
-    dir: "{{.CUE_DIR}}"
-    cmds:
-      - find . -name "namespace*.yaml" -exec rm {} \;
-  clean-kustomization:
-    desc: Clean up the CUE directory of kustomization files
-    dir: "{{.CUE_DIR}}"
-    cmds:
-      - find . -name "ks*.yaml" -exec rm {} \;
-  clean-untemplated:
-    aliases: [clean-misc]
-    desc: Clean up the CUE directory of untemplated files
-    dir: "{{.CUE_DIR}}"
-    cmds:
-      - find -E . ! -regex ".*(helm|ks|name).*yaml" -path "./*/*yaml" -exec rm {} \;
-  clean-helm:
-    desc: Clean up the CUE directory of helm files
-    dir: "{{.CUE_DIR}}"
-    cmds:
-      - find . -name "helm*.yaml" -exec rm {} \;
+      - for: { var: CUE_FILES }
+        cmd: cue trim {{.CUE_MAIN}} {{.ITEM}}
+  clean:
+    desc: Clean the CUE directory of YAML files
+    cmd: find {{.CUE_DIR}} -name "*.yaml" -delete
+  clean_one:
+    internal: true
+    cmd: find {{.CUE_DIR}} -name "$(basename {{.FILE_TYPE}} .cue | cut -d "_" -f 1)*.yaml" -delete
+
+  _export:
+    internal: true
+    silent: true
+    cmd: |
+      output=$(dirname {{.FILE}})/$(basename {{.FILE}} .cue | cut -d "_" -f 1).yaml
+      echo "---" >> $output
+      cue export -s {{.CUE_MAIN}} {{.FILE}} --out yaml >> $output
 
   namespace_only:
     internal: true
-    dir: "{{.CUE_DIR}}"
     cmds:
-      - find . -name "namespace*.cue" -exec sh -c 'output=$(dirname {})/namespace.yaml; echo "---" >> $output; cue export -s "{{.CUE_MAIN}}" {} --out yaml >> $output' \;
-
+      - for : { var: CUE_NAMESPACE }
+        task: _export
+        vars:
+          FILE: '{{.ITEM}}'
   namespace:
     desc: Create namespace files
-    dir: "{{.CUE_DIR}}"
-    deps: [fmt, clean-namespace]
+    deps: [fmt]
     cmds:
+      - task: clean_one
+        vars: { FILE_TYPE: "namespace" }
       - task: namespace_only
 
   kustomization_only:
     internal: true
-    dir: "{{.CUE_DIR}}"
     cmds:
-      - find . -name "ks*.cue" -exec sh -c 'output=$(dirname {})/ks.yaml; echo "---" >> $output; cue export -s "{{.CUE_MAIN}}" {} --out yaml >> $output' \;
-
+      - for : { var: CUE_KS }
+        task: _export
+        vars:
+          FILE: '{{.ITEM}}'
   kustomization:
     aliases: [ks]
-    deps: [fmt, clean-kustomization]
-    dir: "{{.CUE_DIR}}"
+    deps: [fmt]
     desc: Create kustomization files
     cmds:
+      - task: clean_one
+        vars: { FILE_TYPE: "ks" }
       - task: kustomization_only
 
   untemplated_only:
     internal: true
-    dir: "{{.CUE_DIR}}"
     cmds:
-      - find -E . ! -regex ".*(helm|ks|name).*cue" -path "./*/*cue" -exec sh -c 'output=$(dirname {})/$(basename {} .cue).yaml; echo "---" >> $output; cue export -s "{{.CUE_MAIN}}" {} --out yaml >> $output' \;
-
+      - for : { var: CUE_UNTEMPLATED }
+        task: _export
+        vars:
+          FILE: '{{.ITEM}}'
   untemplated:
     aliases: [misc]
-    deps: [fmt, clean-untemplated]
-    dir: "{{.CUE_DIR}}"
+    deps: [fmt]
     desc: Create untemplated files
     cmds:
+      - for : { var: CUE_UNTEMPLATED }
+        task: clean_one
+        silent: true
+        vars:
+          FILE: '{{.ITEM}}'
       - task: untemplated_only
 
   helm_only:
     internal: true
-    dir: "{{.CUE_DIR}}"
     cmds:
-      - find . -name "helm*.cue" -exec sh -c 'output=$(dirname {})/helmrelease.yaml; echo "---" >> $output; cue export -s "{{.CUE_MAIN}}" {} --out yaml >> $output || echo $output' \;
-
+      - for : { var: CUE_HELM }
+        task: _export
+        vars:
+          FILE: '{{.ITEM}}'
   helm:
-    deps: [fmt, clean-helm]
-    dir: "{{.CUE_DIR}}"
+    deps: [fmt]
     desc: Create helmrelease files
     cmds:
+      - task: clean_one
+        vars: { FILE_TYPE: "namespace" }
       - task: helm_only
 
-  
+  k8s_kustomization_prep:
+    silent: true
+    internal: true
+    cmd: |
+      output="{{.DEST_DIR}}/kustomization.yaml"
+      echo "---" > $output
+      yq -n '(.apiVersion="kustomize.config.k8s.io/v1beta1") | (.kind="Kustomization") | with(.resources; . ="" | . tag="!!null")' >> $output
+
+  k8s-kustomization:
+    aliases: [k8s-ks]
+    desc: Rebuild kubernetes kustomizations
+    vars:
+      TOP_DIRS:
+        sh: find {{.CUE_DIR}} -depth 1 -type d
+      FLUXTOMIZATIONS:
+        sh: find {{.CUE_DIR}} -name "ks*yaml" | xargs -I {} rg -N --no-filename 'path.+(\.+)' {} -r '$1'
+    cmds:
+      - for: { var: TOP_DIRS }
+        task: k8s_kustomization_prep
+        vars:
+          DEST_DIR: '{{.ITEM}}'
+      - for: { var: FLUXTOMIZATIONS }
+        task: k8s_kustomization_prep
+        vars:
+          DEST_DIR: '{{.ITEM}}'
+      - for: { var: TOP_DIRS }
+        cmd: output={{.ITEM}}/kustomization.yaml; find {{.ITEM}} -name "ks*yaml" -o -name "namespace*yaml" | sed -r 's,{{.ITEM}},  - .,g' >> $output
+        silent: true
+      - for: { var: FLUXTOMIZATIONS }
+        cmd: output={{.ITEM}}/kustomization.yaml; find {{.ITEM}} -name "*yaml" ! -name "kustomization*" | sed -r 's,{{.ITEM}},  - .,g' >> $output
+        silent: true
+

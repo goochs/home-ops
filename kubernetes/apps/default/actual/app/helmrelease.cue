@@ -14,7 +14,7 @@ package kube
 					repository: "ghcr.io/actualbudget/actual-server"
 					tag:        "24.11.0"
 				}
-				env: ACTUAL_PORT: (_config.appTemplate.port)
+				env: ACTUAL_PORT: _config.appTemplate.port
 				resources: {
 					requests: {
 						cpu:    "100m"
