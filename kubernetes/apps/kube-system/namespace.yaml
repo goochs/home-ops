@@ -1,7 +1,0 @@
----
-metadata:
-  name: kube-system
-  labels:
-    kustomize.toolkit.fluxcd.io/prune: disabled
-kind: Namespace
-apiVersion: v1
