@@ -28,14 +28,6 @@ package kube
 				}
 			}
 		}
-		DefaultPodOptions: securityContext: {
-			runAsNonRoot:        true
-			runAsUser:           568
-			runAsGroup:          568
-			fsGroup:             568
-			fsGroupChangePolicy: "OnRootMismatch"
-			seccompProfile: type: "RuntimeDefault"
-		}
 		persistence: config: {
 			existingClaim: "actual-config"
 			advancedMounts: actual: app: [{path: "/data"}]
