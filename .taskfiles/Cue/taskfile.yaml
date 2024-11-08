@@ -15,6 +15,7 @@ tasks:
     cmds:
       - task: namespace_only
       - task: kustomization_only
+      - task: untemplated_only
 
   fmt:
     desc: Format CUE files
@@ -24,7 +25,7 @@ tasks:
 
   clean:
     desc: Clean up the CUE directory
-    deps: [clean-namespace, clean-kustomization]
+    deps: [clean-namespace, clean-kustomization, clean-untemplated]
 
   trim:
     desc: Trim the CUE directory
@@ -43,6 +44,13 @@ tasks:
     dir: "{{.CUE_DIR}}"
     cmds:
       - find . -name "ks*.yaml" -exec rm {} \;
+
+  clean-untemplated:
+    aliases: [clean-misc]
+    desc: Clean up the CUE directory of untemplated files
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find -E . ! -regex ".*(helm|ks|name).*yaml" -path "./*/*yaml" -exec rm {} \;
 
   namespace_only:
     internal: true
@@ -70,3 +78,17 @@ tasks:
     desc: Create kustomization files
     cmds:
       - task: kustomization_only
+
+  untemplated_only:
+    internal: true
+    dir: "{{.CUE_DIR}}"
+    cmds:
+      - find -E . ! -regex ".*(helm|ks|name).*cue" -path "./*/*cue" -exec sh -c 'output=$(dirname {})/$(basename {} .cue).yaml; echo "---" >> $output; cue export -s "{{.CUE_MAIN}}" {} --out yaml >> $output' \;
+
+  untemplated:
+    aliases: [misc]
+    deps: [fmt, clean-untemplated]
+    dir: "{{.CUE_DIR}}"
+    desc: Create untemplated files
+    cmds:
+      - task: untemplated_only
