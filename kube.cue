@@ -138,7 +138,6 @@ import (
 					}
 					...
 				}
-
 				service: app: {
 					controller: _config.name
 					ports: http: port: _config.appTemplate.port
@@ -147,7 +146,7 @@ import (
 				ingress: app: {
 					className: *"internal" | "external"
 					hosts: {
-						host: *"\(_config.name).${SECRET_DOMAIN}" | string
+						host: *"\(_config.name).goochs.us" | string
 						paths: {
 							path: *"/" | string
 							service: {
@@ -188,4 +187,22 @@ import (
 	}
 }
 
+#persistentVolumeClaim: corev1.#PersistentVolumeClaim & {
+	apiVersion: "v1"
+	kind:       "PersistentVolumeClaim"
+	metadata: name!: string
+	spec: {
+		accessModes: ["ReadWriteOnce"]
+		resources: {
+			requests: storage: *"5Gi" | string
+			...
+		}
+		storageClassName: *"longhorn" | string
+		...
+	}
+	...
+}
+
 #clusterIssuer: {...}
+#secret: {...}
+#untemplated: {...}

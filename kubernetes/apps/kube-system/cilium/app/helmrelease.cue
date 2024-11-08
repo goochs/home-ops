@@ -55,7 +55,7 @@ package kube
 					ingress: {
 						enabled:   true
 						className: "internal"
-						hosts: ["hubble.${SECRET_DOMAIN}"]
+						hosts: ["hubble.goochs.us"]
 					}
 				}
 			}

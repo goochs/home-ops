@@ -91,7 +91,7 @@ spec:
       app:
         className: internal
         hosts:
-          host: sonarr.${SECRET_DOMAIN}
+          host: sonarr.goochs.us
           paths:
             path: /
             service:

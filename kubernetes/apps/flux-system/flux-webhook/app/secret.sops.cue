@@ -1,6 +1,6 @@
 package kube
 
-secret: "github-webhook-token-secret": {
+#secret & {
 	apiVersion: "v1"
 	kind:       "Secret"
 	metadata: name:    "github-webhook-token-secret"

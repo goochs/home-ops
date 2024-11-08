@@ -1,6 +1,6 @@
 package kube
 
-ciliumBGPPeeringPolicy: "l3-policy": {
+#untemplated & {
 	// https://docs.cilium.io/en/latest/network/bgp-control-plane/
 	apiVersion: "cilium.io/v2alpha1"
 	kind:       "CiliumBGPPeeringPolicy"
@@ -16,14 +16,5 @@ ciliumBGPPeeringPolicy: "l3-policy": {
 			}]
 			serviceSelector: matchExpressions: [{key: "somekey", operator: "NotIn", values: ["never-used-value"]}]
 		}]
-	}
-}
-ciliumLoadBalancerIPPool: "l3-pool": {
-	apiVersion: "cilium.io/v2alpha1"
-	kind:       "CiliumLoadBalancerIPPool"
-	metadata: name: "l3-pool"
-	spec: {
-		allowFirstLastIPs: "Yes"
-		blocks: [{cidr: "${BGP_ADVERTISED_CIDR}"}]
 	}
 }

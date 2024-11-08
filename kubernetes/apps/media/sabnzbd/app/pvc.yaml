@@ -1,14 +1,12 @@
 ---
-persistentVolumeClaim:
-  sabnzbd-config:
-    apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: sabnzbd-config
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
-      storageClassName: longhorn
+metadata:
+  name: sabnzbd-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: longhorn
+kind: PersistentVolumeClaim
+apiVersion: v1

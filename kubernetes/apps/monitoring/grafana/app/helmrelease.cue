@@ -13,7 +13,7 @@ package kube
 			admin: existingSecret:    "grafana-admin-secret"
 			env: {
 				GF_EXPLORE_ENABLED: true
-				GF_SERVER_ROOT_URL: "https://grafana.${SECRET_DOMAIN}"
+				GF_SERVER_ROOT_URL: "https://grafana.goochs.us"
 			}
 			"grafana.ini": analytics: {
 				check_for_updates:        false
@@ -155,11 +155,7 @@ package kube
 			ingress: {
 				enabled:          true
 				ingressClassName: "internal"
-				annotations: {
-					"hajimari.io/enable": "true"
-					"hajimari.io/icon":   "simple-icons:grafana"
-				}
-				hosts: ["grafana.${SECRET_DOMAIN}"]
+				hosts: ["grafana.goochs.us"]
 			}
 			persistence: {
 				enabled:          true

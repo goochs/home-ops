@@ -27,6 +27,6 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      host: longhorn.${SECRET_DOMAIN}
+      host: longhorn.goochs.us
 kind: HelmRelease
 apiVersion: helm.toolkit.fluxcd.io/v2

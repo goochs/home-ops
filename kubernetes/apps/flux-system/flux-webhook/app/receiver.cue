@@ -1,6 +1,6 @@
 package kube
 
-receiver: "github-receiver": {
+#untemplated & {
 	apiVersion: "notification.toolkit.fluxcd.io/v1"
 	kind:       "Receiver"
 	metadata: name: "github-receiver"

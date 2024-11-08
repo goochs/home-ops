@@ -17,7 +17,6 @@ package kube
 				env: {
 					PROWLARR__INSTANCE__NAME:    "prowlarr"
 					PROWLARR__PORT:              (_config.appTemplate.port)
-					PROWLARR__APPLICATION_URL:   "https://prowlarr.${SECRET_DOMAIN}"
 					PROWLARR__LOG_LEVEL:         "info"
 					PROWLARR__ANALYTICS_ENABLED: "False"
 				}

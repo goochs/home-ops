@@ -1,6 +1,6 @@
 package kube
 
-secret: "grafana-admin-secret": {
+#secret & {
 	apiVersion: "v1"
 	kind:       "Secret"
 	metadata: {

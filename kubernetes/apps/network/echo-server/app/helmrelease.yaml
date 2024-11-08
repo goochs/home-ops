@@ -96,7 +96,7 @@ spec:
       app:
         className: external
         hosts:
-          host: '{{ .Release.Name }}.${SECRET_DOMAIN}'
+          host: echo-server.goochs.us
           paths:
             path: /
             service:

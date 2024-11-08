@@ -1,19 +1,19 @@
 package kube
 
-certificate: "${SECRET_DOMAIN/./-}-production": {
+#untemplated & {
 	apiVersion: "cert-manager.io/v1"
 	kind:       "Certificate"
-	metadata: name: "${SECRET_DOMAIN/./-}-production"
+	metadata: name: "goochs-us-production"
 	spec: {
-		secretName: "${SECRET_DOMAIN/./-}-production-tls"
+		secretName: "goochs-us-production-tls"
 		issuerRef: {
 			name: "letsencrypt-production"
 			kind: "ClusterIssuer"
 		}
-		commonName: "${SECRET_DOMAIN}"
+		commonName: "goochs.us"
 		dnsNames: [
-			"${SECRET_DOMAIN}",
-			"*.${SECRET_DOMAIN}",
+			"goochs.us",
+			"*.goochs.us",
 		]
 	}
 }

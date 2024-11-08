@@ -1,14 +1,14 @@
 ---
 metadata:
-  name: flux-webhooks
+  name: flux-webhook
   namespace: flux-system
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: flux-webhooks
+      app.kubernetes.io/name: flux-webhook
   interval: 30m
   retryInterval: 1m
-  path: ./kubernetes/apps/flux-system/flux-webhooks/app
+  path: ./kubernetes/apps/flux-system/flux-webhook/app
   prune: true
   sourceRef:
     kind: GitRepository

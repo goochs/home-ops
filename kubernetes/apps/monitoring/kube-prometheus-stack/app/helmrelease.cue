@@ -17,7 +17,7 @@ package kube
 			alertmanager: ingress: {
 				enabled:          true
 				ingressClassName: "internal"
-				hosts: ["alertmanager.${SECRET_DOMAIN}"]
+				hosts: ["alertmanager.goochs.us"]
 			}
 			"kube-state-metrics": {
 				metricLabelsAllowlist: [
@@ -74,13 +74,8 @@ package kube
 				ingress: {
 					enabled:          true
 					ingressClassName: "internal"
-					annotations: {
-						"hajimari.io/enable":  "true"
-						"hajimari.io/appName": "Prometheus"
-						"hajimari.io/icon":    "simple-icons:prometheus"
-					}
-					pathType: "Prefix"
-					hosts: ["prometheus.${SECRET_DOMAIN}"]
+					pathType:         "Prefix"
+					hosts: ["prometheus.goochs.us"]
 				}
 				prometheusSpec: {
 					ruleSelectorNilUsesHelmValues:           false

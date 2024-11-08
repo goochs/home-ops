@@ -1,6 +1,6 @@
 package kube
 
-clusterRole: capacitor: {
+#untemplated & {
 	apiVersion: "rbac.authorization.k8s.io/v1"
 	kind:       "ClusterRole"
 	metadata: name: "capacitor"

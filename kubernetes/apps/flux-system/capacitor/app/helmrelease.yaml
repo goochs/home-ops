@@ -56,18 +56,18 @@ spec:
         ports:
           http:
             port: 9000
-    serviceAccount:
-      create: true
-      name: capacitor
     ingress:
       app:
         className: internal
         hosts:
-          host: '{{ .Release.Name }}.${SECRET_DOMAIN}'
+          host: capacitor.goochs.us
           paths:
             path: /
             service:
               identifier: app
               port: http
+    serviceAccount:
+      create: true
+      name: capacitor
 kind: HelmRelease
 apiVersion: helm.toolkit.fluxcd.io/v2

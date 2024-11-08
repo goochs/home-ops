@@ -1,6 +1,6 @@
 package kube
 
-storageClass: "longhorn-local": {
+#untemplated & {
 	apiVersion: "storage.k8s.io/v1"
 	kind:       "StorageClass"
 	metadata: name: "longhorn-local"

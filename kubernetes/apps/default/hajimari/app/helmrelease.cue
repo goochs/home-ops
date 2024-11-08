@@ -24,9 +24,8 @@ package kube
 			ingress: main: {
 				enabled:          true
 				ingressClassName: "internal"
-				annotations: "hajimari.io/enable": "false"
 				hosts: [{
-					host: "dash.${SECRET_DOMAIN}"
+					host: "dash.goochs.us"
 					paths: [{
 						path:     "/"
 						pathType: "Prefix"

@@ -10,7 +10,7 @@ package kube
 		}
 		values: {
 			fullnameOverride: "k8s-gateway"
-			domain:           "${SECRET_DOMAIN}"
+			domain:           "goochs.us"
 			ttl:              1
 			service: {
 				type: "LoadBalancer"

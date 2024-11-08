@@ -17,21 +17,20 @@ vars:
     sh: find {{.CUE_DIR}} -name "namespace*.cue"
 
 tasks:
+  _deps_rebuild:
+    internal: true
+    deps: [namespace_only, kustomization_only, untemplated_only, helm_only]
+    cmd: { task: k8s-kustomization }
   rebuild:
     desc: Rebuild the CUE directory
     deps: [fmt, clean]
     cmds:
-      - task: namespace_only
-      - task: kustomization_only
-      - task: untemplated_only
-      - task: helm_only
-      - task: k8s-kustomization
+      - task: _deps_rebuild
   fmt:
     desc: Format CUE files
     cmds:
       - cue fmt -s ./...
   trim:
-    silent: true
     desc: Trim the CUE directory
     cmds:
       - for: { var: CUE_FILES }

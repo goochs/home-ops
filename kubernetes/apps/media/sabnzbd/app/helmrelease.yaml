@@ -44,7 +44,7 @@ spec:
             env:
               SABNZBD__PORT: 8080
               TZ: ${TIMEZONE}
-              SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd, sabnzbd.media, sabnzbd.media.svc, sabnzbd.media.svc.cluster, sabnzbd.media.svc.cluster.local, sabnzbd.${SECRET_DOMAIN}
+              SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd, sabnzbd.media, sabnzbd.media.svc, sabnzbd.media.svc.cluster, sabnzbd.media.svc.cluster.local, sabnzbd.goochs.us
             resources:
               requests:
                 cpu: 50m
@@ -89,7 +89,7 @@ spec:
       app:
         className: internal
         hosts:
-          host: sabnzbd.${SECRET_DOMAIN}
+          host: sabnzbd.goochs.us
           paths:
             path: /
             service:

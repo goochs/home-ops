@@ -1,6 +1,6 @@
 package kube
 
-secret: "cert-manager-secret": {
+#secret & {
 	apiVersion: "v1"
 	kind:       "Secret"
 	metadata: {

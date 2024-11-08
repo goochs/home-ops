@@ -17,7 +17,7 @@ package kube
 			ingress: {
 				enabled:          true
 				ingressClassName: "internal"
-				host:             "longhorn.${SECRET_DOMAIN}"
+				host:             "longhorn.goochs.us"
 			}
 		}
 	}

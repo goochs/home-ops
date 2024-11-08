@@ -46,9 +46,6 @@ package kube
 				scrapeTimeout: "10s"
 			}]
 		}
-		ingress: app: {
-			className: "external"
-			hosts: host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
-		}
+		ingress: app: className: "external"
 	}
 }

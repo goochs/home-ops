@@ -1,9 +1,9 @@
 package kube
 
 #kustomization & {
-	_name: "csi-driver-nfs"
+	_name: "flux-webhook"
 	spec: {
-		targetNamespace: "kube-system"
+		targetNamespace: "flux-system"
 		wait:            true
 	}
 }

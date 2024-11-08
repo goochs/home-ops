@@ -106,7 +106,7 @@ spec:
       app:
         className: external
         hosts:
-          host: plex.${SECRET_DOMAIN}
+          host: plex.goochs.us
           paths:
             path: /
             service:

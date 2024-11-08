@@ -21,7 +21,7 @@ package kube
 				}
 				env: {
 					SABNZBD__PORT:                   _config.appTemplate.port
-					SABNZBD__HOST_WHITELIST_ENTRIES: "sabnzbd, sabnzbd.media, sabnzbd.media.svc, sabnzbd.media.svc.cluster, sabnzbd.media.svc.cluster.local, sabnzbd.${SECRET_DOMAIN}"
+					SABNZBD__HOST_WHITELIST_ENTRIES: "sabnzbd, sabnzbd.media, sabnzbd.media.svc, sabnzbd.media.svc.cluster, sabnzbd.media.svc.cluster.local, sabnzbd.goochs.us"
 				}
 				resources: {
 					requests: cpu:  "50m"

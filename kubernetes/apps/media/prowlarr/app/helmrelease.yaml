@@ -42,7 +42,6 @@ spec:
             env:
               PROWLARR__INSTANCE__NAME: prowlarr
               PROWLARR__PORT: 9696
-              PROWLARR__APPLICATION_URL: https://prowlarr.${SECRET_DOMAIN}
               PROWLARR__LOG_LEVEL: info
               TZ: ${TIMEZONE}
               PROWLARR__ANALYTICS_ENABLED: "False"
@@ -68,7 +67,7 @@ spec:
       app:
         className: internal
         hosts:
-          host: prowlarr.${SECRET_DOMAIN}
+          host: prowlarr.goochs.us
           paths:
             path: /
             service:

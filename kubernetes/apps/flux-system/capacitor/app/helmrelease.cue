@@ -23,6 +23,5 @@ package kube
 			create: true
 			name:   "capacitor"
 		}
-		ingress: app: hosts: host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
 	}
 }

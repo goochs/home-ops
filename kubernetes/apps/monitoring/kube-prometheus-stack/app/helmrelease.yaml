@@ -31,7 +31,7 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - alertmanager.${SECRET_DOMAIN}
+          - alertmanager.goochs.us
     kube-state-metrics:
       metricLabelsAllowlist:
         - deployments=[*]
@@ -87,13 +87,9 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/appName: Prometheus
-          hajimari.io/icon: simple-icons:prometheus
         pathType: Prefix
         hosts:
-          - prometheus.${SECRET_DOMAIN}
+          - prometheus.goochs.us
       prometheusSpec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false

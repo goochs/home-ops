@@ -36,7 +36,6 @@ package kube
 			fsGroupChangePolicy: "OnRootMismatch"
 			seccompProfile: type: "RuntimeDefault"
 		}
-		ingress: app: hosts: host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
 		persistence: config: {
 			existingClaim: "actual-config"
 			advancedMounts: actual: app: [{path: "/data"}]
