@@ -17,6 +17,3 @@ talosconfig
 .venv*
 # Taskfile
 .task
-# Go
-go.sum
-cue.mod/*
