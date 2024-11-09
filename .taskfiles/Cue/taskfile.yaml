@@ -46,7 +46,7 @@ tasks:
 
   _export:
     internal: true
-    #silent: true
+    silent: true
     cmd: |
       output=$(dirname {{.FILE}} | sed -r 's,\.?cue/?,,g')/$(basename {{.FILE}} .cue | cut -d "_" -f 1).yaml
       echo "---" >> $output
@@ -118,6 +118,7 @@ tasks:
       - task: helm_only
 
   k8s_kustomization_prep:
+    silent: true
     internal: true
     cmd: |
       output="{{.DEST_DIR}}/kustomization.yaml"
