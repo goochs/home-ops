@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - ./actual/ks.yaml
   - ./namespace.yaml
-  - ./hajimari/ks.yaml

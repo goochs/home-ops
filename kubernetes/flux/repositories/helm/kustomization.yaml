@@ -10,7 +10,6 @@ resources:
   - ./csi-driver-nfs.yaml
   - ./descheduler.yaml
   - ./grafana.yaml
-  - ./hajimari.yaml
   - ./ingress-nginx.yaml
   - ./intel.yaml
   - ./jetstack.yaml
