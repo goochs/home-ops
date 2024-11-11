@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: csi-addons-system
   labels:
-    kustomize.toolkit.fluxcd.io/prune: disabled
+    kustomize.toolkit.fluxcd.io/prune: enabled
