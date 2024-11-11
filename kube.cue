@@ -165,7 +165,7 @@ import (
 					persistence: {
 						hoard: {
 							type:   "nfs"
-							server: "${STORAGE_ADDR}"
+							server: "nas.goochs.us"
 							path:   "/mnt/storage/hoard"
 							globalMounts: [{path: "/hoard"}]
 						}
