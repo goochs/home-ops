@@ -3,7 +3,7 @@ package kube
 import (
 	corev1 "k8s.io/api/core/v1"
 	helmv2 "github.com/fluxcd/helm-controller/api/v2"
-	kustomizev1b2 "github.com/fluxcd/kustomize-controller/api/v1beta2"
+	kustomizev1 "github.com/fluxcd/kustomize-controller/api/v1"
 )
 
 // _spec: {
@@ -13,9 +13,9 @@ import (
 // 	metadata: name: _name
 // }
 
-#kustomization: kustomizev1b2.#Kustomization & {
+#kustomization: kustomizev1.#Kustomization & {
 	_name:      string
-	apiVersion: "kustomize.toolkit.fluxcd.io/v1beta2"
+	apiVersion: "kustomize.toolkit.fluxcd.io/v1"
 	kind:       "Kustomization"
 	metadata: {
 		namespace: "flux-system"

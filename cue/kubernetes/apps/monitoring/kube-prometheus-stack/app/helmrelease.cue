@@ -6,7 +6,7 @@ package kube
 		timeout: "15m"
 		chart: spec: {
 			chart:   "kube-prometheus-stack"
-			version: "65.8.1"
+			version: "66.0.0"
 			sourceRef: name: "prometheus-community"
 		}
 		install: crds: "CreateReplace"
