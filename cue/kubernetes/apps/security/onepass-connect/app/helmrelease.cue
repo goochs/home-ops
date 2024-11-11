@@ -23,7 +23,7 @@ package kube
 			containers: {
 				api: {
 					image: {
-						repository: "docker.io/1password/connect-api"
+						repository: *"docker.io/1password/connect-api" | string
 						tag:        "1.7.3"
 					}
 					env: {
@@ -51,6 +51,7 @@ package kube
 					}
 				}
 				sync: api & {
+					image: repository: "docker.io/1password/connect-sync"
 					env: {
 						OP_HTTP_PORT: _config.appTemplate.syncPort
 						OP_BUS_PORT:  11221

@@ -91,7 +91,7 @@ spec:
                   - ALL
           sync:
             image:
-              repository: docker.io/1password/connect-api
+              repository: docker.io/1password/connect-sync
               tag: 1.7.3
             env:
               XDG_DATA_HOME: /config
