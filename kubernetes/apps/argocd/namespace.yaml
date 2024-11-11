@@ -1,0 +1,7 @@
+---
+metadata:
+  name: argocd
+  labels:
+    kustomize.toolkit.fluxcd.io/prune: enabled
+kind: Namespace
+apiVersion: v1
