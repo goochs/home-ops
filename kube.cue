@@ -209,6 +209,21 @@ import (
 	...
 }
 
+#externalSecret: {
+	_config: name!: string
+	apiVersion: "external-secrets.io/v1beta1"
+	kind:       "ExternalSecret"
+	metadata: name: _config.name
+	spec: {
+		secretStoreRef: {
+			kind: "ClusterSecretStore"
+			name: "onepass-connect"
+		}
+		...
+	}
+	...
+}
+
 #clusterRoleBinding: rbacv1.#ClusterRoleBinding & {...}
 #clusterRole: rbacv1.#ClusterRole & {...}
 #clusterIssuer: {...}
