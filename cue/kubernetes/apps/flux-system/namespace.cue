@@ -1,5 +1,5 @@
 package kube
 
 #namespace & {
-	_name: "flux-system"
+	_config: name: "flux-system"
 }

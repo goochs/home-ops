@@ -1,5 +1,5 @@
 package kube
 
 #namespace & {
-	_name: "network"
+	_config: name: "network"
 }

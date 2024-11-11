@@ -1,5 +1,5 @@
 package kube
 
 #namespace & {
-	_name: "cert-manager"
+	_config: name: "cert-manager"
 }

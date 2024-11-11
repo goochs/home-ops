@@ -1,7 +1,7 @@
 package kube
 
 #kustomization & {
-	_name: "cilium"
+	_config: name: "cilium"
 	spec: {
 		targetNamespace: "kube-system"
 		prune:           false // never should be deleted

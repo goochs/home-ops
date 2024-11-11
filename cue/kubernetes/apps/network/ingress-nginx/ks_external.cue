@@ -1,7 +1,7 @@
 package kube
 
 #kustomization & {
-	_name: "ingress-nginx-external"
+	_config: name: "ingress-nginx-external"
 	spec: {
 		targetNamespace: "network"
 		dependsOn: [{name: "ingress-nginx-certificates"}]

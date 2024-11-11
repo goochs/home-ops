@@ -1,6 +1,6 @@
 package kube
 
 #kustomization & {
-	_name: "sonarr"
+	_config: name:         "sonarr"
 	spec: targetNamespace: "media"
 }

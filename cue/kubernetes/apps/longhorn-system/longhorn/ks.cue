@@ -1,7 +1,7 @@
 package kube
 
 #kustomization & {
-	_name: "longhorn"
+	_config: name: "longhorn"
 	spec: {
 		targetNamespace: "longhorn-system"
 		timeout:         "15m"

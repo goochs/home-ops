@@ -1,5 +1,5 @@
 package kube
 
 #namespace & {
-	_name: "longhorn-system"
+	_config: name: "longhorn-system"
 }

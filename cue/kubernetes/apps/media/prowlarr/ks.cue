@@ -1,6 +1,6 @@
 package kube
 
 #kustomization & {
-	_name: "prowlarr"
+	_config: name:         "prowlarr"
 	spec: targetNamespace: "media"
 }

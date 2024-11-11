@@ -1,6 +1,6 @@
 package kube
 
 #kustomization & {
-	_name: "capacitor"
+	_config: name:         "capacitor"
 	spec: targetNamespace: "flux-system"
 }

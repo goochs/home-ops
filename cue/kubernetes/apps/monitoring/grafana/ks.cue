@@ -1,6 +1,6 @@
 package kube
 
 #kustomization & {
-	_name: "grafana"
+	_config: name:         "grafana"
 	spec: targetNamespace: "monitoring"
 }

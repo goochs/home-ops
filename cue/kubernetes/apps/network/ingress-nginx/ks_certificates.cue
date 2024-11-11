@@ -1,7 +1,7 @@
 package kube
 
 #kustomization & {
-	_name: "ingress-nginx-certificates"
+	_config: name: "ingress-nginx-certificates"
 	spec: {
 		targetNamespace: "network"
 		dependsOn: [{name: "cert-manager-issuers"}]

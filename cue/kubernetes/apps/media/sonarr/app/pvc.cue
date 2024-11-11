@@ -1,5 +1,5 @@
 package kube
 
 #persistentVolumeClaim & {
-	metadata: name: "sonarr-config"
+	_config: name: "sonarr-config"
 }

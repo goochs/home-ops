@@ -1,5 +1,5 @@
 package kube
 
 #namespace & {
-	_name: "default"
+	_config: name: "default"
 }

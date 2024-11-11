@@ -1,5 +1,5 @@
 package kube
 
 #namespace & {
-	_name: "media"
+	_config: name: "media"
 }

@@ -1,5 +1,5 @@
 package kube
 
 #persistentVolumeClaim & {
-	metadata: name: "prowlarr-config"
+	_config: name: "prowlarr-config"
 }

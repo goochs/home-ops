@@ -7,28 +7,18 @@ import (
 	kustomizev1 "github.com/fluxcd/kustomize-controller/api/v1"
 )
 
-// _spec: {
-// 	_name:      string
-// 	apiVersion: string
-// 	kind:       string
-// 	metadata: name: _name
-// }
-
 #kustomization: kustomizev1.#Kustomization & {
-	_name:      string
+	_config: name!: string
 	apiVersion: "kustomize.toolkit.fluxcd.io/v1"
 	kind:       "Kustomization"
 	metadata: {
 		namespace: "flux-system"
-		name:      _name
+		name:      _config.name
 	}
 	spec: {
-		// define alias for targetNamespace
-		NS=targetNamespace: *"default" | string
-		commonMetadata: labels: "app.kubernetes.io/name": _name
-
-		// generate path for fluxtomization
-		path:  *"./kubernetes/apps/\(NS)/\(_name)/app" | string
+		targetNamespace: *"default" | string
+		commonMetadata: labels: "app.kubernetes.io/name": _config.name
+		path:  *"./kubernetes/apps/\(spec.targetNamespace)/\(_config.name)/app" | string
 		prune: *true | bool
 		sourceRef: {
 			kind: *"GitRepository" | string
@@ -181,19 +171,20 @@ import (
 }
 
 #namespace: corev1.#Namespace & {
-	_name:      string
+	_config: name!: string
 	apiVersion: "v1"
 	kind:       "Namespace"
 	metadata: {
-		name: _name
+		name: _config.name
 		labels: "kustomize.toolkit.fluxcd.io/prune": *"disabled" | "enabled"
 	}
 }
 
 #persistentVolumeClaim: corev1.#PersistentVolumeClaim & {
+	_config: name!: string
 	apiVersion: "v1"
 	kind:       "PersistentVolumeClaim"
-	metadata: name!: string
+	metadata: name: _config.name
 	spec: {
 		accessModes: ["ReadWriteOnce"]
 		resources: {

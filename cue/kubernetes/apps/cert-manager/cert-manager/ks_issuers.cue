@@ -1,7 +1,7 @@
 package kube
 
 #kustomization & {
-	_name: "cert-manager-issuers"
+	_config: name: "cert-manager-issuers"
 	spec: {
 		targetNamespace: "cert-manager"
 		dependsOn: [{name: "cert-manager"}]

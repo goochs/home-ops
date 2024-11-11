@@ -1,5 +1,5 @@
 package kube
 
 #namespace & {
-	_name: "database"
+	_config: name: "database"
 }

@@ -1,5 +1,5 @@
 package kube
 
 #persistentVolumeClaim & {
-	metadata: name: "radarr-config"
+	_config: name: "radarr-config"
 }

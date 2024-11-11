@@ -1,7 +1,7 @@
 package kube
 
 #kustomization & {
-	_name: "cilium-config"
+	_config: name: "cilium-config"
 	spec: {
 		targetNamespace: "kube-system"
 		dependsOn: [{name: "cilium"}]

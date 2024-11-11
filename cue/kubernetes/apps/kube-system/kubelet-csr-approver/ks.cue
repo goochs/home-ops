@@ -1,7 +1,7 @@
 package kube
 
 #kustomization & {
-	_name: "kubelet-csr-approver"
+	_config: name: "kubelet-csr-approver"
 	spec: {
 		targetNamespace: "kube-system"
 		prune:           false // never should be deleted

@@ -1,5 +1,5 @@
 package kube
 
 #persistentVolumeClaim & {
-	metadata: name: "sabnzbd-config"
+	_config: name: "sabnzbd-config"
 }

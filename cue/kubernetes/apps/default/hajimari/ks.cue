@@ -1,5 +1,5 @@
 package kube
 
 #kustomization & {
-	_name: "hajimari"
+	_config: name: "hajimari"
 }

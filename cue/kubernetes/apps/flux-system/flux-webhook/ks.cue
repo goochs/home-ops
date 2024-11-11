@@ -1,7 +1,7 @@
 package kube
 
 #kustomization & {
-	_name: "flux-webhook"
+	_config: name: "flux-webhook"
 	spec: {
 		targetNamespace: "flux-system"
 		wait:            true

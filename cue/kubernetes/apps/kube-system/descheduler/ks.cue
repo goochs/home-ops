@@ -1,6 +1,6 @@
 package kube
 
 #kustomization & {
-	_name: "descheduler"
+	_config: name:         "descheduler"
 	spec: targetNamespace: "kube-system"
 }
