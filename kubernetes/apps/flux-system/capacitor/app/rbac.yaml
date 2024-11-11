@@ -1,20 +1,17 @@
 ---
-clusterRoleBinding:
-  capacitor:
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRoleBinding
-    metadata:
-      name: capacitor
-    subjects:
-      - kind: ServiceAccount
-        name: capacitor
-        namespace: flux-system
-    roleRef:
-      kind: ClusterRole
-      name: capacitor
-      apiGroup: rbac.authorization.k8s.io
+metadata:
+  name: capacitor
+subjects:
+  - kind: ServiceAccount
+    name: capacitor
+    namespace: flux-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: capacitor
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+---
 metadata:
   name: capacitor
 rules:
@@ -54,3 +51,5 @@ rules:
       - watch
       - list
       - patch
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1

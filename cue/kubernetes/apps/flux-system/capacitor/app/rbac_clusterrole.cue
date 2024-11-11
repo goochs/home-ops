@@ -1,6 +1,6 @@
 package kube
 
-#untemplated & {
+#clusterRole & {
 	apiVersion: "rbac.authorization.k8s.io/v1"
 	kind:       "ClusterRole"
 	metadata: name: "capacitor"
@@ -49,19 +49,4 @@ package kube
 			"patch",
 		]
 	}]
-}
-clusterRoleBinding: capacitor: {
-	apiVersion: "rbac.authorization.k8s.io/v1"
-	kind:       "ClusterRoleBinding"
-	metadata: name: "capacitor"
-	subjects: [{
-		kind:      "ServiceAccount"
-		name:      "capacitor"
-		namespace: "flux-system"
-	}]
-	roleRef: {
-		kind:     "ClusterRole"
-		name:     "capacitor"
-		apiGroup: "rbac.authorization.k8s.io"
-	}
 }

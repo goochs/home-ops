@@ -1,6 +1,7 @@
 package kube
 
 import (
+	rbacv1 "k8s.io/api/rbac/v1"
 	corev1 "k8s.io/api/core/v1"
 	helmv2 "github.com/fluxcd/helm-controller/api/v2"
 	kustomizev1 "github.com/fluxcd/kustomize-controller/api/v1"
@@ -205,6 +206,8 @@ import (
 	...
 }
 
+#clusterRoleBinding: rbacv1.#ClusterRoleBinding & {...}
+#clusterRole: rbacv1.#ClusterRole & {...}
 #clusterIssuer: {...}
 #secret: {...}
 #untemplated: {...}
