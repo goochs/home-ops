@@ -4,7 +4,10 @@ package kube
 	_config: {
 		name:     "actual"
 		longhorn: true
-		appTemplate: port: 5006
+		appTemplate: {
+			port:    5006
+			ingress: "internal"
+		}
 	}
 	spec: values: {
 		controllers: actual: {

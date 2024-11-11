@@ -5,9 +5,10 @@ package kube
 		name:     "sabnzbd"
 		longhorn: true
 		appTemplate: {
-			nfs:    true
-			probes: true
-			port:   8080
+			nfs:     true
+			probes:  true
+			port:    8080
+			ingress: "internal"
 		}
 	}
 

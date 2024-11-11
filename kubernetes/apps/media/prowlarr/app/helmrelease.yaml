@@ -43,7 +43,7 @@ spec:
               PROWLARR__INSTANCE__NAME: prowlarr
               PROWLARR__PORT: 9696
               PROWLARR__LOG_LEVEL: info
-              TZ: ${TIMEZONE}
+              TZ: America/New_York
               PROWLARR__ANALYTICS_ENABLED: "False"
             resources:
               requests:
@@ -57,12 +57,6 @@ spec:
               capabilities:
                 drop:
                   - ALL
-    service:
-      app:
-        controller: prowlarr
-        ports:
-          http:
-            port: 9696
     ingress:
       app:
         className: internal
@@ -73,6 +67,12 @@ spec:
                 service:
                   identifier: app
                   port: http
+    service:
+      app:
+        controller: prowlarr
+        ports:
+          http:
+            port: 9696
     persistence:
       config:
         existingClaim: prowlarr-config

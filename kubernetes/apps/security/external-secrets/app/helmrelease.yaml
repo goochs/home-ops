@@ -1,0 +1,26 @@
+---
+metadata:
+  name: external-secrets
+spec:
+  chart:
+    spec:
+      chart: external-secrets
+      version: 0.10.5
+      sourceRef:
+        name: external-secrets
+        kind: HelmRepository
+        namespace: flux-system
+  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    serviceMonitor:
+      enabled: true
+kind: HelmRelease
+apiVersion: helm.toolkit.fluxcd.io/v2

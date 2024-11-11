@@ -3,7 +3,10 @@ package kube
 #helmRelease & {
 	_config: {
 		name: "prowlarr"
-		appTemplate: port: 9696
+		appTemplate: {
+			port:    9696
+			ingress: "internal"
+		}
 	}
 	spec: {
 		upgrade: remediation: strategy: "uninstall"

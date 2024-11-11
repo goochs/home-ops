@@ -43,7 +43,7 @@ spec:
               tag: 24.11.0
             env:
               ACTUAL_PORT: 5006
-              TZ: ${TIMEZONE}
+              TZ: America/New_York
             resources:
               requests:
                 cpu: 100m
@@ -62,12 +62,6 @@ spec:
               capabilities:
                 drop:
                   - ALL
-    service:
-      app:
-        controller: actual
-        ports:
-          http:
-            port: 5006
     ingress:
       app:
         className: internal
@@ -78,6 +72,12 @@ spec:
                 service:
                   identifier: app
                   port: http
+    service:
+      app:
+        controller: actual
+        ports:
+          http:
+            port: 5006
     persistence:
       config:
         existingClaim: actual-config

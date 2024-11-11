@@ -1,0 +1,43 @@
+---
+metadata:
+  name: external-secrets
+  namespace: flux-system
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: external-secrets
+  interval: 30m
+  retryInterval: 1m
+  path: ./kubernetes/apps/security/external-secrets/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  targetNamespace: security
+  timeout: 5m
+  wait: true
+kind: Kustomization
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+---
+metadata:
+  name: external-secrets-stores
+  namespace: flux-system
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: external-secrets-stores
+  dependsOn:
+    - name: external-secrets
+    - name: onepass-connect
+  interval: 30m
+  retryInterval: 1m
+  path: ./kubernetes/apps/security/external-secrets/stores
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  targetNamespace: security
+  timeout: 5m
+  wait: true
+kind: Kustomization
+apiVersion: kustomize.toolkit.fluxcd.io/v1

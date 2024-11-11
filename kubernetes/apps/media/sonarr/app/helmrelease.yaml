@@ -45,7 +45,7 @@ spec:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
               SONARR__LOG__LEVEL: info
-              TZ: ${TIMEZONE}
+              TZ: America/New_York
               SONARR__SERVER__PORT: 8989
             resources:
               requests:
@@ -81,12 +81,6 @@ spec:
               capabilities:
                 drop:
                   - ALL
-    service:
-      app:
-        controller: sonarr
-        ports:
-          http:
-            port: 8989
     ingress:
       app:
         className: internal
@@ -97,6 +91,12 @@ spec:
                 service:
                   identifier: app
                   port: http
+    service:
+      app:
+        controller: sonarr
+        ports:
+          http:
+            port: 8989
     persistence:
       config:
         existingClaim: sonarr-config

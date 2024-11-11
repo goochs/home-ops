@@ -3,7 +3,10 @@ package kube
 #helmRelease & {
 	_config: {
 		name: "capacitor"
-		appTemplate: port: 9000
+		appTemplate: {
+			port:    9000
+			ingress: "internal"
+		}
 	}
 	spec: values: {
 		controllers: capacitor: containers: app: {

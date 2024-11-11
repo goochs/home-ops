@@ -5,9 +5,10 @@ package kube
 		name:     "plex"
 		longhorn: true
 		appTemplate: {
-			nfs:    true
-			probes: true
-			port:   32400
+			nfs:     true
+			probes:  true
+			port:    32400
+			ingress: "external"
 		}
 	}
 	spec: values: {
@@ -51,7 +52,6 @@ package kube
 			externalTrafficPolicy: "Cluster"
 			annotations: "io.cilium/lb-ipam-ips": "10.20.30.45"
 		}
-		ingress: app: className: "external"
 		persistence: transcode: {
 			type: "emptyDir"
 			globalMounts: [{path: "/transcode"}]

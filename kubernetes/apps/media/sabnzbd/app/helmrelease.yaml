@@ -43,7 +43,7 @@ spec:
               tag: 4.3.3@sha256:86c645db93affcbf01cc2bce2560082bfde791009e1506dba68269b9c50bc341
             env:
               SABNZBD__PORT: 8080
-              TZ: ${TIMEZONE}
+              TZ: America/New_York
               SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd, sabnzbd.media, sabnzbd.media.svc, sabnzbd.media.svc.cluster, sabnzbd.media.svc.cluster.local, sabnzbd.goochs.us
             resources:
               requests:
@@ -79,12 +79,6 @@ spec:
               capabilities:
                 drop:
                   - ALL
-    service:
-      app:
-        controller: sabnzbd
-        ports:
-          http:
-            port: 8080
     ingress:
       app:
         className: internal
@@ -95,6 +89,12 @@ spec:
                 service:
                   identifier: app
                   port: http
+    service:
+      app:
+        controller: sabnzbd
+        ports:
+          http:
+            port: 8080
     persistence:
       config:
         existingClaim: sabnzbd-config

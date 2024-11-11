@@ -44,7 +44,7 @@ spec:
             env:
               RADARR__APP__THEME: dark
               RADARR__LOG__LEVEL: info
-              TZ: ${TIMEZONE}
+              TZ: America/New_York
               RADARR__SERVER__PORT: 7878
             resources:
               requests:
@@ -80,12 +80,6 @@ spec:
               capabilities:
                 drop:
                   - ALL
-    service:
-      app:
-        controller: radarr
-        ports:
-          http:
-            port: 7878
     ingress:
       app:
         className: internal
@@ -96,6 +90,12 @@ spec:
                 service:
                   identifier: app
                   port: http
+    service:
+      app:
+        controller: radarr
+        ports:
+          http:
+            port: 7878
     persistence:
       config:
         existingClaim: radarr-config

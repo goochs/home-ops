@@ -4,8 +4,9 @@ package kube
 	_config: {
 		name: "echo-server"
 		appTemplate: {
-			probes: true
-			port:   8080
+			probes:  true
+			port:    8080
+			ingress: "external"
 		}
 	}
 	spec: values: {
@@ -46,6 +47,5 @@ package kube
 				scrapeTimeout: "10s"
 			}]
 		}
-		ingress: app: className: "external"
 	}
 }

@@ -28,6 +28,7 @@ import (
 		interval:      *"30m" | string
 		retryInterval: *"1m" | string
 		timeout:       *"5m" | string
+		...
 	}
 }
 
@@ -37,10 +38,14 @@ import (
 		name!:    string
 		longhorn: *false | bool
 		appTemplate?: {
-			port:   number
-			nfs:    *false | bool
-			probes: *false | bool
+			port:    int
+			runAs:   *568 | int
+			nfs:     *false | bool
+			probes:  *false | bool
+			ingress: string
+			...
 		}
+		...
 	}
 
 	apiVersion: "helm.toolkit.fluxcd.io/v2"
@@ -63,12 +68,12 @@ import (
 				sourceRef: name: "bjw-s"
 			}
 		}
-		install: remediation: retries: *3 | number
+		install: remediation: retries: *3 | int
 		upgrade: {
 			cleanupOnFail: *true | bool
 			remediation: {
 				strategy: *"rollback" | string
-				retries:  *3 | number
+				retries:  *3 | int
 			}
 		}
 		if _config.longhorn {
@@ -84,40 +89,47 @@ import (
 				defaultPodOptions: {
 					securityContext: {
 						runAsNonRoot:        *true | bool
-						runAsUser:           *568 | number
-						runAsGroup:          *568 | number
-						fsGroup:             *568 | number
+						runAsUser:           *_config.appTemplate.runAs | int
+						runAsGroup:          *_config.appTemplate.runAs | int
+						fsGroup:             *_config.appTemplate.runAs | int
 						fsGroupChangePolicy: "OnRootMismatch"
 						seccompProfile: type: "RuntimeDefault"
 						...
 					}
 					...
 				}
+
 				controllers: (_config.name): {
-					containers: app: {
-						env: {
-							TZ: "${TIMEZONE}"
-							...
-						}
-						securityContext: {
-							allowPrivilegeEscalation: *false | bool
-							readOnlyRootFilesystem:   *true | bool
-							capabilities: drop: ["ALL"]
-						}
-						if _config.appTemplate.probes {
-							for type in ["liveness", "readiness"] {
-								probes: "\(type)": {
-									enabled: *true | bool
-									custom:  *true | bool
-									spec: {
-										httpGet: {
-											path: string
-											port: *_config.appTemplate.port | number
+					containers: {
+						for instance, v in containers {
+							"\(instance)": {
+								env: {
+									TZ: "America/New_York"
+									...
+								}
+								securityContext: {
+									allowPrivilegeEscalation: *false | bool
+									readOnlyRootFilesystem:   *true | bool
+									capabilities: drop: ["ALL"]
+								}
+								if _config.appTemplate.probes {
+									for type in ["liveness", "readiness"] {
+										probes: "\(type)": {
+											enabled: *true | bool
+											custom:  *true | bool
+											spec: {
+												httpGet: {
+													path: string
+													port: *_config.appTemplate.port | int
+												}
+												initialDelaySeconds: *0 | int
+												periodSeconds:       *10 | int
+												timeoutSeconds:      *1 | int
+												failureThreshold:    *3 | int
+											}
+											...
 										}
-										initialDelaySeconds: 0
-										periodSeconds:       10
-										timeoutSeconds:      1
-										failureThreshold:    3
+										...
 									}
 									...
 								}
@@ -134,20 +146,20 @@ import (
 					ports: http: port: _config.appTemplate.port
 					...
 				}
-				ingress: app: {
-					className: *"internal" | "external"
-					hosts: [{
-						host: *"\(_config.name).goochs.us" | string
-						paths: [{
-							path: *"/" | string
-							service: {
-								identifier: *"app" | string
-								port:       *"http" | string
-							}
-						},
-							...]
-					},
-						...]
+				if _config.appTemplate.ingress != _|_ {
+					ingress: app: {
+						className: _config.appTemplate.ingress
+						hosts: [{
+							host: *"\(_config.name).goochs.us" | string
+							paths: [{
+								path: *"/" | string
+								service: {
+									identifier: *"app" | string
+									port:       *"http" | string
+								}
+							}, ...]
+						}, ...]
+					}
 				}
 				if _config.appTemplate.nfs {
 					persistence: {

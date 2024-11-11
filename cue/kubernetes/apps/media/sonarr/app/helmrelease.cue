@@ -5,9 +5,10 @@ package kube
 		name:     "sonarr"
 		longhorn: true
 		appTemplate: {
-			nfs:    true
-			probes: true
-			port:   8989
+			nfs:     true
+			probes:  true
+			port:    8989
+			ingress: "internal"
 		}
 	}
 	spec: values: {

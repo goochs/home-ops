@@ -5,9 +5,10 @@ package kube
 		name:     "radarr"
 		longhorn: true
 		appTemplate: {
-			port:   7878
-			nfs:    true
-			probes: true
+			port:    7878
+			nfs:     true
+			probes:  true
+			ingress: "internal"
 		}
 	}
 	spec: values: {
