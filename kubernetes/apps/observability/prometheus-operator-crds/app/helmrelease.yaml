@@ -1,0 +1,23 @@
+---
+metadata:
+  name: kube-prometheus-stack
+spec:
+  chart:
+    spec:
+      chart: prometheus-operator-crds
+      version: 16.0.0
+      sourceRef:
+        name: prometheus-community
+        kind: HelmRepository
+        namespace: flux-system
+  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+kind: HelmRelease
+apiVersion: helm.toolkit.fluxcd.io/v2

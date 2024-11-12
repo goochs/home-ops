@@ -30,11 +30,13 @@ tasks:
     desc: Format CUE files
     cmds:
       - cue fmt -s ./...
+
   trim:
     desc: Trim the CUE directory
     cmds:
       - for: { var: CUE_FILES }
         cmd: cue trim {{.CUE_MAIN}} {{.ITEM}}
+        ignore_error: true
   clean:
     desc: Clean the CUE directory of YAML files
     cmds:

@@ -1,20 +1,20 @@
 ---
 metadata:
-  name: kube-prometheus-stack
+  name: prometheus-operator-crds
   namespace: flux-system
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: kube-prometheus-stack
+      app.kubernetes.io/name: prometheus-operator-crds
   interval: 30m
   retryInterval: 1m
-  path: ./kubernetes/apps/monitoring/kube-prometheus-stack/app
-  prune: true
+  path: ./kubernetes/apps/observability/prometheus-operator-crds/app
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  targetNamespace: monitoring
+  targetNamespace: observability
   timeout: 5m
-  wait: true
+  wait: false
 kind: Kustomization
 apiVersion: kustomize.toolkit.fluxcd.io/v1

@@ -2,6 +2,6 @@
 metadata:
   name: monitoring
   labels:
-    kustomize.toolkit.fluxcd.io/prune: disabled
+    kustomize.toolkit.fluxcd.io/prune: enabled
 kind: Namespace
 apiVersion: v1

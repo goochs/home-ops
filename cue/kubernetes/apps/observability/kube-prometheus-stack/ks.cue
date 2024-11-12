@@ -3,7 +3,7 @@ package kube
 #kustomization & {
 	_config: name: "kube-prometheus-stack"
 	spec: {
-		targetNamespace: "monitoring"
+		targetNamespace: "observability"
 		wait:            true
 	}
 }
