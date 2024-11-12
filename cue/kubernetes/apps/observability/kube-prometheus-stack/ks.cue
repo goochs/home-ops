@@ -5,5 +5,6 @@ package kube
 	spec: {
 		targetNamespace: "observability"
 		wait:            true
+		timeout:         "15m"
 	}
 }
