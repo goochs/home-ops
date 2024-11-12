@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: echo-server
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/network/echo-server/app
   prune: true
   sourceRef:

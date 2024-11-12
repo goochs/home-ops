@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: intel-device-plugin-operator
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/kube-system/intel-device-plugins/operator
   prune: true
   sourceRef:
@@ -27,7 +26,6 @@ spec:
     labels:
       app.kubernetes.io/name: intel-device-plugin-gpu
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/kube-system/intel-device-plugins/gpu
   prune: true
   sourceRef:

@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: capacitor
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/flux-system/capacitor/app
   prune: true
   sourceRef:

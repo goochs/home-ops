@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: metrics-server
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/kube-system/metrics-server/app
   prune: true
   sourceRef:

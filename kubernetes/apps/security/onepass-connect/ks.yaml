@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: onepass-connect
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/security/onepass-connect/app
   prune: true
   sourceRef:

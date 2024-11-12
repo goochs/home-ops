@@ -24,10 +24,9 @@ import (
 			kind: *"GitRepository" | string
 			name: *"home-kubernetes" | string
 		}
-		wait:          *false | bool
-		interval:      *"30m" | string
-		retryInterval: *"1m" | string
-		timeout:       *"5m" | string
+		wait:     *false | bool
+		interval: *"30m" | string
+		timeout:  *"5m" | string
 		...
 	}
 }

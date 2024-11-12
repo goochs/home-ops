@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: grafana
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/observability/grafana/app
   prune: true
   sourceRef:

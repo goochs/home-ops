@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: cilium
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/kube-system/cilium/app
   prune: false
   sourceRef:
@@ -29,7 +28,6 @@ spec:
   dependsOn:
     - name: cilium
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/kube-system/cilium/config
   prune: false
   sourceRef:

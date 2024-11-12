@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: prowlarr
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/media/prowlarr/app
   prune: true
   sourceRef:

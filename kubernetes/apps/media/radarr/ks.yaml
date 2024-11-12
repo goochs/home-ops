@@ -7,7 +7,6 @@ spec:
     labels:
       app.kubernetes.io/name: radarr
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/media/radarr/app
   prune: true
   sourceRef:

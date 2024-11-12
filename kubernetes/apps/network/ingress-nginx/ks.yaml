@@ -9,7 +9,6 @@ spec:
   dependsOn:
     - name: cert-manager-issuers
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/network/ingress-nginx/certificates
   prune: true
   sourceRef:
@@ -31,7 +30,6 @@ spec:
   dependsOn:
     - name: ingress-nginx-certificates
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/network/ingress-nginx/external
   prune: true
   sourceRef:
@@ -53,7 +51,6 @@ spec:
   dependsOn:
     - name: ingress-nginx-certificates
   interval: 30m
-  retryInterval: 1m
   path: ./kubernetes/apps/network/ingress-nginx/internal
   prune: true
   sourceRef:
