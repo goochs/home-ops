@@ -1,6 +1,6 @@
 ---
 metadata:
-  name: kube-prometheus-stack
+  name: prometheus-operator-crds
 spec:
   chart:
     spec:
