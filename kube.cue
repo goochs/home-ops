@@ -162,10 +162,10 @@ import (
 				}
 				if _config.appTemplate.nfs {
 					persistence: {
-						hoard: {
+						media: {
 							type:   "nfs"
 							server: "nas.goochs.us"
-							path:   "/mnt/storage/hoard"
+							path:   "/mnt/tank/media"
 							globalMounts: [{path: "/hoard"}]
 						}
 						...

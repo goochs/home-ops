@@ -99,10 +99,10 @@ spec:
     persistence:
       config:
         existingClaim: radarr-config
-      hoard:
+      media:
         type: nfs
         server: nas.goochs.us
-        path: /mnt/storage/hoard
+        path: /mnt/tank/media
         globalMounts:
           - path: /hoard
       tmp:
