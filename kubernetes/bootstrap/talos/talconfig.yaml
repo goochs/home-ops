@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.8.2
+talosVersion: v1.8.3
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.31.2
+kubernetesVersion: v1.30.6
 
 clusterName: &cluster homeprod
 endpoint: https://10.0.30.30:6443
@@ -168,10 +168,10 @@ controlPlane:
     customization:
       systemExtensions:
         officialExtensions:
-          - siderolabs/intel-ucode
           - siderolabs/i915-ucode
-          - siderolabs/util-linux-tools
+          - siderolabs/intel-ucode
           - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
 
   patches:
     # Cluster configuration
