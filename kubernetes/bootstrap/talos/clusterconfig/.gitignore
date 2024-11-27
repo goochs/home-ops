@@ -1,7 +1,4 @@
-homeprod-kmaster1.yaml
-homeprod-kmaster2.yaml
-homeprod-kmaster3.yaml
-homeprod-kworker1.yaml
-homeprod-kworker2.yaml
-homeprod-kworker3.yaml
 talosconfig
+home-kmaster1.yaml
+home-kmaster2.yaml
+home-kmaster3.yaml
