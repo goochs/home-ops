@@ -164,7 +164,7 @@ import (
 					persistence: {
 						media: {
 							type:   "nfs"
-							server: "nas.goochs.us"
+							server: "10.0.30.40"
 							path:   "/mnt/tank/media"
 							globalMounts: [{path: "/hoard"}]
 						}
