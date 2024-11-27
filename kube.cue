@@ -166,7 +166,7 @@ import (
 							type:   "nfs"
 							server: "10.0.30.40"
 							path:   "/mnt/tank/media"
-							globalMounts: [{path: "/hoard"}]
+							globalMounts: [{path: "/media"}]
 						}
 						...
 					}
