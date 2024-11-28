@@ -17,7 +17,7 @@ package kube
 			containers: app: {
 				image: {
 					repository: "ghcr.io/onedr0p/radarr"
-					tag:        "5.14.0@sha256:48e094d0eb3e78a88a2fe1f4b41f9eb2356d19bd01a3f95d701455097db8d5ff"
+					tag:        "5.15.1@sha256:6f511f96f4e0c683e2f0b7e1c1a1669f63c757989cac33eed0bb5c69112cd61b"
 				}
 				env: {
 					RADARR__APP__THEME:   "dark"

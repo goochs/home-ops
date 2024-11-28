@@ -5,7 +5,7 @@ package kube
 	spec: {
 		chart: spec: {
 			chart:   "cert-manager"
-			version: "v1.16.1"
+			version: "v1.16.2"
 			sourceRef: name: "jetstack"
 		}
 		values: {

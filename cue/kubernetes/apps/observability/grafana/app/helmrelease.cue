@@ -5,7 +5,7 @@ package kube
 	spec: {
 		chart: spec: {
 			chart:   "grafana"
-			version: "8.5.12"
+			version: "8.6.3"
 			sourceRef: name: "grafana"
 		}
 		values: {

@@ -4,7 +4,7 @@ package kube
 	_config: name: "prometheus-operator-crds"
 	spec: chart: spec: {
 		chart:   "prometheus-operator-crds"
-		version: "16.0.0"
+		version: "16.0.1"
 		sourceRef: name: "prometheus-community"
 	}
 }

@@ -5,7 +5,7 @@ package kube
 	spec: {
 		chart: spec: {
 			chart:   "reloader"
-			version: "1.1.0"
+			version: "1.2.0"
 			sourceRef: name: "stakater"
 		}
 		values: {

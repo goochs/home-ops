@@ -17,7 +17,7 @@ package kube
 			containers: app: {
 				image: {
 					repository: "ghcr.io/onedr0p/sonarr"
-					tag:        "4.0.10@sha256:17b05e619b07854182bc47295efca2348fadde0a927de1797b55dc01dcd5f58c"
+					tag:        "4.0.11@sha256:f2545b368ca83e1c7e52ef1a923ed3cac4f7b4bb64a40f07bc28d2d80f159898"
 				}
 				env: {
 					SONARR__APP__INSTANCENAME: "Sonarr"
