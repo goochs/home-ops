@@ -1,25 +1,84 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: echo-server
 spec:
   chart:
     spec:
       chart: app-template
-      version: 3.5.1
       sourceRef:
-        name: bjw-s
         kind: HelmRepository
+        name: bjw-s
         namespace: flux-system
-  interval: 30m
+      version: 3.5.1
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
+    controllers:
+      echo-server:
+        containers:
+          app:
+            env:
+              HTTP_PORT: 8080
+              LOG_IGNORE_PATH: /healthz
+              LOG_WITHOUT_NEWLINE: true
+              PROMETHEUS_ENABLED: true
+              TZ: America/New_York
+            image:
+              repository: ghcr.io/mendhak/http-https-echo
+              tag: 35
+            probes:
+              liveness:
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /healthz
+                    port: 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+              readiness:
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /healthz
+                    port: 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+            resources:
+              limits:
+                memory: 64Mi
+              requests:
+                cpu: 10m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+        strategy: RollingUpdate
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
       app:
         className: external
@@ -30,63 +89,6 @@ spec:
                 service:
                   identifier: app
                   port: http
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile:
-          type: RuntimeDefault
-    controllers:
-      echo-server:
-        strategy: RollingUpdate
-        containers:
-          app:
-            image:
-              repository: ghcr.io/mendhak/http-https-echo
-              tag: 35
-            env:
-              HTTP_PORT: 8080
-              LOG_WITHOUT_NEWLINE: true
-              LOG_IGNORE_PATH: /healthz
-              TZ: America/New_York
-              PROMETHEUS_ENABLED: true
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /healthz
-                    port: 8080
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /healthz
-                    port: 8080
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 64Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
     service:
       app:
         controller: echo-server
@@ -95,12 +97,10 @@ spec:
             port: 8080
     serviceMonitor:
       app:
-        serviceName: echo-server
         endpoints:
-          - port: http
-            scheme: http
+          - interval: 1m
             path: /metrics
-            interval: 1m
+            port: http
+            scheme: http
             scrapeTimeout: 10s
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2
+        serviceName: echo-server

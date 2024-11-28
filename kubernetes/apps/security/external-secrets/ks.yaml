@@ -1,4 +1,6 @@
 ---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
 metadata:
   name: external-secrets
   namespace: flux-system
@@ -15,9 +17,9 @@ spec:
   targetNamespace: security
   timeout: 5m
   wait: true
-kind: Kustomization
-apiVersion: kustomize.toolkit.fluxcd.io/v1
 ---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
 metadata:
   name: external-secrets-stores
   namespace: flux-system
@@ -37,5 +39,3 @@ spec:
   targetNamespace: security
   timeout: 5m
   wait: true
-kind: Kustomization
-apiVersion: kustomize.toolkit.fluxcd.io/v1

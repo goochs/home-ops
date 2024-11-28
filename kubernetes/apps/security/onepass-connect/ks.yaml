@@ -1,4 +1,6 @@
 ---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
 metadata:
   name: onepass-connect
   namespace: flux-system
@@ -15,5 +17,3 @@ spec:
   targetNamespace: security
   timeout: 5m
   wait: true
-kind: Kustomization
-apiVersion: kustomize.toolkit.fluxcd.io/v1

@@ -1,32 +1,32 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: longhorn
 spec:
   chart:
     spec:
       chart: longhorn
-      version: 1.7.2
       sourceRef:
-        name: longhorn
         kind: HelmRepository
+        name: longhorn
         namespace: flux-system
-  interval: 30m
-  timeout: 15m
+      version: 1.7.2
   install:
     remediation:
       retries: 3
+  interval: 30m
+  timeout: 15m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
-    monitoring:
-      enabled: true
-      createPrometheusRules: true
     ingress:
       enabled: true
-      ingressClassName: internal
       host: longhorn.goochs.us
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2
+      ingressClassName: internal
+    monitoring:
+      createPrometheusRules: true
+      enabled: true

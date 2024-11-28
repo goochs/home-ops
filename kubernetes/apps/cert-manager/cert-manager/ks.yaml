@@ -1,4 +1,6 @@
 ---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
 metadata:
   name: cert-manager
   namespace: flux-system
@@ -15,9 +17,9 @@ spec:
   targetNamespace: cert-manager
   timeout: 5m
   wait: true
-kind: Kustomization
-apiVersion: kustomize.toolkit.fluxcd.io/v1
 ---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
 metadata:
   name: cert-manager-issuers
   namespace: flux-system
@@ -36,5 +38,3 @@ spec:
   targetNamespace: cert-manager
   timeout: 5m
   wait: true
-kind: Kustomization
-apiVersion: kustomize.toolkit.fluxcd.io/v1

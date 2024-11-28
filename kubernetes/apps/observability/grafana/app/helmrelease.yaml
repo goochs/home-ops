@@ -1,29 +1,126 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: grafana
 spec:
   chart:
     spec:
       chart: grafana
-      version: 8.6.3
       sourceRef:
-        name: grafana
         kind: HelmRepository
+        name: grafana
         namespace: flux-system
-  interval: 30m
+      version: 8.6.3
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
-    deploymentStrategy:
-      type: Recreate
     admin:
       existingSecret: grafana-admin-secret
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - disableDeletion: false
+            editable: true
+            folder: ""
+            name: default
+            options:
+              path: /var/lib/grafana/dashboards/default
+            orgId: 1
+            type: file
+    dashboards:
+      default:
+        cert-manager:
+          datasource: Prometheus
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+        external-secrets:
+          datasource: Prometheus
+          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
+        flux-cluster:
+          datasource: Prometheus
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
+        flux-control-plane:
+          datasource: Prometheus
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
+        kubernetes-api-server:
+          datasource: Prometheus
+          gnetId: 15761
+          revision: 18
+        kubernetes-coredns:
+          datasource: Prometheus
+          gnetId: 15762
+          revision: 18
+        kubernetes-global:
+          datasource: Prometheus
+          gnetId: 15757
+          revision: 42
+        kubernetes-namespaces:
+          datasource: Prometheus
+          gnetId: 15758
+          revision: 40
+        kubernetes-nodes:
+          datasource: Prometheus
+          gnetId: 15759
+          revision: 32
+        kubernetes-pods:
+          datasource: Prometheus
+          gnetId: 15760
+          revision: 32
+        kubernetes-volumes:
+          datasource: Prometheus
+          gnetId: 11454
+          revision: 14
+        nginx:
+          datasource: Prometheus
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+        nginx-request-handling-performance:
+          datasource: Prometheus
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+        node-exporter-full:
+          datasource: Prometheus
+          gnetId: 1860
+          revision: 37
+        node-feature-discovery:
+          datasource: Prometheus
+          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
+        prometheus:
+          datasource: Prometheus
+          gnetId: 19105
+          revision: 5
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - access: proxy
+            isDefault: true
+            jsonData:
+              timeInterval: 1m
+            name: Prometheus
+            type: prometheus
+            uid: prometheus
+            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
+          - access: proxy
+            jsonData:
+              implementation: prometheus
+            name: Alertmanager
+            type: alertmanager
+            uid: alertmanager
+            url: http://alertmanager-operated.observability.svc.cluster.local:9093
+        deleteDatasources:
+          - name: Prometheus
+            orgId: 1
+          - name: Alertmanager
+            orgId: 1
+    deploymentStrategy:
+      type: Recreate
     env:
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
@@ -31,129 +128,32 @@ spec:
       GF_SERVER_ROOT_URL: https://grafana.goochs.us
     grafana.ini:
       analytics:
-        check_for_updates: false
         check_for_plugin_updates: false
+        check_for_updates: false
         reporting_enabled: false
       news:
         news_feed_enabled: false
-    dashboardProviders:
-      dashboardproviders.yaml:
-        apiVersion: 1
-        providers:
-          - name: default
-            orgId: 1
-            folder: ""
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/default
-    datasources:
-      datasources.yaml:
-        apiVersion: 1
-        deleteDatasources:
-          - name: Prometheus
-            orgId: 1
-          - name: Alertmanager
-            orgId: 1
-        datasources:
-          - name: Prometheus
-            type: prometheus
-            uid: prometheus
-            access: proxy
-            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
-            jsonData:
-              timeInterval: 1m
-            isDefault: true
-          - name: Alertmanager
-            type: alertmanager
-            uid: alertmanager
-            access: proxy
-            url: http://alertmanager-operated.observability.svc.cluster.local:9093
-            jsonData:
-              implementation: prometheus
-    dashboards:
-      default:
-        cert-manager:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
-          datasource: Prometheus
-        external-secrets:
-          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
-          datasource: Prometheus
-        flux-cluster:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
-          datasource: Prometheus
-        flux-control-plane:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
-          datasource: Prometheus
-        kubernetes-api-server:
-          gnetId: 15761
-          revision: 18
-          datasource: Prometheus
-        kubernetes-coredns:
-          gnetId: 15762
-          revision: 18
-          datasource: Prometheus
-        kubernetes-global:
-          gnetId: 15757
-          revision: 42
-          datasource: Prometheus
-        kubernetes-namespaces:
-          gnetId: 15758
-          revision: 40
-          datasource: Prometheus
-        kubernetes-nodes:
-          gnetId: 15759
-          revision: 32
-          datasource: Prometheus
-        kubernetes-pods:
-          gnetId: 15760
-          revision: 32
-          datasource: Prometheus
-        kubernetes-volumes:
-          gnetId: 11454
-          revision: 14
-          datasource: Prometheus
-        nginx:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-          datasource: Prometheus
-        nginx-request-handling-performance:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-          datasource: Prometheus
-        node-exporter-full:
-          gnetId: 1860
-          revision: 37
-          datasource: Prometheus
-        node-feature-discovery:
-          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
-          datasource: Prometheus
-        prometheus:
-          gnetId: 19105
-          revision: 5
-          datasource: Prometheus
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.goochs.us
+      ingressClassName: internal
+    persistence:
+      enabled: false
+    serviceMonitor:
+      enabled: true
     sidecar:
       dashboards:
         enabled: true
-        searchNamespace: ALL
-        label: grafana_dashboard
         folderAnnotation: grafana_folder
+        label: grafana_dashboard
         provider:
           disableDelete: true
           foldersFromFilesStructure: true
+        searchNamespace: ALL
       datasources:
         enabled: true
-        searchNamespace: ALL
         labelValue: ""
-    serviceMonitor:
-      enabled: true
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      hosts:
-        - grafana.goochs.us
-    persistence:
-      enabled: false
+        searchNamespace: ALL
     testFramework:
       enabled: false
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2

@@ -9,10 +9,10 @@ spec:
     - host: flux-webhook.${SECRET_DOMAIN}
       http:
         paths:
-          - path: /hook/
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: webhook-receiver
                 port:
                   number: 80
+            path: /hook/
+            pathType: Prefix

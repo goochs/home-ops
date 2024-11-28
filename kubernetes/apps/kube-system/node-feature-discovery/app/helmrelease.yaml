@@ -1,4 +1,6 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: node-feature-discovery
   namespace: kube-system
@@ -6,24 +8,22 @@ spec:
   chart:
     spec:
       chart: node-feature-discovery
-      version: 0.16.6
       sourceRef:
-        name: node-feature-discovery
         kind: HelmRepository
+        name: node-feature-discovery
         namespace: flux-system
-  interval: 30m
+      version: 0.16.6
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
-    crds: CreateReplace
+  interval: 30m
   upgrade:
     cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
     crds: CreateReplace
+    remediation:
+      retries: 3
+      strategy: rollback
   values:
     prometheus:
       enabled: true
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2

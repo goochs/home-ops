@@ -26,10 +26,6 @@ includes:
   talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml
-  cue: .taskfiles/Cue/Taskfile.yaml
-  user:
-    taskfile: .taskfiles/User
-    optional: true
 
 tasks:
   default: task -l

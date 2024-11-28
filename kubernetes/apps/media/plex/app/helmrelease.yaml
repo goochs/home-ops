@@ -1,97 +1,99 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: plex
 spec:
   chart:
     spec:
       chart: app-template
-      version: 3.5.1
       sourceRef:
-        name: bjw-s
         kind: HelmRepository
+        name: bjw-s
         namespace: flux-system
-  interval: 30m
+      version: 3.5.1
   dependsOn:
     - name: longhorn
       namespace: longhorn-system
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
-    defaultPodOptions:
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups:
-          - 44
-          - 109
-        seccompProfile:
-          type: RuntimeDefault
     controllers:
       plex:
-        type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 50Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /config
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
+            env:
+              TZ: America/New_York
             image:
               repository: ghcr.io/onedr0p/plex
               tag: 1.41.1.9057-af5eaea7a@sha256:2793002837580e0004ba436ae8aa291573d4631d3571ac6d02960d7fbc7fa94d
-            resources:
-              requests:
-                cpu: 100m
-              limits:
-                memory: 10Gi
-                gpu.intel.com/i915: 1
-            env:
-              TZ: America/New_York
             probes:
               liveness:
-                enabled: true
                 custom: true
+                enabled: true
                 spec:
+                  failureThreshold: 3
                   httpGet:
                     path: /identity
                     port: 32400
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
               readiness:
-                enabled: true
                 custom: true
+                enabled: true
                 spec:
+                  failureThreshold: 3
                   httpGet:
                     path: /identity
                     port: 32400
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
+            resources:
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 10Gi
+              requests:
+                cpu: 100m
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
               capabilities:
                 drop:
                   - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /config
+              name: config
+              size: 50Gi
+              storageClass: longhorn
+        type: statefulset
+    defaultPodOptions:
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+        supplementalGroups:
+          - 44
+          - 109
     ingress:
       app:
         className: external
@@ -102,26 +104,24 @@ spec:
                 service:
                   identifier: app
                   port: http
+    persistence:
+      media:
+        globalMounts:
+          - path: /media
+        path: /mnt/tank/media
+        server: 10.0.30.40
+        type: nfs
+      transcode:
+        globalMounts:
+          - path: /transcode
+        type: emptyDir
     service:
       app:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.20.30.45
         controller: plex
-        type: LoadBalancer
         externalTrafficPolicy: Cluster
         ports:
           http:
             port: 32400
-        annotations:
-          io.cilium/lb-ipam-ips: 10.20.30.45
-    persistence:
-      transcode:
-        type: emptyDir
-        globalMounts:
-          - path: /transcode
-      media:
-        type: nfs
-        server: 10.0.30.40
-        path: /mnt/tank/media
-        globalMounts:
-          - path: /media
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2
+        type: LoadBalancer

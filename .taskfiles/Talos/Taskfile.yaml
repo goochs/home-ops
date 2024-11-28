@@ -6,18 +6,66 @@ vars:
   TALOS_DIR: "{{.KUBERNETES_DIR}}/bootstrap/talos"
   TALHELPER_SECRET_FILE: "{{.TALOS_DIR}}/talsecret.sops.yaml"
   TALHELPER_CONFIG_FILE: "{{.TALOS_DIR}}/talconfig.yaml"
-
-env:
   TALOSCONFIG: "{{.TALOS_DIR}}/clusterconfig/talosconfig"
 
+env:
+  TALOSCONFIG: '{{.TALOSCONFIG}}'
+
 tasks:
+
+  apply:
+    desc: Apply Talos configs to the nodes normally
+    dir: "{{.TALOS_DIR}}"
+    cmd: talhelper gencommand apply | bash
+    preconditions:
+      - { msg: "Missing talhelper config file", sh: "test -f {{.TALHELPER_CONFIG_FILE}}" }
+
+  genconfig:
+    desc: Generate the Talos configs
+    dir: "{{.TALOS_DIR}}"
+    cmd: talhelper genconfig --secret-file {{.TALHELPER_SECRET_FILE}}
+    preconditions:
+      - { msg: "Missing talhelper config file", sh: "test -f {{.TALHELPER_CONFIG_FILE}}" }
+      - { msg: "Missing talhelper secret file", sh: "test -f {{.TALHELPER_SECRET_FILE}}" }
+
+  upgrade-node:
+    desc: Upgrade Talos on a single node [HOSTNAME=required]
+    cmds:
+      - task: down
+      - talosctl --nodes {{.HOSTNAME}} upgrade --image="factory.talos.dev/installer{{if eq .TALOS_SECUREBOOT "true"}}-secureboot{{end}}/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_VERSION}}" --timeout=10m
+      - talosctl --nodes {{.HOSTNAME}} health --wait-timeout=10m --server=false
+      - task: up
+    vars:
+      TALOS_SCHEMATIC_ID: ebdfa27a8d6272acf806ac6a5c968c3c284a47ce880273cecb19442c11bf0474
+#        sh: kubectl get node {{.HOSTNAME}} --output=jsonpath='{.metadata.annotations.extensions\.talos\.dev/schematic}'
+      TALOS_SECUREBOOT:
+        sh: talosctl --nodes kmaster1 get securitystate --output=jsonpath='{.spec.secureBoot}'
+      TALOS_VERSION:
+        sh: yq '.talosVersion' {{.TALHELPER_CONFIG_FILE}}
+    requires:
+      vars: [HOSTNAME]
+    preconditions:
+      - curl -fsSL -o /dev/null --fail https://github.com/siderolabs/talos/releases/tag/{{.TALOS_VERSION}}
+      - talosctl --nodes {{.HOSTNAME}} get machineconfig &>/dev/null
+      - talosctl config info &>/dev/null
+      - test -f {{.TALOSCONFIG}}
+      - which kubectl talosctl yq
+
+  upgrade-k8s:
+    desc: Upgrade k8s on a node
+    cmd: talosctl --nodes {{.node}} upgrade-k8s --to {{.to}}
+    requires:
+      vars: ["node", "to"]
+    preconditions:
+      - { msg: "Node not found", sh: "talosctl --nodes {{.node}} get machineconfig" }
+
 
   bootstrap:
     desc: Bootstrap the Talos cluster
     dir: "{{.TALOS_DIR}}"
     cmds:
       - task: bootstrap-gensecret
-      - task: bootstrap-genconfig
+      - task: genconfig
       - task: bootstrap-apply
       - task: bootstrap-install
       - task: fetch-kubeconfig
@@ -37,16 +85,8 @@ tasks:
     status:
       - test -f "{{.TALHELPER_SECRET_FILE}}"
 
-  bootstrap-genconfig:
-    desc: Generate the Talos configs
-    dir: "{{.TALOS_DIR}}"
-    cmd: talhelper genconfig --secret-file {{.TALHELPER_SECRET_FILE}}
-    preconditions:
-      - { msg: "Missing talhelper config file", sh: "test -f {{.TALHELPER_CONFIG_FILE}}" }
-      - { msg: "Missing talhelper secret file", sh: "test -f {{.TALHELPER_SECRET_FILE}}" }
-
   bootstrap-apply:
-    desc: Apply the Talos configs to the nodes
+    desc: Apply the Talos configs to the nodes in maintenance mode, using insecure
     dir: "{{.TALOS_DIR}}"
     cmd: talhelper gencommand apply --extra-flags=--insecure | bash
     preconditions:
@@ -72,21 +112,6 @@ tasks:
     preconditions:
       - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }
 
-  upgrade-talos:
-    desc: Upgrade talos on a node
-    cmd: talosctl --nodes {{.node}} upgrade --image {{.image}} --preserve=true --reboot-mode=default
-    requires:
-      vars: ["node", "image"]
-    preconditions:
-      - { msg: "Node not found", sh: "talosctl --nodes {{.node}} get machineconfig" }
-
-  upgrade-k8s:
-    desc: Upgrade k8s on a node
-    cmd: talosctl --nodes {{.node}} upgrade-k8s --to {{.to}}
-    requires:
-      vars: ["node", "to"]
-    preconditions:
-      - { msg: "Node not found", sh: "talosctl --nodes {{.node}} get machineconfig" }
 
   fetch-kubeconfig:
     desc: Generate talos kubeconfig
@@ -108,3 +133,15 @@ tasks:
   .reset:
     internal: true
     cmd: rm -rf {{.TALOS_DIR}}
+
+  down:
+    internal: true
+    cmd: flux --namespace flux-system suspend kustomization --all
+    preconditions:
+      - which flux
+
+  up:
+    internal: true
+    cmd: flux --namespace flux-system resume kustomization --all
+    preconditions:
+      - which flux

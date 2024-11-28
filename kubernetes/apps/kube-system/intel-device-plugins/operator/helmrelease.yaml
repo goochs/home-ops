@@ -1,28 +1,28 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: intel-device-plugin-operator
 spec:
   chart:
     spec:
       chart: intel-device-plugins-operator
-      version: 0.31.1
       sourceRef:
-        name: intel
         kind: HelmRepository
+        name: intel
         namespace: flux-system
-  interval: 30m
+      version: 0.31.1
   dependsOn:
     - name: node-feature-discovery
       namespace: kube-system
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
-    crds: CreateReplace
+  interval: 30m
   upgrade:
     cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
     crds: CreateReplace
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2
+    remediation:
+      retries: 3
+      strategy: rollback

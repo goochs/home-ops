@@ -1,50 +1,48 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: descheduler
 spec:
   chart:
     spec:
       chart: descheduler
-      version: 0.31.0
       sourceRef:
-        name: descheduler
         kind: HelmRepository
+        name: descheduler
         namespace: flux-system
-  interval: 30m
+      version: 0.31.0
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
-    replicas: 2
-    kind: Deployment
-    deschedulerPolicyAPIVersion: descheduler/v1alpha2
-    deschedulingInterval: 1m
     deschedulerPolicy:
       profiles:
         - name: Default
           pluginConfig:
-            - name: DefaultEvictor
-              args:
+            - args:
                 evictFailedBarePods: true
                 evictLocalStoragePods: true
                 evictSystemCriticalPods: true
                 nodeFit: true
+              name: DefaultEvictor
             - name: RemovePodsViolatingInterPodAntiAffinity
-            - name: RemovePodsViolatingNodeAffinity
-              args:
+            - args:
                 nodeAffinityType:
                   - requiredDuringSchedulingIgnoredDuringExecution
+              name: RemovePodsViolatingNodeAffinity
             - name: RemovePodsViolatingNodeTaints
-            - name: RemovePodsViolatingTopologySpreadConstraint
-              args:
+            - args:
                 constraints:
                   - DoNotSchedule
                   - ScheduleAnyway
+              name: RemovePodsViolatingTopologySpreadConstraint
           plugins:
             balance:
               enabled:
@@ -54,11 +52,13 @@ spec:
                 - RemovePodsViolatingInterPodAntiAffinity
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingNodeTaints
+    deschedulerPolicyAPIVersion: descheduler/v1alpha2
+    deschedulingInterval: 1m
+    kind: Deployment
+    leaderElection:
+      enabled: true
+    replicas: 2
     service:
       enabled: true
     serviceMonitor:
       enabled: true
-    leaderElection:
-      enabled: true
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2

@@ -1,30 +1,30 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: reloader
 spec:
   chart:
     spec:
       chart: reloader
-      version: 1.2.0
       sourceRef:
-        name: stakater
         kind: HelmRepository
+        name: stakater
         namespace: flux-system
-  interval: 30m
+      version: 1.2.0
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
     fullnameOverride: reloader
     reloader:
-      readOnlyRootFileSystem: true
       podMonitor:
         enabled: true
         namespace: '{{ .Release.Namespace }}'
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2
+      readOnlyRootFileSystem: true

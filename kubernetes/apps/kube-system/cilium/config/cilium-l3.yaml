@@ -19,9 +19,9 @@ spec:
   virtualRouters:
     - localASN: 64568
       neighbors:
-        - peerAddress: 10.0.30.1/32
+        - eBGPMultihopTTL: 4
           peerASN: 64569
-          eBGPMultihopTTL: 4
+          peerAddress: 10.0.30.1/32
       serviceSelector:
         matchExpressions:
           - key: somekey

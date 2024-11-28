@@ -1,85 +1,87 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: radarr
 spec:
   chart:
     spec:
       chart: app-template
-      version: 3.5.1
       sourceRef:
-        name: bjw-s
         kind: HelmRepository
+        name: bjw-s
         namespace: flux-system
-  interval: 30m
+      version: 3.5.1
   dependsOn:
     - name: longhorn
       namespace: longhorn-system
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile:
-          type: RuntimeDefault
     controllers:
       radarr:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
-            image:
-              repository: ghcr.io/onedr0p/radarr
-              tag: 5.15.1@sha256:6f511f96f4e0c683e2f0b7e1c1a1669f63c757989cac33eed0bb5c69112cd61b
             env:
               RADARR__APP__THEME: dark
               RADARR__LOG__LEVEL: info
-              TZ: America/New_York
               RADARR__SERVER__PORT: 7878
-            resources:
-              requests:
-                cpu: 100m
-              limits:
-                memory: 4Gi
+              TZ: America/New_York
+            image:
+              repository: ghcr.io/onedr0p/radarr
+              tag: 5.15.1@sha256:6f511f96f4e0c683e2f0b7e1c1a1669f63c757989cac33eed0bb5c69112cd61b
             probes:
               liveness:
-                enabled: true
                 custom: true
+                enabled: true
                 spec:
+                  failureThreshold: 3
                   httpGet:
                     path: /ping
                     port: 7878
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
               readiness:
-                enabled: true
                 custom: true
+                enabled: true
                 spec:
+                  failureThreshold: 3
                   httpGet:
                     path: /ping
                     port: 7878
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
+            resources:
+              limits:
+                memory: 4Gi
+              requests:
+                cpu: 100m
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
               capabilities:
                 drop:
                   - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
       app:
         className: internal
@@ -90,22 +92,20 @@ spec:
                 service:
                   identifier: app
                   port: http
+    persistence:
+      config:
+        existingClaim: radarr-config
+      media:
+        globalMounts:
+          - path: /media
+        path: /mnt/tank/media
+        server: 10.0.30.40
+        type: nfs
+      tmp:
+        type: emptyDir
     service:
       app:
         controller: radarr
         ports:
           http:
             port: 7878
-    persistence:
-      config:
-        existingClaim: radarr-config
-      media:
-        type: nfs
-        server: 10.0.30.40
-        path: /mnt/tank/media
-        globalMounts:
-          - path: /media
-      tmp:
-        type: emptyDir
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2

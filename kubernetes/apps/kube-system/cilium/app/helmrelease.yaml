@@ -1,24 +1,26 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: cilium
 spec:
   chart:
     spec:
       chart: cilium
-      version: 1.16.4
       sourceRef:
-        name: cilium
         kind: HelmRepository
+        name: cilium
         namespace: flux-system
-  interval: 30m
+      version: 1.16.4
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
     autoDirectNodeRoutes: true
     bgpControlPlane:
@@ -34,11 +36,19 @@ spec:
       name: homeprod
     cni:
       exclusive: false
+    dashboards:
+      annotations:
+        grafana_folder: Cilium
+      enabled: true
     endpointRoutes:
       enabled: true
     hubble:
       enabled: true
       metrics:
+        dashboards:
+          annotations:
+            grafana_folder: Cilium
+          enabled: true
         enabled:
           - dns:query
           - drop
@@ -49,24 +59,20 @@ spec:
           - http
         serviceMonitor:
           enabled: true
-        dashboards:
-          enabled: true
-          annotations:
-            grafana_folder: Cilium
       relay:
         enabled: true
-        rollOutPods: true
         prometheus:
           serviceMonitor:
             enabled: true
+        rollOutPods: true
       ui:
         enabled: true
-        rollOutPods: true
         ingress:
-          enabled: true
           className: internal
+          enabled: true
           hosts:
             - hubble.goochs.us
+        rollOutPods: true
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: ${CLUSTER_CIDR}
@@ -81,25 +87,21 @@ spec:
       mode: snat
     localRedirectPolicy: true
     operator:
-      replicas: 1
-      rollOutPods: true
+      dashboards:
+        annotations:
+          grafana_folder: Cilium
+        enabled: true
       prometheus:
         enabled: true
         serviceMonitor:
           enabled: true
-      dashboards:
-        enabled: true
-        annotations:
-          grafana_folder: Cilium
+      replicas: 1
+      rollOutPods: true
     prometheus:
       enabled: true
       serviceMonitor:
         enabled: true
         trustCRDsExist: true
-    dashboards:
-      enabled: true
-      annotations:
-        grafana_folder: Cilium
     rollOutCiliumPods: true
     routingMode: native
     securityContext:
@@ -120,5 +122,3 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2

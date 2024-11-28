@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.7.7
+talosVersion: v1.8.3
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.30.6
+kubernetesVersion: v1.31.3
 
 clusterName: &cluster home
 endpoint: https://10.0.30.31:6443
@@ -132,8 +132,7 @@ patches:
     machine:
       network:
         nameservers:
-          - 1.1.1.1
-          - 9.9.9.9
+          - 10.0.30.1
 
   # Configure NTP
   - |-
@@ -141,10 +140,7 @@ patches:
       time:
         disabled: false
         servers:
-          - 0.pool.ntp.org
-          - 1.pool.ntp.org
-          - 2.pool.ntp.org
-          - 3.pool.ntp.org
+          - 10.0.30.1
 
   # Custom sysctl settings
   - |-

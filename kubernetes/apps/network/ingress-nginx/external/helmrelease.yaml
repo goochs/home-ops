@@ -1,36 +1,28 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: ingress-nginx-external
 spec:
   chart:
     spec:
       chart: ingress-nginx
-      version: 4.11.3
       sourceRef:
-        name: ingress-nginx
         kind: HelmRepository
+        name: ingress-nginx
         namespace: flux-system
-  interval: 30m
+      version: 4.11.3
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
-    fullnameOverride: ingress-nginx-external
     controller:
-      replicaCount: 1
-      service:
-        annotations:
-          io.cilium/lb-ipam-ips: 10.20.30.42
-        externalTrafficPolicy: Cluster
-      ingressClassResource:
-        name: external
-        default: false
-        controllerValue: k8s.io/external
       admissionWebhooks:
         objectSelector:
           matchExpressions:
@@ -45,8 +37,8 @@ spec:
         enable-brotli: "true"
         enable-real-ip: "true"
         hsts-max-age: 31449600
-        keep-alive-requests: 10000
         keep-alive: 120
+        keep-alive-requests: 10000
         log-format-escape-json: "true"
         log-format-upstream: |
           time: $time_iso8601
@@ -69,29 +61,37 @@ spec:
         proxy-body-size: 0
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
+      extraArgs:
+        default-ssl-certificate: network/${SECRET_DOMAIN/./-}-production-tls
+      ingressClassResource:
+        controllerValue: k8s.io/external
+        default: false
+        name: external
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
           namespaceSelector:
             any: true
-      extraArgs:
-        default-ssl-certificate: network/${SECRET_DOMAIN/./-}-production-tls
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: ingress-nginx
-              app.kubernetes.io/instance: ingress-nginx-external
-              app.kubernetes.io/component: controller
+      replicaCount: 1
       resources:
-        requests:
-          cpu: 100m
         limits:
           memory: 500Mi
+        requests:
+          cpu: 100m
+      service:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.20.30.42
+        externalTrafficPolicy: Cluster
+      topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: controller
+              app.kubernetes.io/instance: ingress-nginx-external
+              app.kubernetes.io/name: ingress-nginx
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
     defaultBackend:
       enabled: false
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2
+    fullnameOverride: ingress-nginx-external

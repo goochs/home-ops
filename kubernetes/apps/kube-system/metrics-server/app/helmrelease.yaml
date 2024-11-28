@@ -1,24 +1,26 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: metrics-server
 spec:
   chart:
     spec:
       chart: metrics-server
-      version: 3.12.2
       sourceRef:
-        name: metrics-server
         kind: HelmRepository
+        name: metrics-server
         namespace: flux-system
-  interval: 30m
+      version: 3.12.2
   install:
     remediation:
       retries: 3
+  interval: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+      strategy: rollback
   values:
     args:
       - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
@@ -28,5 +30,3 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: true
-kind: HelmRelease
-apiVersion: helm.toolkit.fluxcd.io/v2
