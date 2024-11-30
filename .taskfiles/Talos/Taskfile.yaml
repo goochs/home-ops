@@ -52,13 +52,19 @@ tasks:
       - which kubectl talosctl yq
 
   upgrade-k8s:
-    desc: Upgrade k8s on a node
-    cmd: talosctl --nodes {{.node}} upgrade-k8s --to {{.to}}
-    requires:
-      vars: ["node", "to"]
+    desc: Upgrade Kubernetes
+    cmd: talosctl --nodes {{.KUBERNETES_CONTROLLER}} upgrade-k8s --to {{.KUBERNETES_VERSION}}
+    vars:
+      KUBERNETES_CONTROLLER:
+        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
+      KUBERNETES_VERSION:
+        sh: yq '.kubernetesVersion' {{.TALHELPER_CONFIG_FILE}}
     preconditions:
-      - { msg: "Node not found", sh: "talosctl --nodes {{.node}} get machineconfig" }
-
+      - curl -fsSL -o /dev/null --fail https://github.com/siderolabs/kubelet/releases/tag/{{.KUBERNETES_VERSION}}
+      - talosctl --nodes {{.KUBERNETES_CONTROLLER}} get machineconfig &>/dev/null
+      - talosctl config info &>/dev/null
+      - test -f {{.TALOSCONFIG}}
+      - which talosctl yq
 
   bootstrap:
     desc: Bootstrap the Talos cluster
