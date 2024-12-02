@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: actual
+  name: &name actual
 spec:
   chart:
     spec:
@@ -68,7 +68,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: actual.goochs.us
+          - host: "{{ .Release.Name }}.goochs.us"
             paths:
               - path: /
                 service:
@@ -83,7 +83,7 @@ spec:
         existingClaim: actual-config
     service:
       app:
-        controller: actual
+        controller: *name
         ports:
           http:
             port: 5006

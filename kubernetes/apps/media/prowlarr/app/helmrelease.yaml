@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: prowlarr
+  name: &name prowlarr
 spec:
   chart:
     spec:
@@ -63,7 +63,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: prowlarr.goochs.us
+          - host: "{{ .Release.Name }}.goochs.us"
             paths:
               - path: /
                 service:
@@ -76,7 +76,7 @@ spec:
         type: emptyDir
     service:
       app:
-        controller: prowlarr
+        controller: *name
         ports:
           http:
             port: 9696

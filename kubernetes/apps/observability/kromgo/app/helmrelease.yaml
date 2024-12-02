@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name echo-server
+  name: kromgo
 spec:
   chart:
     spec:
@@ -23,62 +23,49 @@ spec:
       strategy: rollback
   values:
     controllers:
-      echo-server:
+      kromgo:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             env:
-              HTTP_PORT: 8080
-              LOG_IGNORE_PATH: /healthz
-              LOG_WITHOUT_NEWLINE: true
-              PROMETHEUS_ENABLED: true
-              TZ: America/New_York
+              PROMETHEUS_URL: http://prometheus-operated.observability.svc.cluster.local:9090
+              SERVER_PORT: &serverPort 80
+              HEALTH_PORT: &healthPort 8080
             image:
-              repository: ghcr.io/mendhak/http-https-echo
-              tag: 35
+              repository: ghcr.io/kashalls/kromgo
+              tag: v0.4.2@sha256:89eab1c6604d8ef79fb0e7340620d6559ef296cc469c4eabf22598bbaf93ff42
             probes:
-              liveness:
-                custom: true
+              liveness: &probes
                 enabled: true
+                custom: true
                 spec:
-                  failureThreshold: 3
                   httpGet:
-                    path: /healthz
-                    port: 8080
+                    path: /readyz
+                    port: *healthPort
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-              readiness:
-                custom: true
-                enabled: true
-                spec:
                   failureThreshold: 3
-                  httpGet:
-                    path: /healthz
-                    port: 8080
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
+              readiness: *probes
             resources:
               limits:
-                memory: 64Mi
+                memory: 500Mi
               requests:
-                cpu: 10m
+                cpu: 100m
+                memory: 100Mi
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: { drop: ["ALL"] }
               readOnlyRootFilesystem: true
-        strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
         runAsGroup: 65534
         runAsNonRoot: true
         runAsUser: 65534
-        seccompProfile:
-          type: RuntimeDefault
+        seccompProfile: { type: RuntimeDefault }
     ingress:
       app:
         className: external
@@ -94,13 +81,15 @@ spec:
         controller: *name
         ports:
           http:
-            port: 8080
-    serviceMonitor:
-      app:
-        endpoints:
-          - interval: 1m
-            path: /metrics
-            port: http
-            scheme: http
-            scrapeTimeout: 10s
-        serviceName: echo-server
+            primary: true
+            port: *serverPort
+          health:
+            port: *healthPort
+    persistence:
+      config-file:
+        type: configMap
+        name: kromgo-configmap
+        globalMounts:
+          - path: /kromgo/config.yaml
+            subPath: config.yaml
+            readOnly: true

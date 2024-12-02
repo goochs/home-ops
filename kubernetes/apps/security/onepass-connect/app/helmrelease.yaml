@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: onepass-connect
+  name: &name onepass-connect
 spec:
   chart:
     spec:
@@ -142,7 +142,7 @@ spec:
         type: emptyDir
     service:
       app:
-        controller: onepass-connect
+        controller: *name
         ports:
           http:
             port: 8080

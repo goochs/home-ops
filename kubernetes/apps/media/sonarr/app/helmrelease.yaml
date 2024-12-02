@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sonarr
+  name: &name sonarr
 spec:
   chart:
     spec:
@@ -87,7 +87,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: sonarr.goochs.us
+          - host: "{{ .Release.Name }}.goochs.us"
             paths:
               - path: /
                 service:
@@ -106,7 +106,7 @@ spec:
         type: emptyDir
     service:
       app:
-        controller: sonarr
+        controller: *name
         ports:
           http:
             port: 8989

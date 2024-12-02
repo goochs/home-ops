@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: plex
+  name: &name plex
 spec:
   chart:
     spec:
@@ -98,7 +98,7 @@ spec:
       app:
         className: external
         hosts:
-          - host: plex.goochs.us
+          - host: "{{ .Release.Name }}.goochs.us"
             paths:
               - path: /
                 service:
@@ -119,7 +119,7 @@ spec:
       app:
         annotations:
           io.cilium/lb-ipam-ips: 10.20.30.45
-        controller: plex
+        controller: *name
         externalTrafficPolicy: Cluster
         ports:
           http:
