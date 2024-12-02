@@ -6,3 +6,4 @@ resources:
   - ./grafana/ks.yaml
   - ./namespace.yaml
   - ./prometheus-operator-crds/ks.yaml
+  - ./kromgo/ks.yaml
