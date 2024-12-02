@@ -38,8 +38,8 @@ spec:
               SONARR__SERVER__PORT: 8989
               TZ: America/New_York
             image:
-              repository: ghcr.io/onedr0p/sonarr
-              tag: 4.0.11@sha256:f2545b368ca83e1c7e52ef1a923ed3cac4f7b4bb64a40f07bc28d2d80f159898
+              repository: ghcr.io/onedr0p/sonarr-develop
+              tag: 4.0.11.2724@sha256:ada426ae1b85cb7e6e7af75b5d0d062790a4f6947d8c9fa21f04fe8829710c44
             probes:
               liveness:
                 custom: true

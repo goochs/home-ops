@@ -36,8 +36,8 @@ spec:
               TZ: America/New_York
             image:
               pullPolicy: IfNotPresent
-              repository: ghcr.io/onedr0p/prowlarr
-              tag: 1.27.0.4852@sha256:b3d18fd3350cf8d8058389b1bff91ee96606cce8bf2b74aba7701d8b7236a479
+              repository: ghcr.io/onedr0p/prowlarr-develop
+              tag: 1.27.0.4852@sha256:ba93c90960e619ccab707ebf112b22bf57361341255f8fe7a9c44e7a849a996d
             resources:
               limits:
                 memory: 250Mi
