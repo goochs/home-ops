@@ -1,0 +1,55 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app openebs
+spec:
+  chart:
+    spec:
+      chart: *app
+      sourceRef:
+        kind: HelmRepository
+        name: *app
+        namespace: flux-system
+      version: 4.1.1
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    localpv-provisioner:
+      localpv:
+        image:
+          registry: quay.io/
+      hostpathClass:
+        enabled: true
+        name: openebs-hostpath
+        isDefaultClass: false
+      helperPod:
+        image:
+          registry: quay.io/
+    openebs-crds:
+      csi:
+        volumeSnapshots:
+          enabled: false
+          keep: false
+    zfs-localpv:
+      enabled: false
+    lvm-localpv:
+      enabled: false
+    mayastor:
+      enabled: false
+    engines:
+      local:
+        lvm:
+          enabled: false
+        zfs:
+          enabled: false
+      replicated:
+        mayastor:
+          enabled: false
