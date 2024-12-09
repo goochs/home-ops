@@ -7,6 +7,7 @@ vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   PRIVATE_DIR: "{{.ROOT_DIR}}/.private"
   SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
+  INFRA_DIR: "{{.ROOT_DIR}}/infra"
   # Files
   AGE_FILE: "{{.ROOT_DIR}}/age.key"
   KUBECONFIG_FILE: "{{.ROOT_DIR}}/kubeconfig"
@@ -26,6 +27,9 @@ includes:
   talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml
+  infra:
+    aliases: ["i"]
+    taskfile: .taskfiles/Infra/Taskfile.yaml
 
 tasks:
   default: task -l

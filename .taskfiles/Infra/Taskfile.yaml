@@ -1,0 +1,10 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+
+  dns-preview:
+    desc: Display the DNS records that will be applied by DNSControl
+    dir: "{{.ROOT_DIR}}/infra/dnscontrol"
+    cmd: dnscontrol preview --cmode=concurrent
