@@ -25,7 +25,9 @@ spec:
   values:
     defaultSettings:
       defaultDataLocality: best-effort
+      replicaAutoBalance: best-effort
       defaultReplicaCount: 2
+      storageReservedPercentageForDefaultDisk: 5
     ingress:
       enabled: true
       host: longhorn.goochs.us
