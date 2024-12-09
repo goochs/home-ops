@@ -23,6 +23,9 @@ spec:
       retries: 3
       strategy: rollback
   values:
+    defaultSettings:
+      defaultDataLocality: best-effort
+      defaultReplicaCount: 2
     ingress:
       enabled: true
       host: longhorn.goochs.us

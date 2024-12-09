@@ -48,12 +48,8 @@ nodes:
 
   - hostname: kmaster2
     ipAddress: 10.0.30.32
-    installDisk: /dev/nvme0n1
+    installDisk: /dev/nvme1n1
     controlPlane: true
-    machineDisks:
-      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG03651
-        partitions:
-          - mountpoint: /var/lib/longhorn
     networkInterfaces:
       - interface: bond0
         addresses:
@@ -160,6 +156,10 @@ patches:
           - destination: /var/lib/longhorn
             type: bind
             source: /var/lib/longhorn
+            options: ["bind", "rshared", "rw"]
+          - destination: /var/openebs/local
+            type: bind
+            source: /var/openebs/local
             options: ["bind", "rshared", "rw"]
 
 
