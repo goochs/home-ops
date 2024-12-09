@@ -17,6 +17,7 @@
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["digest"],
+      ignoreTests: true,
       matchPackagePatterns: ["ghcr.io/bjw-s", "ghcr.io/onedr0p"],
     },
   ],
