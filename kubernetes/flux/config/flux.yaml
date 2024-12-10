@@ -6,9 +6,9 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  url: oci://ghcr.io/fluxcd/flux-manifests
   ref:
     tag: v2.4.0
+  url: oci://ghcr.io/fluxcd/flux-manifests
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -17,12 +17,6 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./
-  prune: true
-  wait: true
-  sourceRef:
-    kind: OCIRepository
-    name: flux-manifests
   patches:
     # Remove the network policies that does not work with k3s
     - patch: |
@@ -108,3 +102,9 @@ spec:
       target:
         kind: Deployment
         name: helm-controller
+  path: ./
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-manifests
+  wait: true

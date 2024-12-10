@@ -9,14 +9,6 @@ spec:
   #   labels:
   #     app.kubernetes.io/name: kubevirt
   interval: 30m
-  path: "./deploy"
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: kubevirt-flux
-  # targetNamespace: kubevirt
-  timeout: 5m
-  wait: true
   patches:
     # namespace is managed separately by main ks, no need for this ks to also manage it, KubeVirt bundles namespace into kubevirt-operator.yaml
     - patch: |
@@ -28,4 +20,11 @@ spec:
       target:
         kind: Namespace
         name: kubevirt
-
+  path: "./deploy"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: kubevirt-flux
+  # targetNamespace: kubevirt
+  timeout: 5m
+  wait: true

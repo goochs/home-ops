@@ -24,31 +24,29 @@ spec:
   values:
     controllers:
       kromgo:
-        replicas: 2
-        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             env:
+              HEALTH_PORT: &healthPort 8080
               PROMETHEUS_URL: http://prometheus-operated.observability.svc.cluster.local:9090
               SERVER_PORT: &serverPort 80
-              HEALTH_PORT: &healthPort 8080
             image:
               repository: ghcr.io/kashalls/kromgo
               tag: v0.4.2@sha256:89eab1c6604d8ef79fb0e7340620d6559ef296cc469c4eabf22598bbaf93ff42
             probes:
               liveness: &probes
-                enabled: true
                 custom: true
+                enabled: true
                 spec:
+                  failureThreshold: 3
                   httpGet:
                     path: /readyz
                     port: *healthPort
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
               readiness: *probes
             resources:
               limits:
@@ -58,14 +56,16 @@ spec:
                 memory: 100Mi
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
+        replicas: 2
+        strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
         runAsGroup: 65534
         runAsNonRoot: true
         runAsUser: 65534
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
         className: external
@@ -76,20 +76,20 @@ spec:
                 service:
                   identifier: app
                   port: http
+    persistence:
+      config-file:
+        globalMounts:
+          - path: /kromgo/config.yaml
+            readOnly: true
+            subPath: config.yaml
+        name: kromgo-configmap
+        type: configMap
     service:
       app:
         controller: *name
         ports:
-          http:
-            primary: true
-            port: *serverPort
           health:
             port: *healthPort
-    persistence:
-      config-file:
-        type: configMap
-        name: kromgo-configmap
-        globalMounts:
-          - path: /kromgo/config.yaml
-            subPath: config.yaml
-            readOnly: true
+          http:
+            port: *serverPort
+            primary: true

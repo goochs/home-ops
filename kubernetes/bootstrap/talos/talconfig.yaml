@@ -1,87 +1,123 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.8.3
-# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.31.3
-
-clusterName: &cluster home
-endpoint: https://10.0.30.31:6443
-clusterPodNets:
-  - "10.11.0.0/16"
-clusterSvcNets:
-  - "10.12.0.0/16"
 additionalApiServerCertSans: &sans
   - "10.0.30.30"
   - 127.0.0.1 # KubePrism
   - "kube.goochs.us"
 additionalMachineCertSans: *sans
+clusterName: &cluster home
+clusterPodNets:
+  - "10.11.0.0/16"
+clusterSvcNets:
+  - "10.12.0.0/16"
 cniConfig:
   name: none
-
+controlPlane:
+  patches:
+    # Cluster configuration
+    - |-
+      cluster:
+        allowSchedulingOnControlPlanes: true
+        controllerManager:
+          extraArgs:
+            bind-address: 0.0.0.0
+        proxy:
+          disabled: true
+        scheduler:
+          extraArgs:
+            bind-address: 0.0.0.0
+    # ETCD configuration
+    - |-
+      cluster:
+        etcd:
+          extraArgs:
+            listen-metrics-urls: http://0.0.0.0:2381
+          advertisedSubnets:
+            - "10.0.30.0/24"
+    # Disable default API server admission plugins.
+    - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles: ["os:admin"]
+            allowedKubernetesNamespaces: ["system-upgrade"]
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915-ucode
+          - siderolabs/intel-ucode
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
+endpoint: https://10.0.30.31:6443
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.31.3
 nodes:
-  - hostname: kmaster1
-    ipAddress: 10.0.30.31
+  - controlPlane: true
+    hostname: kmaster1
     installDisk: /dev/nvme0n1
-    controlPlane: true
+    ipAddress: 10.0.30.31
     machineDisks:
       - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230711NV01KG23208
         partitions:
           - mountpoint: /var/lib/longhorn
     networkInterfaces:
-      - interface: bond0
-        addresses:
+      - addresses:
           - 10.0.30.31/24
-        dhcp: false
         bond: &bondconfig
-          mode: active-backup
-          primary: enp1s0f1
           interfaces:
             - enp0s31f6
             - enp1s0f0
             - enp1s0f1
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 10.0.30.1
-        vip:
-          ip: 10.0.30.30
-
-  - hostname: kmaster2
-    ipAddress: 10.0.30.32
-    installDisk: /dev/nvme1n1
-    controlPlane: true
-    networkInterfaces:
-      - interface: bond0
-        addresses:
-          - 10.0.30.32/24
+          mode: active-backup
+          primary: enp1s0f1
         dhcp: false
-        bond: *bondconfig
+        interface: bond0
         routes:
-          - network: 0.0.0.0/0
-            gateway: 10.0.30.1
+          - gateway: 10.0.30.1
+            network: 0.0.0.0/0
         vip:
           ip: 10.0.30.30
-
-  - hostname: kmaster3
-    ipAddress: 10.0.30.33
+  - controlPlane: true
+    hostname: kmaster2
+    installDisk: /dev/nvme1n1
+    ipAddress: 10.0.30.32
+    networkInterfaces:
+      - addresses:
+          - 10.0.30.32/24
+        bond: *bondconfig
+        dhcp: false
+        interface: bond0
+        routes:
+          - gateway: 10.0.30.1
+            network: 0.0.0.0/0
+        vip:
+          ip: 10.0.30.30
+  - controlPlane: true
+    hostname: kmaster3
     installDisk: /dev/disk/by-id/nvme-PC_SN740_NVMe_WD_256GB_22358V447822
-    controlPlane: true
+    ipAddress: 10.0.30.33
     machineDisks:
       - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG04096
         partitions:
           - mountpoint: /var/lib/longhorn
     networkInterfaces:
-      - interface: bond0
-        addresses:
+      - addresses:
           - 10.0.30.33/24
-        dhcp: false
         bond: *bondconfig
+        dhcp: false
+        interface: bond0
         routes:
-          - network: 0.0.0.0/0
-            gateway: 10.0.30.1
+          - gateway: 10.0.30.1
+            network: 0.0.0.0/0
         vip:
           ip: 10.0.30.30
-
 patches:
   # Configure containerd
   - |-
@@ -97,13 +133,11 @@ patches:
               discard_unpacked_layers = false
             [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
               discard_unpacked_layers = false
-
   # Disable search domain everywhere
   - |-
     machine:
       network:
         disableSearchDomain: true
-
   # Enable cluster discovery
   - |-
     cluster:
@@ -113,7 +147,6 @@ patches:
             disabled: false
           service:
             disabled: false
-
   # Configure kubelet
   - |-
     machine:
@@ -122,14 +155,12 @@ patches:
           rotate-server-certificates: true
         nodeIP:
           validSubnets: ["10.0.30.0/24"]
-
   # Force nameserver
   - |-
     machine:
       network:
         nameservers:
           - 10.0.30.1
-
   # Configure NTP
   - |-
     machine:
@@ -137,7 +168,6 @@ patches:
         disabled: false
         servers:
           - 10.0.30.1
-
   # Custom sysctl settings
   - |-
     machine:
@@ -147,7 +177,6 @@ patches:
         fs.inotify.max_user_instances: "8192"
         net.core.rmem_max: "2500000"
         net.core.wmem_max: "2500000"
-
   # Mount Longhorn disk in kubelet
   - |-
     machine:
@@ -161,54 +190,4 @@ patches:
             type: bind
             source: /var/openebs/local
             options: ["bind", "rshared", "rw"]
-
-
-
-controlPlane:
-  schematic:
-    customization:
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/i915-ucode
-          - siderolabs/intel-ucode
-          - siderolabs/iscsi-tools
-          - siderolabs/util-linux-tools
-
-  patches:
-    # Cluster configuration
-    - |-
-      cluster:
-        allowSchedulingOnControlPlanes: true
-        controllerManager:
-          extraArgs:
-            bind-address: 0.0.0.0
-        proxy:
-          disabled: true
-        scheduler:
-          extraArgs:
-            bind-address: 0.0.0.0
-
-    # ETCD configuration
-    - |-
-      cluster:
-        etcd:
-          extraArgs:
-            listen-metrics-urls: http://0.0.0.0:2381
-          advertisedSubnets:
-            - "10.0.30.0/24"
-
-    # Disable default API server admission plugins.
-    - |-
-      - op: remove
-        path: /cluster/apiServer/admissionControl
-
-    # Enable K8s Talos API Access
-    - |-
-      machine:
-        features:
-          kubernetesTalosAPIAccess:
-            enabled: true
-            allowedRoles: ["os:admin"]
-            allowedKubernetesNamespaces: ["system-upgrade"]
-
-
+talosVersion: v1.8.3

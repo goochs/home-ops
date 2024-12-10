@@ -1,0 +1,36 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app volsync
+spec:
+  chart:
+    spec:
+      chart: *app
+      sourceRef:
+        kind: HelmRepository
+        name: backube
+        namespace: flux-system
+      version: 0.11.0
+  dependsOn:
+    - name: snapshot-controller
+      namespace: storage
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    manageCRDs: true
+    metrics:
+      disableAuth: true
+    podSecurityContext:
+      runAsGroup: 65534
+      runAsNonRoot: true
+      runAsUser: 65534
+      seccompProfile: {type: RuntimeDefault}
+    replicaCount: 2

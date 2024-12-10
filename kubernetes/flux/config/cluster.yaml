@@ -5,17 +5,17 @@ metadata:
   name: home-kubernetes
   namespace: flux-system
 spec:
+  ignore: |
+    # exclude all
+    /*
+    # include kubernetes directory
+    !/kubernetes
   interval: 30m
   ref:
     branch: main
   secretRef:
     name: github-deploy-key
   url: ssh://git@github.com/goochs/home-ops
-  ignore: |
-    # exclude all
-    /*
-    # include kubernetes directory
-    !/kubernetes
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -23,20 +23,20 @@ metadata:
   name: cluster
   namespace: flux-system
 spec:
-  interval: 30m
-  path: ./kubernetes/flux
-  prune: true
-  wait: false
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
   decryption:
     provider: sops
     secretRef:
       name: sops-age
+  interval: 30m
+  path: ./kubernetes/flux
   postBuild:
     substituteFrom:
       - kind: ConfigMap
         name: cluster-settings
       - kind: Secret
         name: cluster-secrets
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: false

@@ -2,16 +2,18 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: vm
+  name: &app volsync
   namespace: flux-system
 spec:
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/vm
+  path: ./kubernetes/apps/storage/volsync/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
+  targetNamespace: storage
+  timeout: 5m
+  wait: false
