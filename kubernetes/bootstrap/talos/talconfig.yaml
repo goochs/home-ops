@@ -57,7 +57,7 @@ controlPlane:
           - siderolabs/util-linux-tools
 endpoint: https://10.0.30.31:6443
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.31.3
+kubernetesVersion: v1.32.0
 nodes:
   - controlPlane: true
     hostname: kmaster1
