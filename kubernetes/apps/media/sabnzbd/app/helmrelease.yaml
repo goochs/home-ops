@@ -33,44 +33,32 @@ spec:
           app:
             env:
               SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd, sabnzbd.media, sabnzbd.media.svc, sabnzbd.media.svc.cluster, sabnzbd.media.svc.cluster.local, sabnzbd.goochs.us
-              SABNZBD__PORT: 8080
+              SABNZBD__PORT: &port 8080
               TZ: America/New_York
             image:
               repository: ghcr.io/onedr0p/sabnzbd
               tag: 4.4.0@sha256:d2dbde184900504bf3636d2df74e466e223d6b2474b4d21a58c72eadfffa7e99
             probes:
-              liveness:
+              liveness: &probes
                 custom: true
                 enabled: true
                 spec:
-                  failureThreshold: 3
+                  failureThreshold: 5
                   httpGet:
                     path: /api?mode=version
-                    port: 8080
+                    port: *port
                   initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-              readiness:
-                custom: true
-                enabled: true
-                spec:
-                  failureThreshold: 3
-                  httpGet:
-                    path: /api?mode=version
-                    port: 8080
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
+                  periodSeconds: 15
+                  timeoutSeconds: 5
+              readiness: *probes
             resources:
               limits:
                 memory: 8Gi
               requests:
-                cpu: 50m
+                cpu: 100m
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: { drop: ["ALL"] }
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -79,8 +67,7 @@ spec:
         runAsGroup: 568
         runAsNonRoot: true
         runAsUser: 568
-        seccompProfile:
-          type: RuntimeDefault
+        seccompProfile: { type: RuntimeDefault }
     ingress:
       app:
         className: internal
@@ -107,4 +94,4 @@ spec:
         controller: *name
         ports:
           http:
-            port: 8080
+            port: *port
