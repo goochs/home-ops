@@ -38,22 +38,22 @@ spec:
             image:
               repository: ghcr.io/onedr0p/sabnzbd
               tag: 4.4.0@sha256:d2dbde184900504bf3636d2df74e466e223d6b2474b4d21a58c72eadfffa7e99
-            probes:
-              liveness: &probes
-                custom: true
-                enabled: true
-                spec:
-                  failureThreshold: 5
-                  httpGet:
-                    path: /api?mode=version
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 15
-                  timeoutSeconds: 5
-              readiness: *probes
+            # probes:
+            #   liveness: &probes
+            #     custom: true
+            #     enabled: true
+            #     spec:
+            #       failureThreshold: 5
+            #       httpGet:
+            #         path: /api?mode=version
+            #         port: *port
+            #       initialDelaySeconds: 0
+            #       periodSeconds: 15
+            #       timeoutSeconds: 5
+            #   readiness: *probes
             resources:
               limits:
-                memory: 8Gi
+                memory: 12Gi
               requests:
                 cpu: 100m
             securityContext:
