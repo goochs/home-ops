@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    lbipam.cilium.io/ips: 10.20.30.43
+  name: postgres-lb
+spec:
+  ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    cnpg.io/cluster: postgres16
+    cnpg.io/instanceRole: primary
+  type: LoadBalancer
