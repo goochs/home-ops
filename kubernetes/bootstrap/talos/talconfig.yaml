@@ -132,7 +132,6 @@ patches:
             hard=True
             noatime=True
             nconnect=16
-
   # Configure containerd
   - |-
     machine:
