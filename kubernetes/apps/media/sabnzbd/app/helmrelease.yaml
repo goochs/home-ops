@@ -87,6 +87,12 @@ spec:
         path: /mnt/tank/media
         server: 10.0.30.40
         type: nfs
+      incomplete:
+        globalMounts:
+          - path: /incomplete
+        path: /mnt/flash/scratch
+        server: 10.0.30.40
+        type: nfs
       tmp:
         type: emptyDir
     service:
