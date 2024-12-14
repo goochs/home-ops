@@ -9,8 +9,8 @@ spec:
     barmanObjectStore: &barmanObjectStore
       data:
         compression: bzip2
-      destinationPath: s3://
-      endpointURL: https://s3.us-east-005.backblazeb2.com/goochs-cnpg
+      destinationPath: s3://goochs-cnpg/
+      endpointURL: https://s3.us-east-005.backblazeb2.com
       s3Credentials:
         accessKeyId:
           key: aws-access-key-id
