@@ -1,0 +1,48 @@
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+  name: bgp-main
+spec:
+  bgpInstances:
+    - localASN: 64568
+      name: ccr2004
+      peers:
+        - name: ccr2004
+          peerASN: 64569
+          peerAddress: 10.0.30.1
+          peerConfigRef: {name: bgp-peer-config}
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/os: linux
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPPeerConfig
+metadata:
+  name: bgp-peer-config
+spec:
+  ebgpMultihop: 5
+  families:
+    - advertisements:
+        matchLabels: {bgp.home.arpa/peer: ccr}
+      afi: ipv4
+      safi: unicast
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 30
+  timers:
+    holdTimeSeconds: 9
+    keepAliveTimeSeconds: 3
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPAdvertisement
+metadata:
+  labels:
+    bgp.home.arpa/peer: ccr
+  name: bgp-advertisement
+spec:
+  advertisements:
+    - advertisementType: Service
+      selector:
+        matchExpressions: [{key: "somekey", operator: "NotIn", values: ['always-true']}]
+      service: {addresses: [LoadBalancerIP]}

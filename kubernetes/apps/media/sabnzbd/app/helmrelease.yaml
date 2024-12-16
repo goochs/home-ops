@@ -81,16 +81,16 @@ spec:
     persistence:
       config:
         existingClaim: sabnzbd-config
-      media:
-        globalMounts:
-          - path: /media
-        path: /mnt/tank/media
-        server: 10.0.30.40
-        type: nfs
       incomplete:
         globalMounts:
           - path: /incomplete
         path: /mnt/flash/scratch
+        server: 10.0.30.40
+        type: nfs
+      media:
+        globalMounts:
+          - path: /media
+        path: /mnt/tank/media
         server: 10.0.30.40
         type: nfs
       tmp:
