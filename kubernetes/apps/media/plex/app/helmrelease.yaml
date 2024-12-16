@@ -118,7 +118,7 @@ spec:
     service:
       app:
         annotations:
-          io.cilium/lb-ipam-ips: 10.20.30.45
+          io.cilium/lb-ipam-ips: 10.0.41.45
         controller: *name
         externalTrafficPolicy: Cluster
         ports:

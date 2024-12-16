@@ -26,7 +26,7 @@ spec:
     fullnameOverride: k8s-gateway
     service:
       annotations:
-        io.cilium/lb-ipam-ips: 10.20.30.40
+        io.cilium/lb-ipam-ips: 10.0.41.40
       externalTrafficPolicy: Cluster
       port: 53
       type: LoadBalancer

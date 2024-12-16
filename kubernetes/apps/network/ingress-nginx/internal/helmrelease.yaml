@@ -81,7 +81,7 @@ spec:
           cpu: 100m
       service:
         annotations:
-          io.cilium/lb-ipam-ips: 10.20.30.41
+          io.cilium/lb-ipam-ips: 10.0.41.41
         externalTrafficPolicy: Cluster
       topologySpreadConstraints:
         - labelSelector:
