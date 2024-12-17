@@ -39,9 +39,7 @@ spec:
                 memory: 200Mi
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -50,8 +48,7 @@ spec:
         runAsGroup: 568
         runAsNonRoot: true
         runAsUser: 568
-        seccompProfile:
-          type: RuntimeDefault
+        seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
         className: internal

@@ -37,7 +37,7 @@ spec:
               repository: ghcr.io/onedr0p/plex-beta
               tag: 1.41.3.9232-434341a9d@sha256:987a5302c69a15f9d03d1c344fd6b80e2dce6ed2e7b23004f9cb99a84f5b5fe9
             probes:
-              liveness:
+              liveness: &probes
                 custom: true
                 enabled: true
                 spec:
@@ -48,17 +48,7 @@ spec:
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-              readiness:
-                custom: true
-                enabled: true
-                spec:
-                  failureThreshold: 3
-                  httpGet:
-                    path: /identity
-                    port: 32400
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
+              readiness: *probes
             resources:
               limits:
                 gpu.intel.com/i915: 1
@@ -67,9 +57,7 @@ spec:
                 cpu: 100m
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
         statefulset:
           volumeClaimTemplates:
@@ -89,8 +77,7 @@ spec:
         runAsGroup: 568
         runAsNonRoot: true
         runAsUser: 568
-        seccompProfile:
-          type: RuntimeDefault
+        seccompProfile: {type: RuntimeDefault}
         supplementalGroups:
           - 44
           - 109

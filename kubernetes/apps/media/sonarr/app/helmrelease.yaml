@@ -41,7 +41,7 @@ spec:
               repository: ghcr.io/onedr0p/sonarr-develop
               tag: 4.0.11.2743@sha256:eacef4f54c83720185a9c75c8a399f0b961d69fc6288a271901428cfe768524d
             probes:
-              liveness:
+              liveness: &probes
                 custom: true
                 enabled: true
                 spec:
@@ -52,17 +52,7 @@ spec:
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-              readiness:
-                custom: true
-                enabled: true
-                spec:
-                  failureThreshold: 3
-                  httpGet:
-                    path: /ping
-                    port: 8989
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
+              readiness: *probes
             resources:
               limits:
                 memory: 4Gi
@@ -70,9 +60,7 @@ spec:
                 cpu: 100m
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -81,8 +69,7 @@ spec:
         runAsGroup: 568
         runAsNonRoot: true
         runAsUser: 568
-        seccompProfile:
-          type: RuntimeDefault
+        seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
         className: internal

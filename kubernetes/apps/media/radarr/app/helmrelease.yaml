@@ -40,7 +40,7 @@ spec:
               repository: ghcr.io/onedr0p/radarr-develop
               tag: 5.16.1.9508@sha256:43b5f51c6ccaf69978bd4ba5c36fdd4d7d80ffd06a13e6576b3d98a362573766
             probes:
-              liveness:
+              liveness: &probes
                 custom: true
                 enabled: true
                 spec:
@@ -51,17 +51,7 @@ spec:
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-              readiness:
-                custom: true
-                enabled: true
-                spec:
-                  failureThreshold: 3
-                  httpGet:
-                    path: /ping
-                    port: 7878
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
+              readiness: *probes
             resources:
               limits:
                 memory: 4Gi
@@ -69,9 +59,7 @@ spec:
                 cpu: 100m
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -80,8 +68,7 @@ spec:
         runAsGroup: 568
         runAsNonRoot: true
         runAsUser: 568
-        seccompProfile:
-          type: RuntimeDefault
+        seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
         className: internal
