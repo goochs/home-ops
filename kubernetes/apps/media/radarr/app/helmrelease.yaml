@@ -38,7 +38,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/onedr0p/radarr-develop
-              tag: 5.16.1.9508@sha256:43b5f51c6ccaf69978bd4ba5c36fdd4d7d80ffd06a13e6576b3d98a362573766
+              tag: 5.16.3.9541@sha256:bb9ac6e6e9db6d3ecf1d9cfe78d585e404679198d1abdaa9a9fd3ef139e0d041
             probes:
               liveness:
                 custom: true
