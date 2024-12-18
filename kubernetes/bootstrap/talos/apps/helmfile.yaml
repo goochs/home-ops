@@ -15,7 +15,7 @@ releases:
     namespace: kube-system
     needs: ["observability/prometheus-operator-crds"]
     values: ["./cilium-values.yaml"]
-    version: 1.16.4
+    version: 1.16.5
   - chart: postfinance/kubelet-csr-approver
     name: kubelet-csr-approver
     namespace: kube-system
