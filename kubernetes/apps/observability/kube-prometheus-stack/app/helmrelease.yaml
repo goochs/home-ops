@@ -53,6 +53,11 @@ spec:
                   severity: critical
     alertmanager:
       alertmanagerSpec:
+        alertManagerConfiguration:
+          externalUrl: https://alertmanager.goochs.us
+          global:
+            resolveTimeout: 5m
+          name: alertmanager
         storage:
           volumeClaimTemplate:
             spec:
@@ -62,8 +67,7 @@ spec:
               storageClassName: longhorn
       ingress:
         enabled: true
-        hosts:
-          - alertmanager.goochs.us
+        hosts: ["alertmanager.goochs.us"]
         ingressClassName: internal
         pathType: Prefix
     cleanPrometheusOperatorObjectNames: true
@@ -92,14 +96,12 @@ spec:
       serviceMonitor:
         selector:
           k8s-app: kube-apiserver
-    kubeControllerManager:
+    kubeControllerManager: &kubeControllerManager
       service:
         selector:
           k8s-app: kube-controller-manager
     kubeEtcd:
-      service:
-        selector:
-          k8s-app: kube-controller-manager
+      <<: *kubeControllerManager
     kubeProxy:
       enabled: false
     kubeScheduler:
@@ -109,23 +111,19 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        hosts:
-          - prometheus.goochs.us
+        hosts: ["prometheus.goochs.us"]
         ingressClassName: internal
         pathType: Prefix
       prometheusSpec:
         enableAdminAPI: true
         enableFeatures:
-          - auto-gomemlimit
           - memory-snapshot-on-shutdown
-          - new-service-discovery-manager
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         retention: 14d
         retentionSize: 50GB
         ruleSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
-        scrapeInterval: 1m
         serviceMonitorSelectorNilUsesHelmValues: false
         storageSpec:
           volumeClaimTemplate:

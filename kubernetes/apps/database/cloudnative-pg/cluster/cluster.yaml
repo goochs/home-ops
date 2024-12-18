@@ -13,10 +13,10 @@ spec:
       endpointURL: https://s3.us-east-005.backblazeb2.com
       s3Credentials:
         accessKeyId:
-          key: aws-access-key-id
+          key: s3-access-key
           name: cloudnative-pg-secret
         secretAccessKey:
-          key: aws-secret-access-key
+          key: s3-secret-key
           name: cloudnative-pg-secret
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
