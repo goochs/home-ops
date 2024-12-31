@@ -101,7 +101,7 @@ spec:
         selector:
           k8s-app: kube-controller-manager
     kubeEtcd:
-      <<: *kubeControllerManager
+      !!merge <<: *kubeControllerManager
     kubeProxy:
       enabled: false
     kubeScheduler:
