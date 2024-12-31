@@ -7,7 +7,7 @@
     "ansible.validation.lint.enabled": true,
     "ansible.validation.lint.path": ".venv/bin/ansible-lint",
     "files.associations": {
-        "*.json5": "jsonc",
+        "*.json5": "json5",
         "./ansible/**/*.yaml": "ansible",
         "./ansible/**/*.sops.yaml": "yaml",
         "./ansible/**/inventory/**/*.yaml": "yaml",

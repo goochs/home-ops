@@ -13,6 +13,7 @@
     "github>goochs/home-ops//.github/renovate/customManagers.json5",
     "github>goochs/home-ops//.github/renovate/groups.json5",
     "github>goochs/home-ops//.github/renovate/labels.json5",
+    "github>goochs/home-ops//.github/renovate/packageRules.json5",
     "github>goochs/home-ops//.github/renovate/semanticCommits.json5",
   ],
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
