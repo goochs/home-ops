@@ -50,13 +50,13 @@ controlPlane:
     customization:
       systemExtensions:
         officialExtensions:
-          - siderolabs/i915-ucode
+          - siderolabs/i915
           - siderolabs/intel-ucode
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
 endpoint: https://10.0.30.31:6443
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.31.3
+kubernetesVersion: v1.32.0
 nodes:
   - controlPlane: true
     hostname: kmaster1
@@ -155,8 +155,6 @@ patches:
     cluster:
       discovery:
         registries:
-          kubernetes:
-            disabled: false
           service:
             disabled: false
   # Configure kubelet
@@ -202,5 +200,23 @@ patches:
             type: bind
             source: /var/openebs/local
             options: ["bind", "rshared", "rw"]
+  # Enable local registry caches
+  - |-
+    machine:
+      registries:
+        mirrors:
+          docker.io:
+            endpoints:
+              - http://nas.goochs.us:5000
+          registry.k8s.io:
+            endpoints:
+              - http://nas.goochs.us:5001
+          gcr.io:
+            endpoints:
+              - http://nas.goochs.us:5002
+          ghcr.io:
+            endpoints:
+              - http://nas.goochs.us:5003
+
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.8.3
+talosVersion: v1.9.1
