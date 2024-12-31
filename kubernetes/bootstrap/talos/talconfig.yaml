@@ -203,4 +203,4 @@ patches:
             source: /var/openebs/local
             options: ["bind", "rshared", "rw"]
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.8.3
+talosVersion: v1.9.1
