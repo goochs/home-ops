@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      version: 3.5.1
+      version: 3.6.0
   dependsOn:
     - name: longhorn
       namespace: longhorn-system
@@ -39,7 +39,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.11.2784@sha256:4748ae900378dec2adff18c8f2a75bce9d309dbb49e5e5a5a89b1b3d18a2464d
+              tag: 4.0.11.2815@sha256:7ed79ec6b6b0aafa08618631bde13984cf24be8f6171941ec403b84994a878a7
             probes:
               liveness: &probes
                 custom: true

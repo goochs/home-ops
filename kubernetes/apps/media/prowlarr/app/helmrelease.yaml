@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      version: 3.5.1
+      version: 3.6.0
   install:
     remediation:
       retries: 3
@@ -37,7 +37,7 @@ spec:
             image:
               pullPolicy: IfNotPresent
               repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.29.0.4897@sha256:bb7c2800cd1c8b1e91494cbf66a3d709c6c956248c663ec3b78022498d0a8cdf
+              tag: 1.29.1.4903@sha256:a0cbc80092207b54fbd84c409623d235db6652ce49b36c85de749a2c8c0c8dc2
             resources:
               limits:
                 memory: 250Mi
