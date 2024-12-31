@@ -35,7 +35,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/onedr0p/plex-beta
-              tag: 1.41.3.9232-434341a9d@sha256:987a5302c69a15f9d03d1c344fd6b80e2dce6ed2e7b23004f9cb99a84f5b5fe9
+              tag: 1.41.3.9314-a0bfb8370@sha256:76404e56f4c33984114d6f49d1fa024c2b950978976ac46de3b8bcf469a5f535
             probes:
               liveness: &probes
                 custom: true
