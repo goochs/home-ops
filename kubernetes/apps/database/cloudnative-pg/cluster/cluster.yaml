@@ -9,8 +9,8 @@ spec:
     barmanObjectStore: &barmanObjectStore
       data:
         compression: bzip2
-      destinationPath: s3://goochs-cnpg/
-      endpointURL: https://s3.us-east-005.backblazeb2.com
+      destinationPath: s3://cnpg/postgres16/
+      endpointURL: https://minio.serek.xyz
       s3Credentials:
         accessKeyId:
           key: s3-access-key
