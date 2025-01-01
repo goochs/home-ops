@@ -10,7 +10,7 @@ spec:
       data:
         compression: bzip2
       destinationPath: s3://cnpg/postgres16/
-      endpointURL: https://minio.serek.xyz
+      endpointURL: https://s3.serek.xyz
       s3Credentials:
         accessKeyId:
           key: s3-access-key
