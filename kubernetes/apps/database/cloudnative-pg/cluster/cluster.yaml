@@ -9,7 +9,7 @@ spec:
     barmanObjectStore: &barmanObjectStore
       data:
         compression: bzip2
-      destinationPath: s3://cnpg/postgres16/
+      destinationPath: s3://cnpg/
       endpointURL: https://s3.serek.xyz
       s3Credentials:
         accessKeyId:
