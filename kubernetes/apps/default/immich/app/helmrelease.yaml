@@ -36,6 +36,10 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.123.0@sha256:fca90362ff3081fc7762d731eb24de262181eaec28afc51eff1d3ca5348663cd
+            securityContext: &sc
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
       server:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -45,6 +49,7 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.123.0@sha256:666ce77995230ff7327da5d285c861895576977237de08564e3c3ddf842877eb
+            securityContext: *sc
         initContainers:
           init-db:
             envFrom:
@@ -61,11 +66,8 @@ spec:
               tag: 8.0.1
     defaultPodOptions:
       securityContext:
-        allowPrivilegeEscalation: false
-        capabilities: {drop: ["ALL"]}
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-        readOnlyRootFilesystem: true
         runAsGroup: 568
         runAsNonRoot: true
         runAsUser: 568
