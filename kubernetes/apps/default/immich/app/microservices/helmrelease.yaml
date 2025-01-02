@@ -16,7 +16,7 @@ spec:
     remediation:
       retries: 3
   interval: 30m
-  
+
   dependsOn:
     - name: immich-server
       namespace: default
@@ -63,7 +63,7 @@ spec:
     persistence:
       media:
         advancedMounts:
-          server:
+          immich-microservices:
             main:
               - path: /usr/src/app/upload
         path: /mnt/tank/photos

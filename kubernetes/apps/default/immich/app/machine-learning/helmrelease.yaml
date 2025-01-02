@@ -52,13 +52,13 @@ spec:
     persistence:
       model-cache:
         advancedMounts:
-          machine-learning:
+          immich-machine-learning:
             main:
               - path: /cache
         type: emptyDir
       tmp:
         advancedMounts:
-          machine-learning:
+          immich-machine-learning:
             main:
               - path: /tmp
         type: emptyDir
