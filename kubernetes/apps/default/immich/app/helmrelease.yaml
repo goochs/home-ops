@@ -1,0 +1,131 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name immich
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.6.0
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      machine-learning:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            envFrom: &env
+              - secretRef:
+                  name: immich-secret
+              - configMapRef:
+                  name: immich-configmap
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v1.123.0@sha256:fca90362ff3081fc7762d731eb24de262181eaec28afc51eff1d3ca5348663cd
+      server:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            envFrom: *env
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.123.0@sha256:666ce77995230ff7327da5d285c861895576977237de08564e3c3ddf842877eb
+        initContainers:
+          init-db:
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.6@sha256:c1d3a845d47fe1aeebd110fefb5f43f54c4735aec1d2b0c01de8d4d5e8cdd6a4
+      valkey:
+        containers:
+          main:
+            image:
+              repository: docker.io/valkey/valkey
+              tag: 8.0.1
+    defaultPodOptions:
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities: {drop: ["ALL"]}
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        readOnlyRootFilesystem: true
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: immich.goochs.us
+            paths:
+              - path: /
+                service:
+                  identifier: server
+                  port: http
+    persistence:
+      geocoding-dump:
+        advancedMounts:
+          server:
+            main:
+              - path: /usr/src/app/.reverse-geocoding-dump
+        type: emptyDir
+      matplotlib:
+        advancedMounts:
+          server:
+            main:
+              - path: /config/matplotlib
+        type: emptyDir
+      media:
+        advancedMounts:
+          server:
+            main:
+              - path: /usr/src/app/upload
+        path: /mnt/tank/photos
+        server: 10.0.30.40
+        type: nfs
+      model-cache:
+        advancedMounts:
+          machine-learning:
+            main:
+              - path: /cache
+        type: emptyDir
+      transformers-cache:
+        advancedMounts:
+          server:
+            main:
+              - path: /usr/src/app/.transformers_cache
+        type: emptyDir
+    service:
+      machine-learning:
+        controller: machine-learning
+        ports:
+          http:
+            port: 3003
+      server:
+        controller: server
+        ports:
+          http:
+            port: 2283
+      valkey:
+        controller: valkey
+        ports:
+          http:
+            port: 6379

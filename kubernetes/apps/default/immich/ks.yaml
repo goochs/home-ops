@@ -1,25 +1,25 @@
 ---
-  # apiVersion: kustomize.toolkit.fluxcd.io/v1
-  # kind: Kustomization
-  # metadata:
-  #   name: &app immich
-  #   namespace: flux-system
-  # spec:
-  #   commonMetadata:
-  #     labels:
-  #       app.kubernetes.io/name: *app
-  #   dependsOn:
-  #     - name: external-secrets-stores
-  #     - name: immich-pg
-  #   interval: 30m
-  #   path: ./kubernetes/apps/default/immich/app
-  #   prune: true
-  #   sourceRef:
-  #     kind: GitRepository
-  #     name: home-kubernetes
-  #   targetNamespace: default
-  #   timeout: 5m
-  #   wait: true
+  apiVersion: kustomize.toolkit.fluxcd.io/v1
+  kind: Kustomization
+  metadata:
+    name: &app immich
+    namespace: flux-system
+  spec:
+    commonMetadata:
+      labels:
+        app.kubernetes.io/name: *app
+    dependsOn:
+      - name: external-secrets-stores
+      - name: immich-pg
+    interval: 30m
+    path: ./kubernetes/apps/default/immich/app
+    prune: true
+    sourceRef:
+      kind: GitRepository
+      name: home-kubernetes
+    targetNamespace: default
+    timeout: 5m
+    wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
