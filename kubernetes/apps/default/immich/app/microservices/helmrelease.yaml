@@ -46,6 +46,8 @@ spec:
                 cpu: 50m
                 memory: 3Gi
                 gpu.intel.com/i915: "1"
+              limits:
+                gpu.intel.com/i915: "1"
 
             image:
               repository: ghcr.io/immich-app/immich-server
