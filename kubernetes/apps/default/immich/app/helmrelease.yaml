@@ -109,6 +109,12 @@ spec:
             main:
               - path: /cache
         type: emptyDir
+      tmp:
+        advancedMounts:
+          machine-learning:
+            main:
+              - path: /tmp
+        type: emptyDir
       transformers-cache:
         advancedMounts:
           server:
