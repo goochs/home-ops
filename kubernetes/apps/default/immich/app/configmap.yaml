@@ -6,7 +6,7 @@ data:
   IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
   LOG_LEVEL: verbose
   NODE_ENV: "production"
-  REDIS_HOSTNAME: immich-redis.media.svc.cluster.local
+  REDIS_HOSTNAME: immich-valkey.media.svc.cluster.local
   REDIS_PORT: "6379"
 kind: ConfigMap
 metadata:
