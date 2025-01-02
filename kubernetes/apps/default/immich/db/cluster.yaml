@@ -37,7 +37,7 @@ spec:
   #       <<: *barmanObjectStore
   #       serverName: *previousCluster
   enableSuperuserAccess: true
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.6-v0.4.0
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
   instances: 3
   monitoring:
     enablePodMonitor: true
