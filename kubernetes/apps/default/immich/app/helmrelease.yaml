@@ -39,7 +39,13 @@ spec:
             securityContext: &sc
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
+              fsGroup: 568
+              fsGroupChangePolicy: OnRootMismatch
               readOnlyRootFilesystem: true
+              runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile: {type: RuntimeDefault}
       server:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -64,14 +70,6 @@ spec:
             image:
               repository: docker.io/valkey/valkey
               tag: 8.0.1
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 568
-        runAsNonRoot: true
-        runAsUser: 568
-        seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
         className: internal
