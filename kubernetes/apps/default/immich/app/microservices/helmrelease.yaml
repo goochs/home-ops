@@ -1,0 +1,77 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name immich-microservices
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.6.0
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  
+  dependsOn:
+    - name: immich-server
+      namespace: default
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      immich-microservices:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            env:
+              IMMICH_WORKERS_EXCLUDE: api
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+              - configMapRef:
+                  name: immich-configmap
+            resources:
+              requests:
+                cpu: 50m
+                memory: 3Gi
+                gpu.intel.com/i915: "1"
+
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.123.0@sha256:666ce77995230ff7327da5d285c861895576977237de08564e3c3ddf842877eb
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              fsGroup: 568
+              fsGroupChangePolicy: OnRootMismatch
+              readOnlyRootFilesystem: true
+              runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile: {type: RuntimeDefault}
+    persistence:
+      media:
+        advancedMounts:
+          server:
+            main:
+              - path: /usr/src/app/upload
+        path: /mnt/tank/photos
+        server: 10.0.30.40
+        type: nfs
+    service:
+      immich-microservices:
+        controller: immich-microservices
+        ports:
+          http:
+            port: 2283
