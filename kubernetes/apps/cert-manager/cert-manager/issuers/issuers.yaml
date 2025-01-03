@@ -17,4 +17,5 @@ spec:
               name: cert-manager-secret
         selector:
           dnsZones:
-            - ${SECRET_DOMAIN}
+            - "serek.xyz"
+            - "goochs.us"
