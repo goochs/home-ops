@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name authtentik-server
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: authtentik
+        namespace: flux-system
+      version: 2024.12.1
+  dependsOn:
+    - name: authtentik-valkey
+      namespace: security
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    authentik:
+      redis:
+        db: 1
+        host: authtentik-valkey.security.svc.cluster.local
+    global:
+      deploymentStrategy:
+        type: RollingUpdate
+      envFrom:
+        - secretRef:
+            name: authtentik-secret
+      podAnnotations:
+        secret.reloader.stakater.com/reload: &secret authentik-secret
+    prometheus:
+      rules:
+        enabled: true
+    server:
+      ingress:
+        enabled: true
+        hosts:
+          - sso.goochs.us
+        ingressClassName: internal
+      initContainers:
+        - envFrom:
+            - secretRef:
+                name: *secret
+          image: ghcr.io/onedr0p/postgres-init:16.6@sha256:c1d3a845d47fe1aeebd110fefb5f43f54c4735aec1d2b0c01de8d4d5e8cdd6a4
+          name: init-db
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true

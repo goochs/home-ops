@@ -12,13 +12,13 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 3.6.0
+  dependsOn:
+    - name: immich-valkey
+      namespace: default
   install:
     remediation:
       retries: 3
   interval: 30m
-  dependsOn:
-    - name: immich-valkey
-      namespace: default
   upgrade:
     cleanupOnFail: true
     remediation:
@@ -33,7 +33,6 @@ spec:
           main:
             env:
               IMMICH_WORKERS_INCLUDE: api
-
             envFrom:
               - secretRef:
                   name: immich-secret

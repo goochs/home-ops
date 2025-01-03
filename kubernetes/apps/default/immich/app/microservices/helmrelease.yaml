@@ -12,14 +12,13 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 3.6.0
+  dependsOn:
+    - name: immich-server
+      namespace: default
   install:
     remediation:
       retries: 3
   interval: 30m
-
-  dependsOn:
-    - name: immich-server
-      namespace: default
   upgrade:
     cleanupOnFail: true
     remediation:
@@ -28,8 +27,6 @@ spec:
   values:
     controllers:
       immich-microservices:
-        replicas: 2
-        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -41,17 +38,16 @@ spec:
                   name: immich-secret
               - configMapRef:
                   name: immich-configmap
-            resources:
-              requests:
-                cpu: 50m
-                memory: 3Gi
-                gpu.intel.com/i915: "1"
-              limits:
-                gpu.intel.com/i915: "1"
-
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.123.0@sha256:666ce77995230ff7327da5d285c861895576977237de08564e3c3ddf842877eb
+            resources:
+              limits:
+                gpu.intel.com/i915: "1"
+              requests:
+                cpu: 50m
+                gpu.intel.com/i915: "1"
+                memory: 3Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
@@ -62,6 +58,8 @@ spec:
               runAsNonRoot: true
               runAsUser: 568
               seccompProfile: {type: RuntimeDefault}
+        replicas: 2
+        strategy: RollingUpdate
     persistence:
       media:
         advancedMounts:
