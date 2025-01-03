@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: app-template
+      chart: authentik
       sourceRef:
         kind: HelmRepository
         name: authentik
