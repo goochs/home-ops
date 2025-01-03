@@ -2,18 +2,18 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name authtentik-server
+  name: &name authentik-server
 spec:
   chart:
     spec:
       chart: app-template
       sourceRef:
         kind: HelmRepository
-        name: authtentik
+        name: authentik
         namespace: flux-system
       version: 2024.12.1
   dependsOn:
-    - name: authtentik-valkey
+    - name: authentik-valkey
       namespace: security
   install:
     remediation:
@@ -28,13 +28,13 @@ spec:
     authentik:
       redis:
         db: 1
-        host: authtentik-valkey.security.svc.cluster.local
+        host: authentik-valkey.security.svc.cluster.local
     global:
       deploymentStrategy:
         type: RollingUpdate
       envFrom:
         - secretRef:
-            name: authtentik-secret
+            name: authentik-secret
       podAnnotations:
         secret.reloader.stakater.com/reload: &secret authentik-secret
     prometheus:
