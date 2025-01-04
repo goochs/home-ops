@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/alertmanagerconfig_v1alpha1.json
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
@@ -63,7 +64,7 @@ spec:
     receiver: pushover
     repeatInterval: 12h
     routes:
-      - continue: "true"
+      - continue: true
         groupInterval: 5m
         groupWait: 0s
         matchers:
@@ -72,13 +73,13 @@ spec:
             value: Watchdog
         receiver: heartbeat
         repeatInterval: 5m
-      - continue: "true"
+      - continue: true
         matchers:
           - matchType: =
             name: severity
             value: critical
         receiver: pushover
-      - continue: "true"
+      - continue: true
         matchers:
           - matchType: =~
             name: alertname
