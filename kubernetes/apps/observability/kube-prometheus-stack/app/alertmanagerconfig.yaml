@@ -63,11 +63,11 @@ spec:
     receiver: pushover
     repeatInterval: 12h
     routes:
-      - matchers:
-          - matchType: =
-            name: alertname
-            value: InfoInhibitor
-        receiver: "null"
+      # - matchers:
+      #     - matchType: =
+      #       name: alertname
+      #       value: InfoInhibitor
+      #   receiver: "null"
       - groupInterval: 5m
         groupWait: 0s
         matchers:
