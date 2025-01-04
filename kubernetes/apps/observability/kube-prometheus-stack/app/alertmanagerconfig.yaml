@@ -56,7 +56,7 @@ spec:
           userKey:
             key: pushover-user-key
             name: *secret
-    # - name: "null"
+    - name: "null"
   route:
     groupBy: ["alertname", "job"]
     groupInterval: 10m
@@ -72,15 +72,13 @@ spec:
             value: Watchdog
         receiver: heartbeat
         repeatInterval: 5m
-      - continue: true
-        matchers:
+      - matchers:
           - matchType: =
             name: severity
             value: critical
         receiver: pushover
-      # - continue: true
-      #   matchers:
-      #     - matchType: =
-      #       name: alertname
-      #       value: InfoInhibitor
-      #   receiver: "null"
+      - matchers:
+          - matchType: =
+            name: alertname
+            value: InfoInhibitor
+        receiver: "null"
