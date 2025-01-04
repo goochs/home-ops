@@ -11,11 +11,16 @@ spec:
           name: severity
           value: critical
       targetMatch:
-        - matchType: =~
+        - matchType: =
           name: severity
           value: warning
   receivers:
     - name: "null"
+    - name: heartbeat
+      webhookConfigs:
+        - urlSecret:
+            key: alertmanager-heartbeat-url
+            name: &secret alertmanager-secret
     - name: pushover
       pushoverConfigs:
         - html: true
@@ -41,13 +46,12 @@ spec:
           priority: |-
             {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
           sendResolved: true
-          sound: gamelan
           title: >-
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
           token:
             key: alertmanager-pushover-token
-            name: &secret alertmanager-secret
-          ttl: 3600s
+            name: *secret
+          ttl: 86400s
           urlTitle: View in Alertmanager
           userKey:
             key: pushover-user-key
@@ -64,6 +68,14 @@ spec:
             name: alertname
             value: InfoInhibitor
         receiver: "null"
+      - groupInterval: 5m
+        groupWait: 0s
+        matchers:
+          - matchType: =
+            name: alertname
+            value: Watchdog
+        receiver: heartbeat
+        repeatInterval: 5m
       - matchers:
           - matchType: =
             name: severity

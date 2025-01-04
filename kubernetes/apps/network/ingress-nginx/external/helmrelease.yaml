@@ -74,9 +74,9 @@ spec:
           enabled: true
           namespaceSelector:
             any: true
-      replicaCount: 1
       publishService:
         enabled: false
+      replicaCount: 1
       resources:
         limits:
           memory: 500Mi
