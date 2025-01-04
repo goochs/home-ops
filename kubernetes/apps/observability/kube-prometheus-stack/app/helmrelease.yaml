@@ -53,8 +53,8 @@ spec:
                   severity: critical
     alertmanager:
       alertmanagerSpec:
+        externalUrl: https://alertmanager.serek.xyz
         alertManagerConfiguration:
-          externalUrl: https://alertmanager.serek.xyz
           global:
             resolveTimeout: 5m
           name: alertmanager
