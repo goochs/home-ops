@@ -30,7 +30,7 @@ spec:
       storageReservedPercentageForDefaultDisk: 5
     ingress:
       enabled: true
-      host: longhorn.goochs.us
+      host: longhorn.serek.xyz
       ingressClassName: internal
     monitoring:
       createPrometheusRules: true

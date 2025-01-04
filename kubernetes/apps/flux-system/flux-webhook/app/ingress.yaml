@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: flux-webhook.goochs.us
+    - host: flux-webhook.serek.xyz
       http:
         paths:
           - backend:

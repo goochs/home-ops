@@ -63,7 +63,7 @@ spec:
         ssl-protocols: TLSv1.3 TLSv1.2
       extraArgs:
         default-ssl-certificate: network/goochs-us-tls
-        publish-status-address: &hostname external.goochs.us
+        publish-status-address: &hostname external.serek.xyz
       ingressClassResource:
         controllerValue: k8s.io/external
         default: false

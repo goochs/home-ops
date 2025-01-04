@@ -71,7 +71,7 @@ spec:
           className: internal
           enabled: true
           hosts:
-            - hubble.goochs.us
+            - hubble.serek.xyz
         rollOutPods: true
     ipam:
       mode: kubernetes

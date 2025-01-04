@@ -32,7 +32,7 @@ spec:
         containers:
           app:
             env:
-              SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd, sabnzbd.media, sabnzbd.media.svc, sabnzbd.media.svc.cluster, sabnzbd.media.svc.cluster.local, sabnzbd.goochs.us
+              SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd, sabnzbd.media, sabnzbd.media.svc, sabnzbd.media.svc.cluster, sabnzbd.media.svc.cluster.local, sabnzbd.serek.xyz
               SABNZBD__PORT: &port 8080
               TZ: America/New_York
             image:
@@ -72,7 +72,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: "{{ .Release.Name }}.goochs.us"
+          - host: "{{ .Release.Name }}.serek.xyz"
             paths:
               - path: /
                 service:

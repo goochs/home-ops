@@ -44,7 +44,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - sso.goochs.us
+          - sso.serek.xyz
         ingressClassName: internal
       initContainers:
         - envFrom:

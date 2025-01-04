@@ -22,7 +22,7 @@ spec:
       retries: 3
       strategy: rollback
   values:
-    domain: goochs.us
+    domain: serek.xyz
     fullnameOverride: k8s-gateway
     service:
       annotations:

@@ -85,7 +85,7 @@ spec:
       app:
         className: external
         hosts:
-          - host: "{{ .Release.Name }}.goochs.us"
+          - host: "{{ .Release.Name }}.serek.xyz"
             paths:
               - path: /
                 service:

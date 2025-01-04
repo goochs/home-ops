@@ -5,7 +5,7 @@ data:
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.default.svc.cluster.local:3003
   LOG_LEVEL: verbose
   NODE_ENV: production
-  PUBLIC_IMMICH_SERVER_URL: https://immich.goochs.us
+  PUBLIC_IMMICH_SERVER_URL: https://immich.serek.xyz
   REDIS_HOSTNAME: immich-valkey.default.svc.cluster.local
   REDIS_PORT: "6379"
 kind: ConfigMap

@@ -54,7 +54,7 @@ spec:
     alertmanager:
       alertmanagerSpec:
         alertManagerConfiguration:
-          externalUrl: https://alertmanager.goochs.us
+          externalUrl: https://alertmanager.serek.xyz
           global:
             resolveTimeout: 5m
           name: alertmanager
@@ -67,7 +67,7 @@ spec:
               storageClassName: longhorn
       ingress:
         enabled: true
-        hosts: ["alertmanager.goochs.us"]
+        hosts: ["alertmanager.serek.xyz"]
         ingressClassName: internal
         pathType: Prefix
     cleanPrometheusOperatorObjectNames: true
@@ -111,7 +111,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        hosts: ["prometheus.goochs.us"]
+        hosts: ["prometheus.serek.xyz"]
         ingressClassName: internal
         pathType: Prefix
       prometheusSpec:
