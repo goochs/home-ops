@@ -56,7 +56,7 @@ spec:
           userKey:
             key: pushover-user-key
             name: *secret
-    # - name: "null"
+    - name: "null"
   route:
     groupBy: ["alertname", "job"]
     groupInterval: 10m
