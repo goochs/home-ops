@@ -52,9 +52,9 @@ spec:
                 labels:
                   severity: critical
     alertmanager:
-      config:
-        route: null
       alertmanagerSpec:
+        alertmanagerConfigMatcherStrategy:
+          type: None
         externalUrl: https://alertmanager.serek.xyz
         alertManagerConfiguration:
           name: alertmanager
