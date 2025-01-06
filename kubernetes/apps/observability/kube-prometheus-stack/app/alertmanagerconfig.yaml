@@ -5,16 +5,6 @@ kind: AlertmanagerConfig
 metadata:
   name: alertmanager
 spec:
-  inhibitRules:
-    - equal: ["alertname", "namespace"]
-      sourceMatch:
-        - matchType: =
-          name: severity
-          value: critical
-      targetMatch:
-        - matchType: =
-          name: severity
-          value: warning
   receivers:
     - name: heartbeat
       webhookConfigs:
