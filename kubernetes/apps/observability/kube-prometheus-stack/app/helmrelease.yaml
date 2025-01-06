@@ -52,11 +52,11 @@ spec:
                 labels:
                   severity: critical
     alertmanager:
+      config:
+        routes: {}
       alertmanagerSpec:
         externalUrl: https://alertmanager.serek.xyz
         alertManagerConfiguration:
-          # global:
-          #   resolveTimeout: 5m
           name: alertmanager
         storage:
           volumeClaimTemplate:

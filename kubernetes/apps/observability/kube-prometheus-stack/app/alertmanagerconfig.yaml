@@ -5,16 +5,16 @@ kind: AlertmanagerConfig
 metadata:
   name: alertmanager
 spec:
-  inhibitRules:
-    - equal: ["alertname", "namespace"]
-      sourceMatch:
-        - matchType: =
-          name: severity
-          value: critical
-      targetMatch:
-        - matchType: =
-          name: severity
-          value: warning
+  # inhibitRules:
+  #   - equal: ["alertname", "namespace"]
+  #     sourceMatch:
+  #       - matchType: =
+  #         name: severity
+  #         value: critical
+  #     targetMatch:
+  #       - matchType: =
+  #         name: severity
+  #         value: warning
   receivers:
     - name: heartbeat
       webhookConfigs:
@@ -56,7 +56,7 @@ spec:
           userKey:
             key: pushover-user-key
             name: *secret
-    - name: "null"
+    # - name: "null"
   route:
     groupBy: ["alertname", "job"]
     groupInterval: 10m
