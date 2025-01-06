@@ -53,7 +53,7 @@ spec:
                   severity: critical
     alertmanager:
       config:
-        route: {}
+        route: null
       alertmanagerSpec:
         externalUrl: https://alertmanager.serek.xyz
         alertManagerConfiguration:
