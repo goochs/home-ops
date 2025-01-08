@@ -42,6 +42,10 @@ spec:
   managed:
     roles:
       - login: true
+        name: prowlarr
+        passwordSecret:
+          name: prowlarr-pg-secret
+      - login: true
         name: radarr
         passwordSecret:
           name: radarr-pg-secret

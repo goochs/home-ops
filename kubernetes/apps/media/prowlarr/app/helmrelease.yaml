@@ -20,7 +20,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: uninstall
+      strategy: rollback
   values:
     controllers:
       prowlarr:
@@ -29,11 +29,13 @@ spec:
         containers:
           app:
             env:
-              PROWLARR__ANALYTICS_ENABLED: "False"
               PROWLARR__INSTANCE__NAME: prowlarr
               PROWLARR__LOG_LEVEL: info
               PROWLARR__PORT: 9696
               TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: prowlarr-secret
             image:
               pullPolicy: IfNotPresent
               repository: ghcr.io/onedr0p/prowlarr-develop

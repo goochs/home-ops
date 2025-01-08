@@ -31,15 +31,15 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
-            envFrom:
-              - secretRef:
-                  name: sonarr-secret
             env:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: 8989
               TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: sonarr-secret
             image:
               repository: ghcr.io/onedr0p/sonarr-develop
               tag: 4.0.12.2825@sha256:982ed7a07a91347583817a6010442002334ffe886a82aa7b5f60347e2bd7612e
