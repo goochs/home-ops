@@ -12,7 +12,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: radarr-postgres16
+  name: radarr-main
 spec:
   name: radarr-main
   owner: radarr
@@ -22,7 +22,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: radarr-postgres16
+  name: radarr-log
 spec:
   name: radarr-log
   owner: radarr
