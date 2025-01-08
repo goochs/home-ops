@@ -53,11 +53,11 @@ spec:
                   severity: critical
     alertmanager:
       alertmanagerSpec:
+        alertManagerConfiguration:
+          name: alertmanager
         alertmanagerConfigMatcherStrategy:
           type: None
         externalUrl: https://alertmanager.serek.xyz
-        alertManagerConfiguration:
-          name: alertmanager
         storage:
           volumeClaimTemplate:
             spec:
