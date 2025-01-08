@@ -28,7 +28,7 @@ spec:
           main:
             image:
               repository: docker.io/valkey/valkey
-              tag: 8.0.1
+              tag: 8.0.2
     service:
       immich-valkey:
         controller: *name
