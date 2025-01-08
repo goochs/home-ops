@@ -21,7 +21,7 @@ releases:
     namespace: kube-system
     needs: ["kube-system/cilium"]
     values: ["./kubelet-csr-approver-values.yaml"]
-    version: 1.2.4
+    version: 1.2.5
 repositories:
   - name: cilium
     url: https://helm.cilium.io
