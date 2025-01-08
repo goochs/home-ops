@@ -31,6 +31,9 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
+            envFrom:
+              - secretRef:
+                name: radarr-secret
             env:
               RADARR__APP__THEME: dark
               RADARR__LOG__LEVEL: info
