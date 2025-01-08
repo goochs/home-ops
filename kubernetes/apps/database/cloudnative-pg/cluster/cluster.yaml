@@ -45,6 +45,10 @@ spec:
         name: radarr
         passwordSecret:
           name: radarr-pg-secret
+      - login: true
+        name: sonarr
+        passwordSecret:
+          name: sonarr-pg-secret
   monitoring:
     enablePodMonitor: true
   postgresql:

@@ -18,3 +18,23 @@ spec:
     name: postgres16
   name: radarr-log
   owner: radarr
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: sonarr-main
+spec:
+  cluster:
+    name: postgres16
+  name: sonarr-main
+  owner: sonarr
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: sonarr-log
+spec:
+  cluster:
+    name: postgres16
+  name: sonarr-log
+  owner: sonarr

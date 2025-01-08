@@ -31,6 +31,9 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
+            envFrom:
+              - secretRef:
+                  name: sonarr-secret
             env:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
