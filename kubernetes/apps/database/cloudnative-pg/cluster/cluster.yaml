@@ -41,12 +41,10 @@ spec:
   instances: 3
   managed:
     roles:
-      - name: radarr
-        login: true
+      - login: true
+        name: radarr
         passwordSecret:
           name: radarr-pg-secret
-
-
   monitoring:
     enablePodMonitor: true
   postgresql:

@@ -4,17 +4,17 @@ kind: Database
 metadata:
   name: radarr-main
 spec:
-  name: radarr-main
-  owner: radarr
   cluster:
     name: postgres16
+  name: radarr-main
+  owner: radarr
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
   name: radarr-log
 spec:
-  name: radarr-log
-  owner: radarr
   cluster:
     name: postgres16
+  name: radarr-log
+  owner: radarr

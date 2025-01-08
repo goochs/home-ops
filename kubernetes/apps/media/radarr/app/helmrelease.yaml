@@ -31,14 +31,14 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
-            envFrom:
-              - secretRef:
-                name: radarr-secret
             env:
               RADARR__APP__THEME: dark
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: 7878
               TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: radarr-secret
             image:
               repository: ghcr.io/onedr0p/radarr-develop
               tag: 5.17.2.9580@sha256:405e5e3ab3ef6d55b42c036786d64b39dbff76236f6fabe35b358ae09d42eb5d
