@@ -1,13 +1,3 @@
-apiVersion: postgresql.cnpg.io/v1
-kind: Database
-metadata:
-  name: radarr-postgres16
-spec:
-  ensure: absent
-  name: radarr
-  owner: radarr
-  cluster:
-    name: postgres16
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
