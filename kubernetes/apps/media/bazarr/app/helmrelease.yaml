@@ -1,0 +1,106 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name bazarr
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.6.0
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      bazarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: bazarr-secret
+            image:
+              repository: ghcr.io/onedr0p/bazarr-develop
+              tag: 1.5.1@sha256:dab8017cadadece962e775cc096e0be18848c700bd08183fe18c0feec60cff28
+            probes:
+              liveness: &probes
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /health
+                    port: &port 7878
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+              readiness: *probes
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 50m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.serek.xyz"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /config/cache
+      log:
+        type: emptyDir
+        globalMounts:
+          - path: /config/log
+      config:
+        existingClaim: bazarr-config
+      media:
+        globalMounts:
+          - path: /media
+        path: /mnt/tank/media
+        server: 10.0.30.40
+        type: nfs
+      tmp:
+        type: emptyDir
+    service:
+      app:
+        controller: *name
+        ports:
+          http:
+            port: *port
