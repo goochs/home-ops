@@ -9,3 +9,4 @@ generatorOptions:
 kind: Kustomization
 resources:
   - ./helmrelease.yaml
+  - ../../../../templates/gatus/external

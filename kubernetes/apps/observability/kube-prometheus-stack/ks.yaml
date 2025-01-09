@@ -19,6 +19,10 @@ spec:
   targetNamespace: observability
   timeout: 15m
   wait: false
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: prometheus
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

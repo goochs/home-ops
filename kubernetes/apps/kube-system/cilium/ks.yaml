@@ -17,6 +17,10 @@ spec:
   targetNamespace: kube-system
   timeout: 5m
   wait: true
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: hubble
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
