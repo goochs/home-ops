@@ -1,0 +1,37 @@
+---
+alerting:
+  pushover:
+    application-token: ${APPLICATION_TOKEN}
+    default-alert:
+      description: health-check failed
+      failure-threshold: 3
+      send-on-resolved: true
+      success-threshold: 3
+    priority: 1
+    resolved-priority: 0
+    title: Gatus
+    user-key: ${USER_KEY}
+connectivity:
+  checker:
+    interval: 1m
+    target: 1.1.1.1:53
+debug: false
+endpoints:
+  - alerts:
+      - type: pushover
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 404"
+    group: external
+    interval: 1m
+    name: flux-webhook
+    url: https://flux-webhook.serek.xyz
+metrics: true
+storage:
+  caching: true
+  path: ${STORAGE_PATH}
+  type: postgres
+ui:
+  header: Status
+  title: Status | Gatus

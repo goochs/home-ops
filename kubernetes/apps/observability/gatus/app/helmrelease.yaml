@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name bazarr
+  name: &app gatus
 spec:
   chart:
     spec:
@@ -26,19 +26,21 @@ spec:
       strategy: rollback
   values:
     controllers:
-      bazarr:
+      gatus:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             env:
+              GATUS_CONFIG_PATH: /config
+              GATUS_DELAY_START_SECONDS: 5
               TZ: America/New_York
             envFrom:
               - secretRef:
-                  name: bazarr-secret
+                  name: gatus-secret
             image:
-              repository: ghcr.io/onedr0p/bazarr
-              tag: 1.5.1@sha256:dab8017cadadece962e775cc096e0be18848c700bd08183fe18c0feec60cff28
+              repository: ghcr.io/twin/gatus
+              tag: v5.15.0@sha256:45686324db605e57dfa8b0931d8d57fe06298f52685f06aa9654a1f710d461bb
             probes:
               liveness: &probes
                 custom: true
@@ -47,60 +49,74 @@ spec:
                   failureThreshold: 3
                   httpGet:
                     path: /health
-                    port: &port 6767
+                    port: &port 8080
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
               readiness: *probes
             resources:
               limits:
-                memory: 2Gi
+                memory: 500Mi
               requests:
-                cpu: 50m
+                cpu: 100m
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
+        initContainers:
+          init-config:
+            env:
+              FOLDER: /config
+              LABEL: gatus.io/enabled
+              METHOD: WATCH
+              NAMESPACE: ALL
+              RESOURCE: both
+              UNIQUE_FILENAMES: true
+            image:
+              repository: ghcr.io/kiwigrid/k8s-sidecar
+              tag: 1.28.4@sha256:20caf4e241e1f9f9231527db5e75b735aa7b0da7bee3d262cbe369bb9b33469f
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 10m
+            restartPolicy: Always
+        replicas: 2
+        strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
-        fsGroup: 568
+        fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 568
+        runAsGroup: 3000
         runAsNonRoot: true
-        runAsUser: 568
+        runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
         className: internal
         hosts:
-          - host: "{{ .Release.Name }}.serek.xyz"
+          - host: status.serek.xyz
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
     persistence:
-      cache:
-        globalMounts:
-          - path: /config/cache
-        type: emptyDir
       config:
-        existingClaim: bazarr-config
-      log:
+        existingClaim: gatus
+      config-file:
         globalMounts:
-          - path: /config/log
-        type: emptyDir
-      media:
-        globalMounts:
-          - path: /media
-        path: /mnt/tank/media
-        server: 10.0.30.40
-        type: nfs
-      tmp:
-        type: emptyDir
+          - path: /gatus/config.yaml
+            readOnly: true
+            subPath: config.yaml
+        name: gatus-configmap
+        type: configMap
     service:
       app:
-        controller: *name
+        controller: *app
         ports:
           http:
             port: *port
+    serviceAccount:
+      create: true
+      name: gatus

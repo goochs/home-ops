@@ -68,3 +68,13 @@ spec:
     name: postgres16
   name: sonarr-log
   owner: sonarr
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: gatus
+spec:
+  cluster:
+    name: postgres16
+  name: gatus
+  owner: gatus

@@ -57,6 +57,10 @@ spec:
         name: sonarr
         passwordSecret:
           name: sonarr-pg-secret
+      - login: true
+        name: gatus
+        passwordSecret:
+          name: gatus-pg-secret
   monitoring:
     enablePodMonitor: true
   postgresql:
