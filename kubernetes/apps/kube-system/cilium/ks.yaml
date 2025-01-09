@@ -19,8 +19,7 @@ spec:
   wait: true
   postBuild:
     substitute:
-      APP: *app
-      GATUS_SUBDOMAIN: hubble
+      APP: hubble
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

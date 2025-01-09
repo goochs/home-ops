@@ -21,8 +21,7 @@ spec:
   wait: false
   postBuild:
     substitute:
-      APP: *app
-      GATUS_SUBDOMAIN: prometheus
+      APP: prometheus
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
