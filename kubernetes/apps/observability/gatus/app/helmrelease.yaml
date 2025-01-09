@@ -104,7 +104,7 @@ spec:
         existingClaim: gatus
       config-file:
         globalMounts:
-          - path: /gatus/config.yaml
+          - path: /config/config.yaml
             readOnly: true
             subPath: config.yaml
         name: gatus-configmap
@@ -118,3 +118,13 @@ spec:
     serviceAccount:
       create: true
       name: gatus
+    serviceMonitor:
+      app:
+        serviceName: gatus
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+
