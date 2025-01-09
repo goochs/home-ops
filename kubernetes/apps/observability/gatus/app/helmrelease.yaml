@@ -101,7 +101,7 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: gatus
+        type: emptyDir
       config-file:
         globalMounts:
           - path: /config/config.yaml
