@@ -37,7 +37,7 @@ spec:
               - secretRef:
                   name: bazarr-secret
             image:
-              repository: ghcr.io/onedr0p/bazarr-develop
+              repository: ghcr.io/onedr0p/bazarr
               tag: 1.5.1@sha256:dab8017cadadece962e775cc096e0be18848c700bd08183fe18c0feec60cff28
             probes:
               liveness: &probes
