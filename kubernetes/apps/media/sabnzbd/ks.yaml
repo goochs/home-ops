@@ -17,3 +17,6 @@ spec:
   targetNamespace: media
   timeout: 5m
   wait: false
+  postBuild:
+    substitute:
+      APP: *app
