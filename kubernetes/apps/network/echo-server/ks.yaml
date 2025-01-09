@@ -10,6 +10,9 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/apps/network/echo-server/app
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -17,6 +20,3 @@ spec:
   targetNamespace: network
   timeout: 5m
   wait: false
-  postBuild:
-    substitute:
-      APP: *app

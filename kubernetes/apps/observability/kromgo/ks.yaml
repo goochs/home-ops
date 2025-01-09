@@ -10,6 +10,10 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/apps/observability/kromgo/app
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_PATH: /talos_version
   prune: true
   sourceRef:
     kind: GitRepository
@@ -17,7 +21,3 @@ spec:
   targetNamespace: observability
   timeout: 5m
   wait: false
-  postBuild:
-    substitute:
-      APP: *app
-      GATUS_PATH: /talos_version

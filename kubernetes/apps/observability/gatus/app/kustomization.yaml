@@ -5,9 +5,9 @@ configMapGenerator:
       - config.yaml=./config.yaml
     name: gatus-configmap
 generatorOptions:
-  disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
+  disableNameSuffixHash: true
 kind: Kustomization
 resources:
   - ./externalsecret.yaml

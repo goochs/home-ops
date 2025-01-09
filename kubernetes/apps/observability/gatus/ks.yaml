@@ -8,6 +8,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: gatus
+  dependsOn:
+    - name: external-secrets-stores
   interval: 30m
   path: ./kubernetes/apps/observability/gatus/app
   prune: true
@@ -17,6 +19,3 @@ spec:
   targetNamespace: observability
   timeout: 5m
   wait: false
-  dependsOn:
-    - name: external-secrets-stores
-

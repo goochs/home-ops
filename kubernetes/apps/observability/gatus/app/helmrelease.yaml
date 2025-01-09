@@ -120,11 +120,10 @@ spec:
       name: gatus
     serviceMonitor:
       app:
-        serviceName: gatus
         endpoints:
-          - port: http
-            scheme: http
+          - interval: 1m
             path: /metrics
-            interval: 1m
+            port: http
+            scheme: http
             scrapeTimeout: 10s
-
+        serviceName: gatus
