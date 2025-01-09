@@ -81,8 +81,6 @@ spec:
               requests:
                 cpu: 10m
             restartPolicy: Always
-        replicas: 2
-        strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
         fsGroup: 3000
