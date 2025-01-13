@@ -29,8 +29,8 @@ spec:
     metrics:
       disableAuth: true
     podSecurityContext:
-      runAsGroup: 65534
+      runAsGroup: 3000
       runAsNonRoot: true
-      runAsUser: 65534
+      runAsUser: 3000
       seccompProfile: {type: RuntimeDefault}
     replicaCount: 2

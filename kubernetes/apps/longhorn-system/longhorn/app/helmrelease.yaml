@@ -24,9 +24,6 @@ spec:
       strategy: rollback
   values:
     defaultSettings:
-      defaultDataLocality: best-effort
-      defaultReplicaCount: 2
-      replicaAutoBalance: best-effort
       storageReservedPercentageForDefaultDisk: 5
     ingress:
       enabled: true
