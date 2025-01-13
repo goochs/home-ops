@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name radarr
+  name: &app radarr
 spec:
   chart:
     spec:
@@ -84,7 +84,7 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: radarr-config
+        existingClaim: *app
       media:
         globalMounts:
           - path: /media
@@ -95,7 +95,7 @@ spec:
         type: emptyDir
     service:
       app:
-        controller: *name
+        controller: *app
         ports:
           http:
             port: 7878

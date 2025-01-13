@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name bazarr
+  name: &app bazarr
 spec:
   chart:
     spec:
@@ -85,7 +85,7 @@ spec:
           - path: /config/cache
         type: emptyDir
       config:
-        existingClaim: bazarr-config
+        existingClaim: *app
       log:
         globalMounts:
           - path: /config/log
@@ -100,7 +100,7 @@ spec:
         type: emptyDir
     service:
       app:
-        controller: *name
+        controller: *app
         ports:
           http:
             port: *port

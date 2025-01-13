@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name actual
+  name: &app actual
 spec:
   chart:
     spec:
@@ -77,10 +77,10 @@ spec:
           actual:
             app:
               - path: /data
-        existingClaim: actual-config
+        existingClaim: *app
     service:
       app:
-        controller: *name
+        controller: *app
         ports:
           http:
             port: 5006

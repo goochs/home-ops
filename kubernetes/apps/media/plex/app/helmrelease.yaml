@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name plex
+  name: &app plex
 spec:
   chart:
     spec:
@@ -106,7 +106,7 @@ spec:
       app:
         annotations:
           io.cilium/lb-ipam-ips: 10.0.41.45
-        controller: *name
+        controller: *app
         externalTrafficPolicy: Cluster
         ports:
           http:
