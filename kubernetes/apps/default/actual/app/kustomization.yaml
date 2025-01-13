@@ -4,4 +4,4 @@ resources:
   - ./helmrelease.yaml
   - ./pvc.yaml
   - ../../../../templates/gatus/internal
-  - ../../../../templates/volsync
+  # - ../../../../templates/volsync
