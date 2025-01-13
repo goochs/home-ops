@@ -1,8 +1,9 @@
 ---
+allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
-reclaimPolicy: Delete
-provisioner: driver.longhorn.io
+metadata:
+  name: longhorn-snapshot
 parameters:
   # used for volsync to copy from.
   # we set this to 1 replica for faster restores from the snapclass
@@ -10,7 +11,6 @@ parameters:
   numberOfReplicas: "1"
   replicaAutoBalance: best-effort
   staleReplicaTimeout: "30"
-allowVolumeExpansion: true
+provisioner: driver.longhorn.io
+reclaimPolicy: Delete
 volumeBindingMode: Immediate
-metadata:
-  name: longhorn-snapshot
