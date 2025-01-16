@@ -25,27 +25,6 @@ spec:
   values:
     domainFilters:
       - serek.xyz
-    env:
-      - name: MIKROTIK_BASEURL
-        valueFrom:
-          secretKeyRef:
-            key: MIKROTIK_BASEURL
-            name: &secret external-dns-mikrotik-secret
-      - name: MIKROTIK_USERNAME
-        valueFrom:
-          secretKeyRef:
-            key: MIKROTIK_USERNAME
-            name: *secret
-      - name: MIKROTIK_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            key: MIKROTIK_PASSWORD
-            name: *secret
-      - name: MIKROTIK_SKIP_TLS_VERIFY
-        valueFrom:
-          secretKeyRef:
-            key: MIKROTIK_SKIP_TLS_VERIFY
-            name: *secret
     extraArgs:
       - --ignore-ingress-tls-spec
       - --managed-record-types=A
@@ -57,29 +36,50 @@ spec:
       - --managed-record-types=NS
     fullnameOverride: *app
     interval: 5s
-    livenessProbe:
-      httpGet:
-        path: /healthz
-        port: http-webhook
-      initialDelaySeconds: 10
-      timeoutSeconds: 5
     logFormat: text
     logLevel: debug
     podAnnotations:
-      secret.reloader.stakater.com/reload: *secret
+      secret.reloader.stakater.com/reload: &secret external-dns-mikrotik-secret
     policy: sync
     provider:
       name: webhook
       webhook:
+        env:
+          - name: MIKROTIK_BASEURL
+            valueFrom:
+              secretKeyRef:
+                key: MIKROTIK_BASEURL
+                name: *secret
+          - name: MIKROTIK_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: MIKROTIK_USERNAME
+                name: *secret
+          - name: MIKROTIK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MIKROTIK_PASSWORD
+                name: *secret
+          - name: MIKROTIK_SKIP_TLS_VERIFY
+            valueFrom:
+              secretKeyRef:
+                key: MIKROTIK_SKIP_TLS_VERIFY
+                name: *secret
         image:
           repository: ghcr.io/mirceanton/external-dns-provider-mikrotik
           tag: v1.2.6@sha256:b7d8d0a97886e2f2a4075c327f500bac8e23101fa04c8fdd155ff3806e599d1a
-    readinessProbe:
-      httpGet:
-        path: /readyz
-        port: http-webhook
-      initialDelaySeconds: 10
-      timeoutSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http-webhook
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http-webhook
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
     serviceMonitor:
       enabled: true
     sources: ["service", "ingress"]
