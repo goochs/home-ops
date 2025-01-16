@@ -1,0 +1,88 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app external-dns-mikrotik
+spec:
+  chart:
+    spec:
+      chart: external-dns
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+      version: 1.15.0
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    domainFilters:
+      - serek.xyz
+    env:
+      - name: MIKROTIK_BASEURL
+        valueFrom:
+          secretKeyRef:
+            key: MIKROTIK_BASEURL
+            name: &secret external-dns-mikrotik-secret
+      - name: MIKROTIK_USERNAME
+        valueFrom:
+          secretKeyRef:
+            key: MIKROTIK_USERNAME
+            name: *secret
+      - name: MIKROTIK_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MIKROTIK_PASSWORD
+            name: *secret
+      - name: MIKROTIK_SKIP_TLS_VERIFY
+        valueFrom:
+          secretKeyRef:
+            key: MIKROTIK_SKIP_TLS_VERIFY
+            name: *secret
+    extraArgs:
+      - --ignore-ingress-tls-spec
+      - --managed-record-types=A
+      - --managed-record-types=AAAA
+      - --managed-record-types=CNAME
+      - --managed-record-types=TXT
+      - --managed-record-types=MX
+      - --managed-record-types=SRV
+      - --managed-record-types=NS
+    fullnameOverride: *app
+    interval: 5s
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: http-webhook
+      initialDelaySeconds: 10
+      timeoutSeconds: 5
+    logFormat: text
+    logLevel: debug
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
+    policy: sync
+    provider:
+      name: webhook
+      webhook:
+        image:
+          repository: ghcr.io/mirceanton/external-dns-provider-mikrotik
+          tag: v1.2.6@sha256:b7d8d0a97886e2f2a4075c327f500bac8e23101fa04c8fdd155ff3806e599d1a
+    readinessProbe:
+      httpGet:
+        path: /readyz
+        port: http-webhook
+      initialDelaySeconds: 10
+      timeoutSeconds: 5
+    serviceMonitor:
+      enabled: true
+    sources: ["service", "ingress"]
+    triggerLoopOnEvent: true
+    txtOwnerId: main
+    txtPrefix: k8s.main.

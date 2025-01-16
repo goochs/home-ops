@@ -36,8 +36,8 @@ tasks:
       - talosctl --nodes {{.HOSTNAME}} health --wait-timeout=10m --server=false
       - task: up
     vars:
-      TALOS_SCHEMATIC_ID: ebdfa27a8d6272acf806ac6a5c968c3c284a47ce880273cecb19442c11bf0474
-#        sh: kubectl get node {{.HOSTNAME}} --output=jsonpath='{.metadata.annotations.extensions\.talos\.dev/schematic}'
+      TALOS_SCHEMATIC_ID:
+        sh: kubectl get node {{.HOSTNAME}} --output=jsonpath='{.metadata.annotations.extensions\.talos\.dev/schematic}'
       TALOS_SECUREBOOT:
         sh: talosctl --nodes kmaster1 get securitystate --output=jsonpath='{.spec.secureBoot}'
       TALOS_VERSION:
