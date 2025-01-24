@@ -1,0 +1,113 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app jellyfin
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.6.1
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      jellyfin:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+              JELLYFIN_CACHE_DIR: /cache
+              JELLYFIN_DATA_DIR: /config
+              TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: jellyfin-secret
+            image:
+              repository: ghcr.io/jellyfin/jellyfin
+              tag: 10.10.4@sha256:5ff40713373c1a9b069a2f452b652ee965987f39d5c48ee52462008209b7ad6a
+            probes:
+              liveness: &probes
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /health
+                    port: &port 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+              readiness: *probes
+            resources:
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 8Gi
+              requests:
+                cpu: 100m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+        supplementalGroups:
+          - 44
+          - 109
+    ingress:
+      app:
+        className: external
+        hosts:
+          - host: "{{ .Release.Name }}.serek.xyz"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      cache:
+        enabled: true
+        globalMounts:
+          - path: /cache
+        type: emptyDir
+      config:
+        existingClaim: *app
+      media:
+        globalMounts:
+          - path: /media
+        path: /mnt/tank/media/media
+        server: 10.0.30.40
+        type: nfs
+      transcode:
+        enabled: true
+        globalMounts:
+          - path: /transcode
+        type: emptyDir
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 7878

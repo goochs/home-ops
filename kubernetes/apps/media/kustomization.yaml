@@ -9,3 +9,4 @@ resources:
   - ./namespace.yaml
   - ./plex/ks.yaml
   - ./sonarr/ks.yaml
+  - ./jellyfin/ks.yaml

@@ -36,10 +36,10 @@ spec:
         image:
           registry: quay.io/
       hostpathClass:
+        basePath: /var/mnt/extra/openebs/hostpath
         enabled: true
         isDefaultClass: false
         name: openebs-hostpath
-        basePath: /var/mnt/extra/openebs/hostpath
       localpv:
         image:
           registry: quay.io/
