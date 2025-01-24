@@ -83,9 +83,6 @@ spec:
                   port: http
     persistence:
       cache:
-        enabled: true
-        globalMounts:
-          - path: /cache
         type: emptyDir
       config:
         existingClaim: *app
@@ -95,10 +92,9 @@ spec:
         path: /mnt/tank/media/media
         server: 10.0.30.40
         type: nfs
+      tmp:
+        type: emptyDir
       transcode:
-        enabled: true
-        globalMounts:
-          - path: /transcode
         type: emptyDir
     service:
       app:
