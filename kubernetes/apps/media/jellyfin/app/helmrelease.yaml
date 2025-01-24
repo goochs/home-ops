@@ -105,4 +105,4 @@ spec:
         controller: *app
         ports:
           http:
-            port: 7878
+            port: *port
