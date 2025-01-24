@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: metrics-server
+  name: &name metrics-server
   namespace: flux-system
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: metrics-server
+      app.kubernetes.io/name: *name
   interval: 30m
   path: ./kubernetes/apps/kube-system/metrics-server/app
   prune: true

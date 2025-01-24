@@ -8,5 +8,5 @@ resources:
   - ./intel-device-plugins/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./namespace.yaml
-  - ./kubelet-csr-approver/ks.yaml
   - ./cilium/ks.yaml
+  - ./coredns/ks.yaml

@@ -1,0 +1,51 @@
+---
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
+fullnameOverride: coredns
+k8sAppLabelOverride: kube-dns
+replicaCount: 2
+servers:
+  - plugins:
+      - name: errors
+      - configBlock: |-
+          lameduck 5s
+        name: health
+      - name: ready
+      - configBlock: |-
+          class error
+        name: log
+      - name: prometheus
+        parameters: 0.0.0.0:9153
+      - configBlock: |-
+          pods insecure
+          fallthrough in-addr.arpa ip6.arpa
+        name: kubernetes
+        parameters: cluster.local in-addr.arpa ip6.arpa
+      - name: forward
+        parameters: . /etc/resolv.conf
+      - name: cache
+        parameters: 30
+      - name: loop
+      - name: reload
+      - name: loadbalance
+    port: 53
+    zones:
+      - scheme: dns://
+        use_tcp: true
+        zone: .
+service:
+  clusterIP: 10.1.128.10
+  name: kube-dns
+serviceAccount:
+  create: true
+tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+    operator: Exists

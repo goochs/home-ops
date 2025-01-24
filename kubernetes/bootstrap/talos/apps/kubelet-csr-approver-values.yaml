@@ -1,3 +1,0 @@
----
-bypassDnsResolution: true
-providerRegex: ^k(master|worker)\d$

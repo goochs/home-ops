@@ -1,31 +1,151 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
-additionalApiServerCertSans: &sans
-  - "10.0.30.30"
-  - 127.0.0.1 # KubePrism
-  - "kube.goochs.us"
-additionalMachineCertSans: *sans
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.9.2
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.32.1
+
 clusterName: &cluster home
+endpoint: https://10.0.30.31:6443
+
+additionalApiServerCertSans: &sans
+  - &talosVIP 10.0.30.30
+  - 127.0.0.1
+  - k8s.serek.xyz
+additionalMachineCertSans: *sans
+
 clusterPodNets:
-  - "10.11.0.0/16"
+  - 10.1.0.0/17
 clusterSvcNets:
-  - "10.12.0.0/16"
+  - 10.1.128.0/17
 cniConfig:
   name: none
+
+nodes:
+  - controlPlane: true
+    hostname: k8s-m1
+    installDiskSelector:
+      size: '<= 300GB'
+    ipAddress: 10.0.30.31
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230711NV01KG23208
+        partitions:
+          - mountpoint: /var/mnt/extra
+    networkInterfaces:
+      - interface: bond0
+        addresses:
+          - 10.0.30.31/24
+        bond: &bondconfig
+          interfaces:
+            - enp1s0f1
+            - enp0s31f6
+          primary: enp1s0f1
+          numPeerNotif: 20
+          mode: active-backup
+        dhcp: false
+        routes: &routes
+          - network: 0.0.0.0/0
+            gateway: 10.0.30.1
+        vip:
+          ip: *talosVIP
+        vlans: &vlanconfig
+          - vlanId: 10
+            dhcp: false
+          - vlanId: 20
+            dhcp: false
+          - vlanId: 40
+            dhcp: false
+
+  - controlPlane: true
+    hostname: k8s-m2
+    installDiskSelector:
+      size: '<= 300GB'
+    ipAddress: 10.0.30.32
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG03651
+        partitions:
+          - mountpoint: /var/mnt/extra
+    networkInterfaces:
+      - interface: bond0
+        addresses:
+          - 10.0.30.32/24
+        bond: *bondconfig
+        dhcp: false
+        routes: *routes
+        vip:
+          ip: *talosVIP
+        vlans: *vlanconfig
+
+  - controlPlane: true
+    hostname: k8s-m3
+    installDiskSelector:
+      size: '<= 300GB'
+    ipAddress: 10.0.30.33
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG04096
+        partitions:
+          - mountpoint: /var/mnt/extra
+    networkInterfaces:
+      - interface: bond0
+        addresses:
+          - 10.0.30.33/24
+        bond: *bondconfig
+        dhcp: false
+        routes: *routes
+        vip:
+          ip: *talosVIP
+        vlans: *vlanconfig
+
 controlPlane:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - apparmor=0
+        - init_on_alloc=0
+        - init_on_free=0
+        - mitigations=off
+        - security=none
+        - talos.auditd.disabled=1
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915
+          - siderolabs/intel-ucode
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
+
   patches:
     # Cluster configuration
     - |-
       cluster:
         allowSchedulingOnControlPlanes: true
+        proxy:
+          disabled: true
+        coreDNS:
+          disabled: true
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
-        proxy:
-          disabled: true
         scheduler:
           extraArgs:
             bind-address: 0.0.0.0
+          config:
+            apiVersion: kubescheduler.config.k8s.io/v1
+            kind: KubeSchedulerConfiguration
+            profiles:
+              - schedulerName: default-scheduler
+                plugins:
+                  score:
+                    disabled:
+                      - name: ImageLocality
+                pluginConfig:
+                  - name: PodTopologySpread
+                    args:
+                      defaultingType: List
+                      defaultConstraints:
+                        - maxSkew: 1
+                          topologyKey: kubernetes.io/hostname
+                          whenUnsatisfiable: ScheduleAnyway
+
     # ETCD configuration
     - |-
       cluster:
@@ -34,188 +154,104 @@ controlPlane:
             listen-metrics-urls: http://0.0.0.0:2381
           advertisedSubnets:
             - "10.0.30.0/24"
+
     # Disable default API server admission plugins.
     - |-
       - op: remove
         path: /cluster/apiServer/admissionControl
-    # Enable K8s Talos API Access
+
+    # Configure NFS mount options
+    - |
+      machine:
+        files:
+          - op: overwrite
+            path: /etc/nfsmount.conf
+            permissions: 0o644
+            content: |
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              noatime=True
+              nconnect=16
+
+    # Disable search domain everywhere
+    - |-
+      machine:
+        network:
+          disableSearchDomain: true
+
+    # Enable host dns
     - |-
       machine:
         features:
-          kubernetesTalosAPIAccess:
+          hostDNS:
             enabled: true
-            allowedRoles: ["os:admin"]
-            allowedKubernetesNamespaces: ["system-upgrade"]
-  schematic:
-    customization:
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/i915
-          - siderolabs/intel-ucode
-          - siderolabs/iscsi-tools
-          - siderolabs/util-linux-tools
-endpoint: https://10.0.30.31:6443
-# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.1
-nodes:
-  - controlPlane: true
-    hostname: kmaster1
-    installDisk: /dev/nvme0n1
-    ipAddress: 10.0.30.31
-    machineDisks:
-      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230711NV01KG23208
-        partitions:
-          - mountpoint: /var/lib/longhorn
-    networkInterfaces:
-      - addresses:
-          - 10.0.30.31/24
-        bond: &bondconfig
-          interfaces:
-            - enp0s31f6
-            - enp1s0f0
-            - enp1s0f1
-          mode: active-backup
-          primary: enp1s0f1
-        dhcp: false
-        interface: bond0
-        routes:
-          - gateway: 10.0.30.1
-            network: 0.0.0.0/0
-        vip:
-          ip: 10.0.30.30
-  - controlPlane: true
-    hostname: kmaster2
-    installDisk: /dev/nvme1n1
-    ipAddress: 10.0.30.32
-    networkInterfaces:
-      - addresses:
-          - 10.0.30.32/24
-        bond: *bondconfig
-        dhcp: false
-        interface: bond0
-        routes:
-          - gateway: 10.0.30.1
-            network: 0.0.0.0/0
-        vip:
-          ip: 10.0.30.30
-  - controlPlane: true
-    hostname: kmaster3
-    installDisk: /dev/disk/by-id/nvme-PC_SN740_NVMe_WD_256GB_22358V447822
-    ipAddress: 10.0.30.33
-    machineDisks:
-      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG04096
-        partitions:
-          - mountpoint: /var/lib/longhorn
-    networkInterfaces:
-      - addresses:
-          - 10.0.30.33/24
-        bond: *bondconfig
-        dhcp: false
-        interface: bond0
-        routes:
-          - gateway: 10.0.30.1
-            network: 0.0.0.0/0
-        vip:
-          ip: 10.0.30.30
-patches:
-  # Configure NFS mount options
-  - |
-    machine:
-      files:
-        - op: overwrite
-          path: /etc/nfsmount.conf
-          permissions: 0o644
-          content: |
-            [ NFSMount_Global_Options ]
-            nfsvers=4.2
-            hard=True
-            noatime=True
-            nconnect=16
-  # Configure containerd
-  - |-
-    machine:
-      files:
-        - op: create
-          path: /etc/cri/conf.d/20-customization.part
-          content: |-
-            [plugins."io.containerd.grpc.v1.cri"]
-              enable_unprivileged_ports = true
-              enable_unprivileged_icmp = true
-            [plugins."io.containerd.grpc.v1.cri".containerd]
-              discard_unpacked_layers = false
-            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
-              discard_unpacked_layers = false
-  # Disable search domain everywhere
-  - |-
-    machine:
-      network:
-        disableSearchDomain: true
-  # Enable cluster discovery
-  - |-
-    cluster:
-      discovery:
+            resolveMemberNames: true
+            forwardKubeDNSToHost: false
+
+    # Enable cluster discovery
+    - |-
+      cluster:
+        discovery:
+          registries:
+            service:
+              disabled: false
+
+    # Configure kubelet
+    - |-
+      machine:
+        kubelet:
+          extraConfig:
+            maxPods: 150
+          nodeIP:
+            validSubnets: ["10.0.30.0/24"]
+          extraMounts:
+            - destination: /var/mnt/extra
+              type: bind
+              source: /var/mnt/extra
+              options: ["bind", "rshared", "rw"]
+
+    # Force nameserver
+    - |-
+      machine:
+        network:
+          nameservers: ["10.0.30.1"]
+
+    # Configure NTP
+    - |-
+      machine:
+        time:
+          disabled: false
+          servers: ["10.0.30.1"]
+
+    # Custom sysctl settings
+    - |-
+      machine:
+        sysctls:
+          fs.inotify.max_user_watches: 1048576   # Watchdog
+          fs.inotify.max_user_instances: 8192    # Watchdog
+          net.core.rmem_max: 67108864            # 10Gb/s
+          net.core.wmem_max: 67108864            # 10Gb/s
+          net.ipv4.tcp_mtu_probing: 1            # 10Gb/s | Jumbo frames?
+          net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
+          net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
+          net.core.default_qdisc: fq             # 10Gb/s
+          net.ipv4.tcp_congestion_control: bbr   # 10Gb/s
+          net.ipv4.tcp_fastopen: 3               # TCP Fast Open
+          net.ipv4.tcp_window_scaling: 1         # 10Gb/s
+          vm.nr_hugepages: 1024                  # Postgres
+
+    # Enable local registry caches
+    - |-
+      machine:
         registries:
-          service:
-            disabled: false
-  # Configure kubelet
-  - |-
-    machine:
-      kubelet:
-        extraArgs:
-          rotate-server-certificates: true
-        nodeIP:
-          validSubnets: ["10.0.30.0/24"]
-  # Force nameserver
-  - |-
-    machine:
-      network:
-        nameservers:
-          - 10.0.30.1
-  # Configure NTP
-  - |-
-    machine:
-      time:
-        disabled: false
-        servers:
-          - 10.0.30.1
-  # Custom sysctl settings
-  - |-
-    machine:
-      sysctls:
-        fs.inotify.max_queued_events: "65536"
-        fs.inotify.max_user_watches: "524288"
-        fs.inotify.max_user_instances: "8192"
-        net.core.rmem_max: "2500000"
-        net.core.wmem_max: "2500000"
-  # Mount Longhorn disk in kubelet
-  - |-
-    machine:
-      kubelet:
-        extraMounts:
-          - destination: /var/lib/longhorn
-            type: bind
-            source: /var/lib/longhorn
-            options: ["bind", "rshared", "rw"]
-          - destination: /var/openebs/local
-            type: bind
-            source: /var/openebs/local
-            options: ["bind", "rshared", "rw"]
-  # Enable local registry caches
-  - |-
-    machine:
-      registries:
-        mirrors:
-          docker.io:
-            endpoints:
-              - http://nas.goochs.us:5000
-          registry.k8s.io:
-            endpoints:
-              - http://nas.goochs.us:5001
-          gcr.io:
-            endpoints:
-              - http://nas.goochs.us:5002
-          ghcr.io:
-            endpoints:
-              - http://nas.goochs.us:5003
-# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.2
+          mirrors:
+            docker.io:
+              endpoints: ["http://nas.serek.xyz:5000"]
+            registry.k8s.io:
+              endpoints: ["http://nas.serek.xyz:5001"]
+            gcr.io:
+              endpoints: ["http://nas.serek.xyz:5002"]
+            ghcr.io:
+              endpoints: ["http://nas.serek.xyz:5003"]
+
