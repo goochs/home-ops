@@ -14,7 +14,7 @@ spec:
       version: 3.6.1
   dependsOn:
     - name: longhorn
-      namespace: longhorn-system
+      namespace: storage
   install:
     remediation:
       retries: 3

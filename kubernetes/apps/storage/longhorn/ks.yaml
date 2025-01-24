@@ -9,15 +9,15 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/apps/longhorn-system/longhorn/app
+  path: ./kubernetes/apps/storage/longhorn/app
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: longhorn
+      GATUS_SUBDOMAIN: *app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  targetNamespace: longhorn-system
+  targetNamespace: storage
   timeout: 15m
   wait: false

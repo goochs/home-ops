@@ -24,7 +24,9 @@ spec:
       strategy: rollback
   values:
     defaultSettings:
-      storageReservedPercentageForDefaultDisk: 5
+      storageReservedPercentageForDefaultDisk: 10
+      defaultLonghornStaticStorageClass: longhorn
+      defaultDataPath: /var/mnt/extra/longhorn
     ingress:
       enabled: true
       host: longhorn.serek.xyz
