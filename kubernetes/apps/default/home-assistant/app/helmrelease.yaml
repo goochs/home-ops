@@ -1,0 +1,109 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app home-assistant
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.6.1
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              TZ: America/New_York
+            image:
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2025.1.4@sha256:0d20c912e2c2a1a8f76b22f4689b575b4498c3cc334b807a91ecf82f2cd33094
+            resources:
+              limits:
+                memory: 4Gi
+              requests:
+                cpu: 100m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+          code-server:
+            args: ["--auth", "none", "--user-data-dir", "/config/.vscode", "--extensions-dir", "/config/.vscode", "--port", "12321", "/config"]
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.96.4@sha256:f93810f7f6636b3af3b1a750faf612349cddb89fbb6d28d69123a214fc75ee9e
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 10m
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: hass.serek.xyz
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+      code-server:
+        className: internal
+        hosts:
+          - host: hass-code.serek.xyz
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: code-server
+    persistence:
+      config:
+        existingClaim: *app
+        globalMounts:
+          - path: /config
+      logs:
+        globalMounts:
+          - path: /config/logs
+        type: emptyDir
+      tmp:
+        globalMounts:
+          - path: /tmp
+        type: emptyDir
+      tts:
+        globalMounts:
+          - path: /config/tts
+        type: emptyDir
+    service:
+      app:
+        controller: *app
+        ports:
+          code-server:
+            port: 12321
+          http:
+            port: 8123
