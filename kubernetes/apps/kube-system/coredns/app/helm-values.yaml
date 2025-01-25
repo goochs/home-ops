@@ -8,7 +8,7 @@ affinity:
               operator: Exists
 fullnameOverride: coredns
 k8sAppLabelOverride: kube-dns
-replicaCount: 2
+replicaCount: 3
 servers:
   - plugins:
       - name: errors
