@@ -35,12 +35,12 @@ spec:
               k8s.v1.cni.cncf.io/networks: |
                 [{
                   "name": "multus-trusted",
-                  "namespace": "networking",
+                  "namespace": "network",
                   "ips": ["10.0.10.70/24"]
                 },
                 {
                   "name": "multus-untrusted",
-                  "namespace": "networking",
+                  "namespace": "network",
                   "ips": ["10.0.20.70/24"]
                 }]
             env:
