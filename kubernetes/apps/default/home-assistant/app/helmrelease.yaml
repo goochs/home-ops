@@ -31,6 +31,18 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
+            annotations:
+              k8s.v1.cni.cncf.io/networks: |
+                [{
+                  "name": "multus-trusted",
+                  "namespace": "networking",
+                  "ips": ["10.0.10.70/24"]
+                },
+                {
+                  "name": "multus-untrusted",
+                  "namespace": "networking",
+                  "ips": ["10.0.20.70/24"]
+                }]
             env:
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/16
               HASS_HTTP_TRUSTED_PROXY_2: 10.1.0.0/16
