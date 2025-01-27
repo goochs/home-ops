@@ -61,6 +61,11 @@ spec:
       annotations:
         k8s.v1.cni.cncf.io/networks: |
           [{
+            "name": "multus-trusted",
+            "namespace": "network",
+            "ips": ["10.0.10.70/24"]
+          },
+          {
             "name": "multus-untrusted",
             "namespace": "network",
             "ips": ["10.0.20.70/24"]
