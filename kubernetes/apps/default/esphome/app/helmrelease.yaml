@@ -101,4 +101,4 @@ spec:
           code-server:
             port: 12321
           http:
-            port: 6502
+            port: 6052
