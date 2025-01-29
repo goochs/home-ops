@@ -5,7 +5,7 @@ metadata:
   name: letsencrypt-production
 spec:
   acme:
-    email: admin.serek.xyz
+    email: admin@serek.xyz
     privateKeySecretRef:
       name: letsencrypt-production
     server: https://acme-v02.api.letsencrypt.org/directory
