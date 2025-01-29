@@ -9,12 +9,12 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/apps/cert-manager/cert-manager/app
+  path: ./kubernetes/apps/network/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  targetNamespace: cert-manager
+  targetNamespace: network
   timeout: 5m
   wait: true
 ---
@@ -31,11 +31,11 @@ spec:
     - name: cert-manager
     - name: external-secrets-stores
   interval: 30m
-  path: ./kubernetes/apps/cert-manager/cert-manager/issuers
+  path: ./kubernetes/apps/network/cert-manager/issuers
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  targetNamespace: cert-manager
+  targetNamespace: network
   timeout: 5m
   wait: true
