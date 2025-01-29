@@ -23,7 +23,7 @@ releases:
     namespace: kube-system
     values: ["../../../apps/kube-system/coredns/app/helm-values.yaml"]
     needs: ["kube-system/cilium"]
-    version: 1.38.1
+    version: 1.39.0
 
 repositories:
   - name: cilium
