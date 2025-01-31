@@ -76,7 +76,7 @@ spec:
       replicaCount: 1
       resources:
         limits:
-          memory: 500Mi
+          memory: 1Gi
         requests:
           cpu: 100m
       service:
