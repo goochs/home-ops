@@ -60,13 +60,11 @@ spec:
         seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
-        annotations:
-          nginx.ingress.kubernetes.io/rewrite-target: /$1
         className: internal
         hosts:
-          - host: hass.serek.xyz
+          - host: appdaemon.serek.xyz
             paths:
-              - path: /appdaemon/(.*)
+              - path: /
                 service:
                   identifier: app
                   port: http
