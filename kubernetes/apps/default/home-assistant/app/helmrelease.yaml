@@ -62,12 +62,12 @@ spec:
                 cpu: 10m
     defaultPodOptions:
       annotations:
-        k8s.v1.cni.cncf.io/networks: |
-          [{
-            "name": "multus-trusted",
-            "namespace": "network",
-            "ips": ["10.0.10.70/24"]
-          }]
+        # k8s.v1.cni.cncf.io/networks: |
+        #   [{
+        #     "name": "multus-trusted",
+        #     "namespace": "network",
+        #     "ips": ["10.0.10.70/24"]
+        #   }]
       securityContext:
         fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
