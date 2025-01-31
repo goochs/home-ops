@@ -32,8 +32,8 @@ spec:
         containers:
           app:
             env:
-              HA_URL: "http://home-assistant.default.svc.cluster.local:8123"
               DASH_URL: "http://$HOSTNAME:5050"
+              HA_URL: "http://home-assistant.default.svc.cluster.local:8123"
               TZ: America/New_York
             envFrom:
               - secretRef:
@@ -74,11 +74,13 @@ spec:
       config:
         existingClaim: home-assistant
         globalMounts:
-        - path: /home-assistant
-          readOnly: false
-        - path: /conf
-          readOnly: false
-          subPath: appdaemon
+          - path: /home-assistant
+            readOnly: false
+          - path: /conf
+            readOnly: false
+            subPath: appdaemon
+      tmp:
+        type: emptyDir
     service:
       app:
         controller: *app
