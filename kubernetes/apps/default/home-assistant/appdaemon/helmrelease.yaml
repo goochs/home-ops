@@ -1,0 +1,87 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app appdaemon
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.6.1
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      appdaemon:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              HA_URL: "http://home-assistant.default.svc.cluster.local:8123"
+              DASH_URL: "http://$HOSTNAME:5050"
+              TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: appdaemon-secret
+            image:
+              repository: docker.io/acockburn/appdaemon
+              tag: 4.4.2@sha256:586ed3bedfc0698956003760e3914254c412ceb62f17c73035ae57686520f5e7
+            resources:
+              limits:
+                memory: 4Gi
+              requests:
+                cpu: 100m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        annotations:
+          nginx.ingress.kubernetes.io/rewrite-target: /$1
+        className: internal
+        hosts:
+          - host: hass.serek.xyz
+            paths:
+              - path: /appdaemon/(.*)
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: home-assistant
+        globalMounts:
+        - path: /home-assistant
+          readOnly: false
+        - path: /conf
+          readOnly: false
+          subPath: appdaemon
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 5050
