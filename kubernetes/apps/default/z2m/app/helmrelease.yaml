@@ -1,0 +1,108 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app z2m
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.6.1
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      z2m:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              TZ: America/New_York
+              ZIGBEE2MQTT_CONFIG_ADVANCED_LAST_SEEN: ISO_8601
+              ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_LEVEL: info # debug
+              ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_OUTPUT: '["console"]'
+              ZIGBEE2MQTT_CONFIG_AVAILABILITY_ACTIVE_TIMEOUT: 60
+              ZIGBEE2MQTT_CONFIG_AVAILABILITY_PASSIVE_TIMEOUT: 2000
+              ZIGBEE2MQTT_CONFIG_DEVICE_OPTIONS_RETAIN: "true"
+              ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: &port 80
+              ZIGBEE2MQTT_CONFIG_FRONTEND_URL: https://z2m.serek.xyz
+              ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_DISCOVERY_TOPIC: homeassistant
+              ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED: true
+              ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_STATUS_TOPIC: homeassistant/status
+              ZIGBEE2MQTT_CONFIG_MQTT_INCLUDE_DEVICE_INFORMATION: "true"
+              ZIGBEE2MQTT_CONFIG_MQTT_KEEPALIVE: 60
+              ZIGBEE2MQTT_CONFIG_MQTT_REJECT_UNAUTHORIZED: "true"
+              ZIGBEE2MQTT_CONFIG_MQTT_SERVER: mqtt://emqx-listeners.database.svc.cluster.local:1883
+              ZIGBEE2MQTT_CONFIG_MQTT_VERSION: 5
+              ZIGBEE2MQTT_CONFIG_PERMIT_JOIN: "false"
+              ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ezsp
+              ZIGBEE2MQTT_CONFIG_SERIAL_BAUDRATE: 115200
+              ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
+              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://10.0.20.80:6638
+              ZIGBEE2MQTT_DATA: /config
+            image:
+              repository: ghcr.io/koenkk/zigbee2mqtt
+              tag: 2.0.0@sha256:6105a3a01a66bbfb98909a7c309d0707ec7b41728ac15d399747077225231545
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 10m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                add: ["NET_BIND_SERVICE"]
+                drop: ["ALL"]
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: z2m.serek.xyz
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: *app
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port

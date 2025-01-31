@@ -9,10 +9,10 @@ spec:
     - host: emqx.serek.xyz
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: emqx-dashboard
                 port:
                   number: 18083
+            path: /
+            pathType: Prefix

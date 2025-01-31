@@ -5,7 +5,6 @@ kind: EMQX
 metadata:
   name: emqx
 spec:
-  image: public.ecr.aws/emqx/emqx:5.8.4
   config:
     data: |
       authentication {
@@ -32,22 +31,23 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     spec:
-      replicas: 2
       envFrom:
         - secretRef:
             name: emqx-secret
       extraVolumeMounts:
-        - name: init-user
-          mountPath: /opt/init-user.json
-          subPath: init-user.json
+        - mountPath: /opt/init-user.json
+          name: init-user
           readOnly: true
+          subPath: init-user.json
       extraVolumes:
         - name: init-user
           secret:
             secretName: emqx-init-user-secret
+      replicas: 2
+  image: public.ecr.aws/emqx/emqx:5.8.4
   listenersServiceTemplate:
     metadata:
       annotations:
-        lbipam.cilium.io/ips: 192.168.42.129
+        lbipam.cilium.io/ips: 10.0.40.46
     spec:
       type: LoadBalancer
