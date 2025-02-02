@@ -41,7 +41,7 @@ spec:
                   name: radarr-secret
             image:
               repository: ghcr.io/onedr0p/radarr-develop
-              tag: 5.18.1.9612@sha256:7170bde9ecd4ab0872ec8ad70c678afd769edbe118576699312e81935ebe5e33
+              tag: 5.18.3.9669@sha256:51023c3bf6e8ebe5ed3269e52e3071325e88e610d318d90ce4f2950687ac9cec
             probes:
               liveness: &probes
                 custom: true
