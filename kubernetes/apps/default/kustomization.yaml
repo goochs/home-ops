@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ./actual/ks.yaml
   - ./esphome/ks.yaml
-  # - ./home-assistant/ks.yaml
+  - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
   - ./z2m/ks.yaml
   - ./namespace.yaml
