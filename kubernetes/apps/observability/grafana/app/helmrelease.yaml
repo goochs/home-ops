@@ -74,7 +74,7 @@ spec:
           datasource: Prometheus
           # renovate: depName="Kubernetes / Views / Namespaces"
           gnetId: 15758
-          revision: 40
+          revision: 41
         kubernetes-nodes:
           datasource: Prometheus
           # renovate: depName="Kubernetes / Views / Nodes"
