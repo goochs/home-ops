@@ -66,12 +66,14 @@ spec:
           [{
             "name": "multus-trusted",
             "namespace": "network",
-            "ips": ["10.0.10.70/24"]
+            "ips": ["10.0.10.70/24"],
+            "mac": "ea:3c:79:4e:d7:92"
           },
           {
             "name": "multus-untrusted",
             "namespace": "network",
-            "ips": ["10.0.20.70/24"]
+            "ips": ["10.0.20.70/24"],
+            "mac": "8a:2d:2f:f6:4d:98"
           }]
       securityContext:
         fsGroup: 3000
