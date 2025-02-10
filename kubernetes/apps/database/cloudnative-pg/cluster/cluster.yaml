@@ -18,19 +18,14 @@ spec:
         secretAccessKey:
           key: s3-secret-key
           name: cloudnative-pg-secret
-      # Note: serverName version needs to be incremented
-      # when recovering from an existing cnpg cluster
       serverName: &currentCluster postgres16-v2
       wal:
         compression: bzip2
         maxParallel: 8
     retentionPolicy: 30d
-  # Note: previousCluster needs to be set to the name of the previous
-  # cluster when recovering from an existing cnpg cluster
   # bootstrap:
   #   recovery:
   #     source: &previousCluster postgres16-v1
-  # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
   #   - name: *previousCluster
   #     barmanObjectStore:
