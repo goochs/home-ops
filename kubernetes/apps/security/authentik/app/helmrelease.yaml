@@ -45,7 +45,7 @@ spec:
         enabled: true
         hosts:
           - sso.serek.xyz
-        ingressClassName: internal
+        ingressClassName: external
       initContainers:
         - envFrom:
             - secretRef:
