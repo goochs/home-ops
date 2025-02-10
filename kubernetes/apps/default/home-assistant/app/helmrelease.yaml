@@ -84,24 +84,20 @@ spec:
         seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
-        annotations:
-          nginx.ingress.kubernetes.io/rewrite-target: /$1
         className: external
         hosts:
           - host: hass.serek.xyz
             paths:
-              - path: /(.*)
+              - path: /
                 service:
                   identifier: app
                   port: http
       code-server:
-        annotations:
-          nginx.ingress.kubernetes.io/rewrite-target: /$1
         className: internal
         hosts:
-          - host: hass.serek.xyz
+          - host: hass-code.serek.xyz
             paths:
-              - path: /code/(.*)
+              - path: /
                 service:
                   identifier: app
                   port: code-server
