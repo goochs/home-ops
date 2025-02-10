@@ -7,4 +7,4 @@ resources:
   - ./valkey/helmrelease.yaml
   - ./configmap.yaml
   - ./externalsecret.yaml
-  - ../../../../templates/gatus/internal
+  - ../../../../templates/gatus/external
