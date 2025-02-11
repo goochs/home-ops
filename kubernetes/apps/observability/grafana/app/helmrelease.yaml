@@ -64,7 +64,7 @@ spec:
           datasource: Prometheus
           # renovate: depName="Kubernetes / System / CoreDNS"
           gnetId: 15762
-          revision: 19
+          revision: 20
         kubernetes-global:
           datasource: Prometheus
           # renovate: depName="Kubernetes / Views / Global"
