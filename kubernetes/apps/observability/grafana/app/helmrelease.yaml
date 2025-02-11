@@ -59,7 +59,7 @@ spec:
           datasource: Prometheus
           # renovate: depName="Kubernetes / System / API Server"
           gnetId: 15761
-          revision: 18
+          revision: 19
         kubernetes-coredns:
           datasource: Prometheus
           # renovate: depName="Kubernetes / System / CoreDNS"
