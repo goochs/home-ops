@@ -9,11 +9,3 @@ talosconfig
 *.agekey
 *.pub
 *.key
-# Private
-.private
-.bin
-.envrc.secret
-# Ansible
-.venv*
-# Taskfile
-.task
