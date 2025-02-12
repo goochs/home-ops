@@ -32,7 +32,6 @@ spec:
       name: sops-age
   dependsOn:
     - name: cluster-meta
-      namespace: flux-system
   interval: 30m
   path: ./kubernetes/apps
   prune: true
