@@ -12,7 +12,7 @@ spec:
     - name: external-secrets-stores
   interval: 30m
   path: ./kubernetes/apps/database/emqx/app
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -36,7 +36,7 @@ spec:
   postBuild:
     substitute:
       APP: emqx
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

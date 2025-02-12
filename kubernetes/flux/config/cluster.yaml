@@ -27,7 +27,7 @@ spec:
       name: sops-age
   interval: 30m
   path: ./kubernetes/flux
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

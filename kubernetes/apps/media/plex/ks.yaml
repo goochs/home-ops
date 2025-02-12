@@ -14,7 +14,7 @@ spec:
     substitute:
       APP: *app
       GATUS_PATH: /web/index.html
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

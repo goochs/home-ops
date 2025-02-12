@@ -14,7 +14,7 @@ spec:
     substitute:
       APP: *app
       GATUS_PATH: /talos_version
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

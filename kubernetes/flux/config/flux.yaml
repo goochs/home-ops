@@ -103,7 +103,7 @@ spec:
         kind: Deployment
         name: helm-controller
   path: ./
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: OCIRepository
     name: flux-manifests

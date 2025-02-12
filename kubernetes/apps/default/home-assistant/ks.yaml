@@ -16,7 +16,7 @@ spec:
       GATUS_SUBDOMAIN: hass
       VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_CAPACITY: 10Gi
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -37,7 +37,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/apps/default/home-assistant/appdaemon
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -14,7 +14,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: *app
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

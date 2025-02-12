@@ -17,7 +17,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

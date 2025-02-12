@@ -15,7 +15,7 @@ spec:
   postBuild:
     substitute:
       APP: prometheus
-  prune: true
+  prune: false #revert
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
