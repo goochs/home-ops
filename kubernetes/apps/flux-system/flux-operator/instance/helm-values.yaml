@@ -96,4 +96,4 @@ instance:
     name: home-kubernetes
     path: kubernetes/flux/cluster
     ref: refs/heads/main
-    url: https://github.com/goochs/home-ops
+    url: https://github.com/goochs/home-ops.git
