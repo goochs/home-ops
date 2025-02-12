@@ -4,4 +4,3 @@ resources:
   - ./cluster.yaml
   - ./gatus.yaml
   - ./ingress.yaml
-  - ../../../../templates/gatus/internal

@@ -8,6 +8,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../flux/components/gatus/internal
+    - ../../../flux/components/volsync
   dependsOn:
     - name: emqx-cluster
     - name: external-secrets-stores
