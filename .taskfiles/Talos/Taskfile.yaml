@@ -4,7 +4,8 @@ version: "3"
 
 vars:
   TALOS_DIR: "{{.KUBERNETES_DIR}}/bootstrap/talos"
-  TALHELPER_SECRET_FILE: "{{.TALOS_DIR}}/talsecret.sops.yaml"
+  TALHELPER_SECRET_FILE: "{{.TALOS_DIR}}/talsecret.yaml"
+  TALHELPER_SECRET_TEMPLATE: "{{.TALOS_DIR}}/talsecret.tmpl.yaml"
   TALHELPER_CONFIG_FILE: "{{.TALOS_DIR}}/talconfig.yaml"
   TALOSCONFIG: "{{.TALOS_DIR}}/clusterconfig/talosconfig"
 
@@ -82,14 +83,13 @@ tasks:
     desc: Generate the Talos secrets
     dir: "{{.TALOS_DIR}}"
     cmds:
-      - talhelper gensecret > {{.TALHELPER_SECRET_FILE}}
-      - task: :sops:.encrypt-file
-        vars:
-          file: "{{.TALHELPER_SECRET_FILE}}"
+      - op inject -i "{{.TALHELPER_SECRET_TEMPLATE}}" -o "{{.TALHELPER_SECRET_FILE}}"
     preconditions:
       - { msg: "Missing talhelper config file", sh: "test -f {{.TALHELPER_CONFIG_FILE}}" }
     status:
       - test -f "{{.TALHELPER_SECRET_FILE}}"
+
+
 
   bootstrap-apply:
     desc: Apply the Talos configs to the nodes in maintenance mode, using insecure
