@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Flux Diff"
+name: "Flux Local"
 
 on:
   pull_request:
@@ -12,15 +12,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  flux-diff:
-    name: Flux Diff
+  test:
+    name: Flux Local Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: pull
+
+      - name: Run flux-local test
+        uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
+        with:
+          args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/flux/cluster -v
+
+  diff:
+    name: Flux Local Diff
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
     strategy:
       matrix:
-        paths: ["kubernetes"]
         resources: ["helmrelease", "kustomization"]
     steps:
       - name: Checkout
@@ -40,8 +53,8 @@ jobs:
           args: >-
             diff ${{ matrix.resources }}
             --unified 6
-            --path /github/workspace/pull/${{ matrix.paths }}/flux/config
-            --path-orig /github/workspace/default/${{ matrix.paths }}/flux/config
+            --path /github/workspace/pull/kubernetes/flux/cluster
+            --path-orig /github/workspace/default/kubernetes/flux/cluster
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces
@@ -60,9 +73,19 @@ jobs:
         name: Add comment
         uses: mshick/add-pr-comment@v2
         with:
-          message-id: "${{ github.event.pull_request.number }}/${{ matrix.paths }}/${{ matrix.resources }}"
+          message-id: "${{ github.event.pull_request.number }}/kubernetes/${{ matrix.resources }}"
           message-failure: Diff was not successful
           message: |
             ```diff
             ${{ steps.diff.outputs.diff }}
             ```
+
+  flux-local-success:
+    needs: ["test", "diff"]
+    if: ${{ always() }}
+    name: Flux Local successful
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check flux-local status
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: exit 1
