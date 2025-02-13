@@ -6,4 +6,5 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./grafana/ks.yaml
   - ./namespace.yaml
+  - ./snmp-exporter/ks.yaml
   - ./kromgo/ks.yaml

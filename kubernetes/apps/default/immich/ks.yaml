@@ -18,7 +18,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-  prune: false #revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -40,7 +40,7 @@ spec:
     - name: cloudnative-pg
   interval: 30m
   path: ./kubernetes/apps/default/immich/db
-  prune: false #revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

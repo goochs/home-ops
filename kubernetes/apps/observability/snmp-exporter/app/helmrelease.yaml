@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app snmp-exporter
+spec:
+  chart:
+    spec:
+      chart: prometheus-snmp-exporter
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+      version: 6.0.0
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: observability
+  values:
+    fullnameOverride: *app
+    serviceMonitor:
+      enabled: true
+      params:
+        - name: ccr2004
+          module: ["mikrotik"]
+          target: 10.0.30.1
+          auth: ["public_v2"]
+        - name: crs317
+          module: ["mikrotik"]
+          target: 10.0.30.2
+          auth: ["public_v2"]
+        - name: hap_ax2
+          module: ["mikrotik"]
+          target: 10.0.30.5
+          auth: ["public_v2"]
+      path: /snmp
+      scrapeTimeout: 15s
+      relabelings:
+        - { sourceLabels: ["__param_target"], targetLabel: instance }

@@ -12,7 +12,7 @@ spec:
     - name: external-secrets-stores
   interval: 30m
   path: ./kubernetes/apps/network/external-dns/cloudflare
-  prune: false #revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -33,7 +33,7 @@ spec:
     - name: external-secrets-stores
   interval: 30m
   path: ./kubernetes/apps/network/external-dns/mikrotik
-  prune: false #revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

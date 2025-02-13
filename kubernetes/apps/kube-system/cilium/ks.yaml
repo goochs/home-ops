@@ -36,7 +36,7 @@ spec:
     - name: cilium
   interval: 30m
   path: ./kubernetes/apps/kube-system/cilium/config
-  prune: false #revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -19,7 +19,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: sso
-  prune: false #revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -38,7 +38,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/apps/security/authentik/valkey
-  prune: false #revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
