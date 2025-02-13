@@ -37,7 +37,7 @@ spec:
           module: ["mikrotik"]
           target: 10.0.30.2
           auth: ["public_v2"]
-        - name: hap_ax2
+        - name: hap-ax2
           module: ["mikrotik"]
           target: 10.0.30.5
           auth: ["public_v2"]
