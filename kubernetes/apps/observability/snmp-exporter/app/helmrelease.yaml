@@ -12,6 +12,9 @@ spec:
         name: prometheus-community
         namespace: flux-system
       version: 6.0.0
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: observability
   install:
     remediation:
       retries: 3
@@ -21,27 +24,24 @@ spec:
     remediation:
       retries: 3
       strategy: rollback
-  dependsOn:
-    - name: kube-prometheus-stack
-      namespace: observability
   values:
     fullnameOverride: *app
     serviceMonitor:
       enabled: true
       params:
-        - name: ccr2004
+        - auth: ["public_v2"]
           module: ["mikrotik"]
+          name: ccr2004
           target: 10.0.30.1
-          auth: ["public_v2"]
-        - name: crs317
+        - auth: ["public_v2"]
           module: ["mikrotik"]
+          name: crs317
           target: 10.0.30.2
-          auth: ["public_v2"]
-        - name: hap-ax2
+        - auth: ["public_v2"]
           module: ["mikrotik"]
+          name: hap-ax2
           target: 10.0.30.5
-          auth: ["public_v2"]
       path: /snmp
-      scrapeTimeout: 15s
       relabelings:
-        - { sourceLabels: ["__param_target"], targetLabel: instance }
+        - {sourceLabels: ["__param_target"], targetLabel: instance}
+      scrapeTimeout: 15s

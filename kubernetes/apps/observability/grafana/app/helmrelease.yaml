@@ -165,7 +165,8 @@ spec:
         - grafana.serek.xyz
       ingressClassName: internal
     persistence:
-      enabled: false
+      enabled: true
+      existingClaim: grafana
     serviceMonitor:
       enabled: true
     sidecar:
