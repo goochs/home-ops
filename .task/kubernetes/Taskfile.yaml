@@ -6,7 +6,6 @@ vars:
   KUBECONFORM_SCRIPT: "{{.SCRIPTS_DIR}}/kubeconform.sh"
 
 tasks:
-
   resources:
     desc: Gather common resources in your cluster, useful when asking for support
     cmds:
@@ -40,7 +39,3 @@ tasks:
     desc: Remove all pods not in a running state
     cmds:
       - kubectl delete pods --field-selector status.phase!=Running -A
-
-  .reset:
-    internal: true
-    cmd: rm -rf {{.KUBERNETES_DIR}}

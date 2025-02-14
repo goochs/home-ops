@@ -5,27 +5,25 @@ version: "3"
 vars:
   # Directories
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
-  PRIVATE_DIR: "{{.ROOT_DIR}}/.private"
   SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
   # Files
-  AGE_FILE: "{{.ROOT_DIR}}/age.key"
   KUBECONFIG_FILE: "{{.ROOT_DIR}}/kubeconfig"
 
 env:
   KUBECONFIG: "{{.KUBECONFIG_FILE}}"
-  SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
 
 includes:
   kubernetes:
     aliases: ["k8s"]
-    taskfile: .taskfiles/Kubernetes/Taskfile.yaml
-  flux: .taskfiles/Flux/Taskfile.yaml
-  repository:
-    aliases: ["repo"]
-    taskfile: .taskfiles/Repository/Taskfile.yaml
-  talos: .taskfiles/Talos/Taskfile.yaml
-  sops: .taskfiles/Sops/Taskfile.yaml
-  workstation: .taskfiles/Workstation/Taskfile.yaml
+    taskfile: .task/kubernetes/Taskfile.yaml
+  talos: .task/talos/Taskfile.yaml
+  bootstrap: .task/bootstrap/Taskfile.yaml
 
 tasks:
   default: task -l
+
+  reconcile:
+    desc: Force update Flux to pull in changes from git
+    cmd: flux --kubeconfig {{.KUBECONFIG_FILE}} reconcile --namespace flux-system kustomization cluster-apps --with-source
+    preconditions:
+      - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }
