@@ -14,10 +14,10 @@ spec:
       s3Credentials:
         accessKeyId:
           key: s3-access-key
-          name: immich-pg-secret
+          name: immich-admin-pg-secret
         secretAccessKey:
           key: s3-secret-key
-          name: immich-pg-secret
+          name: immich-admin-pg-secret
       serverName: &currentCluster immich-pg-v2
       wal:
         compression: bzip2
@@ -34,6 +34,12 @@ spec:
   enableSuperuserAccess: true
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
   instances: 3
+  managed:
+    roles:
+      - login: true
+        name: immich
+        passwordSecret:
+          name: immich-pg-secret
   monitoring:
     enablePodMonitor: true
   postgresql:
@@ -47,4 +53,4 @@ spec:
     size: 20Gi
     storageClass: openebs-hostpath
   superuserSecret:
-    name: immich-pg-secret
+    name: immich-admin-pg-secret
