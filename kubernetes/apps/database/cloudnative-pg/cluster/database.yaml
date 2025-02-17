@@ -2,6 +2,16 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
+  name: authentik
+spec:
+  cluster:
+    name: postgres16
+  name: authentik
+  owner: authentik
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
   name: bazarr
 spec:
   cluster:
