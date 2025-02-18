@@ -27,8 +27,23 @@ spec:
       retries: 3
       strategy: rollback
   values:
+    gateway:
+      enabled: true
+      ingress:
+        enabled: true
+        hosts:
+          - host: loki.serek.xyz
+            paths:
+              - path: /
+                pathType: Prefix
+        ingressClassName: internal
     loki:
+      auth_enabled: false
       storage:
+        bucketNames:
+          chunks:
+          admin:
+          rulers:
         s3:
           endpoint: https://s3.serek.xyz
         type: s3
