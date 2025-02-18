@@ -43,14 +43,17 @@ jobs:
           OCTODNS_CF_TOKEN: op://home-k8s/octodns/cfToken
       - name: Preview octodns config
         run: |
-          uv run octodns-sync --config-file=./octodns/config.yaml | tee octodns-preview.yaml
-      - name: Generate Diff
-        id: diff
+          uv run octodns-sync --config-file=./octodns/config.yaml | tee octodns-preview.md
+      - name: Generate Github preview
+        id: preview
         run: |
-          cat octodns-preview.yaml | tee $GITHUB_OUTPUT
+          cat octodns-preview.md
+          echo "preview<<EOF" >> $GITHUB_OUTPUT
+          cat octodns-preview.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
       - name: Add comment
         uses: mshick/add-pr-comment@v2
         with:
           message-failure: Diff was not successful
           message: |
-            ${{ steps.diff.outputs.diff }}
+            ${{ steps.preview.outputs.preview }}
