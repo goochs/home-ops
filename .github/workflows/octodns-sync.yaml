@@ -24,7 +24,7 @@ jobs:
           OCTODNS_CF_TOKEN: placeholder
         run: |
           uv run octodns-validate --config-file=./octodns/config.yaml --all
-  octodns-preview:
+  octodns-sync:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
