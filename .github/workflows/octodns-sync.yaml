@@ -1,9 +1,9 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: octodns-preview
+name: octodns-sync
 
 on:
-  pull_request:
+  push:
     paths:
       - octodns/**
       - .github/workflows/octodns.yml

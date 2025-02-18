@@ -3,7 +3,7 @@
 name: octodns-preview
 
 on:
-  push:
+  pull_request:
     paths:
       - octodns/**
       - .github/workflows/octodns.yml
