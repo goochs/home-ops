@@ -39,10 +39,19 @@ spec:
         ingressClassName: internal
     loki:
       auth_enabled: false
+      schemaConfig:
+        configs:
+          - from: "2024-01-01"
+            index:
+              period: 24h
+              prefix: loki_index_
+            object_store: s3
+            schema: v13
+            store: tsdb
       storage:
         bucketNames:
-          chunks: loki-chunks
           admin: loki-admin
+          chunks: loki-chunks
           rulers: loki-rulers
         s3:
           endpoint: https://s3.serek.xyz
