@@ -1,0 +1,26 @@
+---
+manager:
+  max_workers: 5
+
+providers:
+  config:
+    class: octodns.provider.yaml.YamlProvider
+    directory: ./octodns/config
+    default_ttl: 300
+    enforce_order: False
+  cloudflare:
+    class: octodns_cloudflare.CloudflareProvider
+    token: env/OCTODNS_CF_TOKEN
+
+processors:
+  ownership:
+    class: octodns.processor.ownership.OwnershipProcessor
+
+zones:
+  '*':
+    sources:
+      - config
+    targets:
+      - cloudflare
+    processors:
+      - ownership
