@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: loki
+spec:
+  chart:
+    spec:
+      chart: loki
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+      version: 6.27.0
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  install:
+    crds: Skip
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    crds: Skip
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    loki:
+      storage:
+        s3:
+          endpoint: https://s3.serek.xyz
+        type: s3
+  valuesFrom:
+    - kind: Secret
+      name: loki-secret
+      targetPath: loki.storage.s3.accessKeyId
+      valuesKey: s3-access-key
+    - kind: Secret
+      name: loki-secret
+      targetPath: loki.storage.s3.secretAccessKey
+      valuesKey: s3-secret-key
