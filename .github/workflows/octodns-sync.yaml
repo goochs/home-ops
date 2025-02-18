@@ -7,7 +7,7 @@ on:
     branches: ["main"]
     paths:
       - octodns/**
-      - .github/workflows/octodns.yml
+      - .github/workflows/octodns*.yaml
 
 jobs:
   octodns-lint:
