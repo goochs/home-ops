@@ -1,0 +1,14 @@
+[project]
+name = "home-ops"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[project.optional-dependencies]
+octodns = [
+  "octodns~=1.11.0",
+  "octodns-cloudflare~=0.0.9"
+]
+

@@ -1,0 +1,60 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: octodns-preview
+
+on:
+  pull_request_target:
+    branches: ["main"]
+    paths:
+      - octodns/**
+      - .github/workflows/octodns*.yaml
+
+jobs:
+  octodns-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Install the project
+        run: uv sync --extra octodns
+      - name: Validate octodns config
+        env:
+          OCTODNS_CF_TOKEN: placeholder
+        run: |
+          uv run octodns-validate --config-file=./octodns/config.yaml --all
+  octodns-preview:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Install the project
+        run: uv sync --extra octodns
+      - name: Load secret
+        uses: 1password/load-secrets-action@v2
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          OCTODNS_CF_TOKEN: op://home-k8s/octodns/cfToken
+      - name: Preview octodns config
+        run: |
+          uv run octodns-sync --config-file=./octodns/config.yaml | tee octodns-preview.md
+      - name: Generate Github preview
+        id: preview
+        run: |
+          cat octodns-preview.md
+          echo "preview<<EOF" >> $GITHUB_OUTPUT
+          cat octodns-preview.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Add comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message-failure: Diff was not successful
+          message: |
+            ${{ steps.preview.outputs.preview }}

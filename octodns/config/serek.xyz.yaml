@@ -1,0 +1,34 @@
+---
+'':
+  - type: MX
+    values:
+    - exchange: aspmx1.migadu.com.
+      preference: 10
+    - exchange: aspmx2.migadu.com.
+      preference: 20
+  - type: TXT
+    values:
+    - hosted-email-verify=12zjnrnn
+    - v=spf1 include:spf.migadu.com -all
+'*':
+  type: MX
+  values:
+  - exchange: aspmx1.migadu.com.
+    preference: 10
+  - exchange: aspmx2.migadu.com.
+    preference: 20
+_dmarc:
+  type: TXT
+  value: v=DMARC1\; p=quarantine\;
+key1._domainkey:
+  type: CNAME
+  value: key1.serek.xyz._domainkey.migadu.com.
+key2._domainkey:
+  type: CNAME
+  value: key2.serek.xyz._domainkey.migadu.com.
+key3._domainkey:
+  type: CNAME
+  value: key3.serek.xyz._domainkey.migadu.com.
+external:
+  type: CNAME
+  value: bastion.gooch.dev.
