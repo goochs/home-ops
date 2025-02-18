@@ -41,9 +41,9 @@ spec:
       auth_enabled: false
       storage:
         bucketNames:
-          chunks:
-          admin:
-          rulers:
+          chunks: loki-chunks
+          admin: loki-admin
+          rulers: loki-rulers
         s3:
           endpoint: https://s3.serek.xyz
         type: s3
