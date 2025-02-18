@@ -5,6 +5,9 @@ name: octodns-preview
 on:
   pull_request_target:
     branches: ["main"]
+    paths:
+      - octodns/**
+      - .github/workflows/octodns*.yaml
 
 jobs:
   octodns-lint:
