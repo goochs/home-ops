@@ -3,6 +3,7 @@
 - { name: "area/github",             color: "0e8a16" }
 - { name: "area/kubernetes",         color: "0e8a16" }
 - { name: "area/taskfile",           color: "0e8a16" }
+- { name: "area/dns",                color: "0e8a16" }
 # Distro
 - { name: "distro/talos",            color: "ffc300" }
 # Renovate
