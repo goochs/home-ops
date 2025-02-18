@@ -3,10 +3,8 @@
 name: octodns-preview
 
 on:
-  pull_request:
-    paths:
-      - octodns/**
-      - .github/workflows/octodns.yml
+  pull_request_target:
+    branches: ["main"]
 
 jobs:
   octodns-lint:

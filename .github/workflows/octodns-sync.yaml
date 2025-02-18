@@ -4,6 +4,7 @@ name: octodns-sync
 
 on:
   push:
+    branches: ["main"]
     paths:
       - octodns/**
       - .github/workflows/octodns.yml
