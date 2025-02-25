@@ -39,7 +39,7 @@ spec:
             image:
               pullPolicy: IfNotPresent
               repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.31.2.4975@sha256:a0ac7c3b5d730abbb3bb54729096559e96fad998aec2b3b99d80576bb6ca4213
+              tag: 1.31.2.4975@sha256:795ceb070065b3bfafb96b7987a9f340cb664af8bfe8ad3dee77064fbb48d35c
             resources:
               limits:
                 memory: 250Mi
