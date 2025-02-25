@@ -105,4 +105,4 @@ securityContext:
     cleanCiliumState:
       - NET_ADMIN
       - SYS_ADMIN
-      - SYS_RESOURC
+      - SYS_RESOURCE
