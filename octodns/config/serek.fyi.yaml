@@ -2,30 +2,17 @@
 '':
   - type: MX
     values:
-    - exchange: aspmx1.migadu.com.
-      preference: 10
-    - exchange: aspmx2.migadu.com.
-      preference: 20
+    - exchange: serek-fyi.mail.protection.outlook.com.
+      preference: 0
   - type: TXT
     values:
-    - hosted-email-verify=9jb1gqfi
-    - v=spf1 include:spf.migadu.com -all
-'*':
-  type: MX
-  values:
-  - exchange: aspmx1.migadu.com.
-    preference: 10
-  - exchange: aspmx2.migadu.com.
-    preference: 20
-_dmarc:
-  type: TXT
-  value: v=DMARC1\; p=quarantine\;
-key1._domainkey:
+    - v=spf1 include:spf.protection.outlook.com -all
+selector1._domainkey:
   type: CNAME
-  value: key1.serek.fyi._domainkey.migadu.com.
-key2._domainkey:
+  value: selector1-serek-fyi._domainkey.goochseth.onmicrosoft.com.
+selector2._domainkey:
   type: CNAME
-  value: key2.serek.fyi._domainkey.migadu.com.
-key3._domainkey:
+  value: selector2-serek-fyi._domainkey.goochseth.onmicrosoft.com.
+autodiscover:
   type: CNAME
-  value: key3.serek.fyi._domainkey.migadu.com.
+  value: autodiscover.outlook.com.
