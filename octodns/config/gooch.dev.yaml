@@ -2,33 +2,24 @@
 '':
   - type: MX
     values:
-    - exchange: aspmx1.migadu.com.
-      preference: 10
-    - exchange: aspmx2.migadu.com.
-      preference: 20
+    - exchange: gooch-dev.mail.protection.outlook.com
+      preference: 0
+      ttl: 3600
   - type: TXT
     values:
-    - hosted-email-verify=l854aw2g
-    - v=spf1 include:spf.migadu.com -all
-'*':
-  type: MX
-  values:
-  - exchange: aspmx1.migadu.com.
-    preference: 10
-  - exchange: aspmx2.migadu.com.
-    preference: 20
-_dmarc:
-  type: TXT
-  value: v=DMARC1\; p=quarantine\;
-key1._domainkey:
+    - v=spf1 include:spf.protection.outlook.com -all
+selector1._domainkey:
   type: CNAME
-  value: key1.gooch.dev._domainkey.migadu.com.
-key2._domainkey:
+  value: selector1-gooch-dev._domainkey.goochseth.onmicrosoft.com
+  ttl: 3600
+selector2._domainkey:
   type: CNAME
-  value: key2.gooch.dev._domainkey.migadu.com.
-key3._domainkey:
+  value: selector2-gooch-dev._domainkey.goochseth.onmicrosoft.com
+  ttl: 3600
+autodiscover:
   type: CNAME
-  value: key3.gooch.dev._domainkey.migadu.com.
+  value: autodiscover.outlook.com.
+  ttl: 3600
 bastion:
   type: A
   value: 131.186.0.23
