@@ -2,7 +2,7 @@
 '':
   - type: MX
     values:
-    - exchange: gooch-dev.mail.protection.outlook.com
+    - exchange: gooch-dev.mail.protection.outlook.com.
       preference: 0
       ttl: 3600
   - type: TXT
@@ -10,11 +10,11 @@
     - v=spf1 include:spf.protection.outlook.com -all
 selector1._domainkey:
   type: CNAME
-  value: selector1-gooch-dev._domainkey.goochseth.onmicrosoft.com
+  value: selector1-gooch-dev._domainkey.goochseth.onmicrosoft.com.
   ttl: 3600
 selector2._domainkey:
   type: CNAME
-  value: selector2-gooch-dev._domainkey.goochseth.onmicrosoft.com
+  value: selector2-gooch-dev._domainkey.goochseth.onmicrosoft.com.
   ttl: 3600
 autodiscover:
   type: CNAME
