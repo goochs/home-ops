@@ -44,4 +44,4 @@ jobs:
           OCTODNS_CF_TOKEN: op://home-k8s/octodns/cfToken
       - name: Apply octodns config
         run: |
-          uv run octodns-sync --config-file=./octodns/config.yaml --doit
+          uv run octodns-sync --config-file=./octodns/config.yaml --doit --force
