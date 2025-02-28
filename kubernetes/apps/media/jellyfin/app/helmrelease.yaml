@@ -98,7 +98,11 @@ spec:
         type: emptyDir
     service:
       app:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.0.41.55
         controller: *app
+        externalTrafficPolicy: Cluster
         ports:
           http:
             port: *port
+        type: LoadBalancer
