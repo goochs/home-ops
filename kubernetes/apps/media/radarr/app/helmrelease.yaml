@@ -37,7 +37,7 @@ spec:
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
               RADARR__LOG__LEVEL: info
-              RADARR__SERVER__PORT: 7878
+              RADARR__SERVER__PORT: &port 80
               RADARR__UPDATE__BRANCH: develop
               TZ: America/New_York
             envFrom:
@@ -54,7 +54,7 @@ spec:
                   failureThreshold: 3
                   httpGet:
                     path: /ping
-                    port: 7878
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -102,4 +102,4 @@ spec:
         controller: *app
         ports:
           http:
-            port: 7878
+            port: *port

@@ -37,7 +37,7 @@ spec:
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__LEVEL: info
-              SONARR__SERVER__PORT: 8989
+              SONARR__SERVER__PORT: &port 80
               SONARR__UPDATE__BRANCH: develop
               TZ: America/New_York
             envFrom:
@@ -54,7 +54,7 @@ spec:
                   failureThreshold: 3
                   httpGet:
                     path: /ping
-                    port: 8989
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -102,4 +102,4 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8989
+            port: *port
