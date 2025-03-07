@@ -31,6 +31,7 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
+            args: ["sync"]
             envFrom:
               - secretRef:
                   name: recyclarr-secret
