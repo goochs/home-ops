@@ -7,5 +7,5 @@ resources:
   - ./grafana/ks.yaml
   - ./namespace.yaml
   - ./snmp-exporter/ks.yaml
-  - ./loki/ks.yaml
+  # - ./loki/ks.yaml
   - ./kromgo/ks.yaml
