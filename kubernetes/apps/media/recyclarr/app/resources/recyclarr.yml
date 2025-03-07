@@ -6,14 +6,22 @@ sonarr:
     api_key: !env_var SONARR_API_KEY
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
+    media_naming:
+      series: jellyfin
+      season: default
+      episodes:
+        rename: true
+        standard: default
+        daily: default
+        anime: default
     quality_profiles:
       - name: WEB-1080p
       - name: WEB-2160p
     include:
       - template: sonarr-quality-definition-series
-      - template: sonarr-v4-quality-profile-web-1080p
+      - template: sonarr-v4-quality-profile-web-1080p-alternative
       - template: sonarr-v4-custom-formats-web-1080p
-      - template: sonarr-v4-quality-profile-web-2160p
+      - template: sonarr-v4-quality-profile-web-2160p-alternative
       - template: sonarr-v4-custom-formats-web-2160p
     custom_formats:
       - trash_ids:
@@ -25,6 +33,19 @@ sonarr:
         assign_scores_to:
           - name: WEB-1080p
           - name: WEB-2160p
+      - trash_ids:
+          - 9b27ab6498ec0f31a3353992e19434ca # DV (WEBDL)
+          - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10+ Boost
+          - 385e9e8581d33133c3961bdcdeffb7b4 # DV HDR10+ Boost
+
+          - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
+        assign_scores_to:
+          - name: WEB-2160p
+      - trash_ids:
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+        assign_scores_to:
+          - name: WEB-2160p
+            score: 0
 
 radarr:
   radarr:
@@ -32,13 +53,14 @@ radarr:
     api_key: !env_var RADARR_API_KEY
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
+    media_naming:
+      folder: jellyfin
+      movie:
+        rename: true
+        standard: jellyfin-imdb
     quality_profiles:
-      - name: SQP-1 WEB (1080p)
       - name: SQP-2
     include:
-      - template: radarr-quality-definition-sqp-streaming
-      - template: radarr-quality-profile-sqp-1-web-1080p
-      - template: radarr-custom-formats-sqp-1-web-1080p
       - template: radarr-quality-definition-sqp-uhd
       - template: radarr-quality-profile-sqp-2
       - template: radarr-custom-formats-sqp-2
@@ -51,13 +73,15 @@ radarr:
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
           - f537cf427b64c38c8e36298f657e4828 # Scene
-        assign_scores_to:
-          - name: SQP-1 WEB (1080p)
-          - name: SQP-2
-      - trash_ids:
+
           - b17886cb4158d9fea189859409975758 # HDR10+ Boost
           - 55a5b50cb416dea5a50c4955896217ab # DV HDR10+ Boost
           - 923b6abef9b17f937fab56cfcf89e1f1 # DV (WEBDL)
         assign_scores_to:
           - name: SQP-2
+      - trash_ids:
+          - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
+        assign_scores_to:
+          - name: SQP-2
+            score: 0
 
