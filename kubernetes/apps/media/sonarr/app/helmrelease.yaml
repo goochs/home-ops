@@ -34,8 +34,11 @@ spec:
             env:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: 8989
+              SONARR__UPDATE__BRANCH: develop
               TZ: America/New_York
             envFrom:
               - secretRef:
@@ -67,11 +70,11 @@ spec:
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
-        fsGroup: 568
+        fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 568
+        runAsGroup: 3000
         runAsNonRoot: true
-        runAsUser: 568
+        runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
