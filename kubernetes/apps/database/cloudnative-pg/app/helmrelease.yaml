@@ -30,4 +30,5 @@ spec:
     monitoring:
       grafanaDashboard:
         create: true
+      podMonitorEnabled: true
     replicaCount: 2
