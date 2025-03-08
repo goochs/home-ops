@@ -30,3 +30,4 @@ spec:
     monitoring:
       grafanaDashboard:
         create: true
+    replicaCount: 2
