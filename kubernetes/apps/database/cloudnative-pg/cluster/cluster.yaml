@@ -65,13 +65,17 @@ spec:
   postgresql:
     parameters:
       max_connections: "250"
-      shared_buffers: 128MB
+      shared_buffers: "256MB"
   primaryUpdateStrategy: unsupervised
   resources:
     limits:
-      memory: 8Gi
+      memory: 2Gi
+      cpu: 1
+      hugepages-2Mi: 1Gi
     requests:
-      cpu: 500m
+      memory: 2Gi
+      cpu: 1
+      hugepages-2Mi: 1Gi
   storage:
     size: 20Gi
     storageClass: openebs-hostpath
