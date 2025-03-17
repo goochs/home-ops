@@ -56,6 +56,7 @@ spec:
           ruler: loki-ruler
         s3:
           endpoint: https://s3.serek.xyz
+          s3ForcePathStyle: true
         type: s3
     minio:
       enabled: false
