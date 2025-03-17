@@ -69,13 +69,13 @@ spec:
   primaryUpdateStrategy: unsupervised
   resources:
     limits:
-      memory: 2Gi
       cpu: 1
       hugepages-2Mi: 1Gi
+      memory: 2Gi
     requests:
-      memory: 2Gi
       cpu: 1
       hugepages-2Mi: 1Gi
+      memory: 2Gi
   storage:
     size: 20Gi
     storageClass: openebs-hostpath
