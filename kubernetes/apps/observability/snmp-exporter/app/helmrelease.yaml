@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-      version: 8.0.0
+      version: 9.0.0
   dependsOn:
     - name: kube-prometheus-stack
       namespace: observability
