@@ -28,7 +28,7 @@ spec:
       strategy: rollback
   values:
     backend:
-      replicas: 2
+      replicas: 3
     deploymentMode: SimpleScalable
     loki:
       auth_enabled: false
@@ -61,9 +61,9 @@ spec:
     minio:
       enabled: false
     read:
-      replicas: 2
+      replicas: 3
     write:
-      replicas: 2
+      replicas: 3
   valuesFrom:
     - kind: Secret
       name: loki-secret

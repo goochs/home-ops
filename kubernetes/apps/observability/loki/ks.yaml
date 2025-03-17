@@ -8,8 +8,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../flux/components/gatus/internal
   interval: 30m
   path: ./kubernetes/apps/observability/loki/app
   postBuild:
@@ -20,5 +18,5 @@ spec:
     kind: GitRepository
     name: home-kubernetes
   targetNamespace: observability
-  timeout: 5m
+  timeout: 15m
   wait: false
