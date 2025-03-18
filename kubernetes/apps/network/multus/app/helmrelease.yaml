@@ -43,8 +43,8 @@ spec:
         initContainers:
           cni-plugins:
             image:
-              repository: ghcr.io/buroa/cni-plugins
-              tag: 1.6.2@sha256:fd78504277d802ec8ad8d8d8c919edfa783ca69065232e59292427f59ab76fb2
+              repository: ghcr.io/home-operations/cni-plugins
+              tag: 1.6.2@sha256:22a3350100228f06c30760101d30e1292698e30d1fa4d896911b6620a82a4de8
         type: daemonset
     defaultPodOptions:
       hostNetwork: true
