@@ -70,6 +70,8 @@ spec:
       enabled: false
     lokiCanary:
       enabled: false
+    test:
+      enabled: false
   valuesFrom:
     - kind: Secret
       name: loki-secret
