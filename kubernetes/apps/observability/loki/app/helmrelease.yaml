@@ -64,6 +64,12 @@ spec:
       replicas: 3
     write:
       replicas: 3
+    chunksCache:
+      enabled: false
+    resultsCache:
+      enabled: false
+    lokiCanary:
+      enabled: false
   valuesFrom:
     - kind: Secret
       name: loki-secret
