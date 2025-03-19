@@ -39,6 +39,7 @@ spec:
       - --crd-source-kind=DNSEndpoint
       - --ignore-ingress-tls-spec
       - --ingress-class=external
+      - --cloudflare-proxied
     fullnameOverride: *app
     podAnnotations:
       secret.reloader.stakater.com/reload: *secret
