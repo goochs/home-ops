@@ -44,7 +44,7 @@ spec:
           cni-plugins:
             image:
               repository: ghcr.io/home-operations/cni-plugins
-              tag: 1.6.2@sha256:22a3350100228f06c30760101d30e1292698e30d1fa4d896911b6620a82a4de8
+              tag: 1.6.2@sha256:f01b428700241feace15c2f36f9953ead555a1db4ddede38ef0d364701335758
         type: daemonset
     defaultPodOptions:
       hostNetwork: true
