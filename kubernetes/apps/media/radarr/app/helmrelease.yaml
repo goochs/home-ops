@@ -44,8 +44,8 @@ spec:
               - secretRef:
                   name: radarr-secret
             image:
-              repository: ghcr.io/onedr0p/radarr-develop
-              tag: 5.20.1.9773@sha256:be8f5765429aad2f2b68352680b9fde0e2bfbeaef8628841eaafa5513e1037c1
+              repository: ghcr.io/home-operations/radarr
+              tag: 5.22.2.9862@sha256:2e600980e98ce45bdbc7182fc1a77990b7a7963d8fe8f1a27a7695257d4767dc
             probes:
               liveness: &probes
                 custom: true

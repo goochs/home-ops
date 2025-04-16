@@ -38,8 +38,8 @@ spec:
                   name: prowlarr-secret
             image:
               pullPolicy: IfNotPresent
-              repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.32.2.4987@sha256:0ceaaf075e14ab9f25be8feb6c5332c2a7bfb09e118f15769f423ffc9f8ffb04
+              repository: ghcr.io/home-operations/prowlarr
+              tag: 1.34.0.5016@sha256:8060915bd5c0a9774ef0f7e8ba3f282aa6890c82da8aae8809d205cd5e73b2ca
             resources:
               limits:
                 memory: 250Mi

@@ -44,8 +44,8 @@ spec:
               - secretRef:
                   name: sonarr-secret
             image:
-              repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.14.2938@sha256:11c99940edbb234dd9c71b114e9d17937aaf57b23c8c52c0e164342b9a0b9d7e
+              repository: ghcr.io/home-operations/sonarr
+              tag: 4.0.14.2938@sha256:60686ca3be7b1f182f71c459b62450affd6de79d2d4baa90256f0fae76742132 
             probes:
               liveness: &probes
                 custom: true
