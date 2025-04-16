@@ -105,7 +105,7 @@ spec:
           datasource: Prometheus
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
-          revision: 37
+          revision: 39
         node-feature-discovery:
           datasource: Prometheus
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
