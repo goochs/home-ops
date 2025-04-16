@@ -31,4 +31,3 @@ spec:
             port  80
             labels job=fluentbit
             auto_kubernetes_labels on
-
