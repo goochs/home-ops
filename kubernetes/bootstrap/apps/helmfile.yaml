@@ -27,7 +27,7 @@ releases:
     namespace: kube-system
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/kube-system/coredns/app/helm-values.yaml']
     needs: ['kube-system/cilium']
-    version: 1.39.2
+    version: 1.40.0
 
   - name: flux-operator
     namespace: flux-system
