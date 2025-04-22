@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: coredns
         namespace: flux-system
-      version: 1.39.2
+      version: 1.40.0
   install:
     remediation:
       retries: 3
