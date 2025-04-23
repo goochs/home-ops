@@ -63,6 +63,9 @@ spec:
     persistence:
       updater:
         type: emptyDir
+        globalMounts:
+          - path: /updater/data
+            readOnly: false
     service:
       app:
         controller: *name
