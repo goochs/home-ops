@@ -26,7 +26,7 @@ spec:
       ddns:
         containers:
           app:
-            envFron:
+            envFrom:
               - secretRef:
                   name: ddns-secret
             image:
