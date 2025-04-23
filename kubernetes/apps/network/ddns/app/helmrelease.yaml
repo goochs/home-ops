@@ -60,6 +60,9 @@ spec:
                 service:
                   identifier: app
                   port: http
+    persistence:
+      updater:
+        type: emptyDir
     service:
       app:
         controller: *name
