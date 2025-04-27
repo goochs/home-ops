@@ -74,7 +74,7 @@ spec:
               UNIQUE_FILENAMES: true
             image:
               repository: ghcr.io/home-operations/k8s-sidecar
-              tag: 1.30.3@sha256:ec399adf3e8035fd50e537899e96eae06ccc58891e00662a524b6086d5909157
+              tag: 1.30.3@sha256:39cca7abcad8f1621b9462d95f7d0e60301b92fcb0ff4de0ad4561859011cddf
             resources:
               limits:
                 memory: 128Mi
