@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-      version: 19.1.0
+      version: 20.0.0
   install:
     remediation:
       retries: 3
