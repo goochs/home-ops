@@ -1,4 +1,20 @@
 ---
+'':
+  - type: MX
+    ttl: 3600
+    values:
+    - exchange: mx01.mail.icloud.com.
+      preference: 10
+    - exchange: mx02.mail.icloud.com.
+      preference: 10
+  - type: TXT
+    ttl: 3600
+    values:
+    - apple-domain=U4EbyoP979v69t04; v=spf1 include:icloud.com ~all
+sig1._domainkey:
+  type: CNAME
+  ttl: 3600
+  value: sig1.dkim.gooch.dev.at.icloudmailadmin.com.
 bastion:
   type: A
   value: 131.186.0.23
