@@ -62,10 +62,10 @@ spec:
                   port: http
     persistence:
       updater:
-        type: emptyDir
         globalMounts:
           - path: /updater/data
             readOnly: false
+        type: emptyDir
     service:
       app:
         controller: *name

@@ -1,21 +1,4 @@
 ---
-'':
-  - type: MX
-    values:
-    - exchange: gooch-dev.mail.protection.outlook.com.
-      preference: 0
-  - type: TXT
-    values:
-    - v=spf1 include:spf.protection.outlook.com -all
-selector1._domainkey:
-  type: CNAME
-  value: selector1-gooch-dev._domainkey.goochseth.onmicrosoft.com.
-selector2._domainkey:
-  type: CNAME
-  value: selector2-gooch-dev._domainkey.goochseth.onmicrosoft.com.
-autodiscover:
-  type: CNAME
-  value: autodiscover.outlook.com.
 bastion:
   type: A
   value: 131.186.0.23
