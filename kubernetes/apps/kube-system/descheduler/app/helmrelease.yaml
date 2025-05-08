@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: descheduler
         namespace: flux-system
-      version: 0.32.2
+      version: 0.33.0
   install:
     remediation:
       retries: 3
