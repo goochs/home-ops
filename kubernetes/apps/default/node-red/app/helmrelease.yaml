@@ -72,7 +72,7 @@ spec:
         globalMounts:
           - path: /data
       tmp:
-        type: EmptyDir
+        type: emptyDir
     service:
       app:
         controller: *app
