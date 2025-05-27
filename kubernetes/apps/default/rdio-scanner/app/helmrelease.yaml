@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app rdio-scanner
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.7.3
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      rdio-scanner:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              TZ: America/New_York
+            image:
+              repository: docker.io/chuot/rdio-scanner
+              tag: latest@sha256:7a34dda5949ff44a1b7c0f5a1b4bb445f606000d1309d29272bf28d5f566afb3
+            probes:
+              readiness: &probes
+                spec:
+                  httpGet:
+                    path: /admin
+                    port: 3000
+              liveness: *probes
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 100m
+                memory: 100Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: rdio.serek.xyz
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        advancedMounts:
+          rdio-scanner:
+            app:
+              - path: /app/data
+        existingClaim: *app
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 3000

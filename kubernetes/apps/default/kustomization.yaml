@@ -6,5 +6,6 @@ resources:
   - ./esphome/ks.yaml
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
+  - ./rdio-scanner/ks.yaml
   - ./z2m/ks.yaml
   - ./namespace.yaml
