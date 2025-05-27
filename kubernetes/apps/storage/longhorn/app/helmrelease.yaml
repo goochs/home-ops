@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
-      version: 1.8.1
+      version: 1.9.0
   install:
     remediation:
       retries: 3
