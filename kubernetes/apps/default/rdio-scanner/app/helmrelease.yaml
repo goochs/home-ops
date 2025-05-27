@@ -37,12 +37,12 @@ spec:
               repository: docker.io/chuot/rdio-scanner
               tag: latest@sha256:7a34dda5949ff44a1b7c0f5a1b4bb445f606000d1309d29272bf28d5f566afb3
             probes:
-              readiness: &probes
+              liveness: &probes
                 spec:
                   httpGet:
                     path: /admin
                     port: 3000
-              liveness: *probes
+              readiness: *probes
             resources:
               limits:
                 memory: 1Gi
