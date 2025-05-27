@@ -2,10 +2,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./actual/ks.yaml
-  - ./esphome/ks.yaml
-  - ./home-assistant/ks.yaml
+  # - ./actual/ks.yaml
+  # - ./esphome/ks.yaml
+  # - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
-  - ./rdio-scanner/ks.yaml
-  - ./z2m/ks.yaml
+  # - ./rdio-scanner/ks.yaml
+  # - ./z2m/ks.yaml
   - ./namespace.yaml
