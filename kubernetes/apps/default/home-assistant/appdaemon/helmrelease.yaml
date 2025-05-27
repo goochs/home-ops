@@ -40,7 +40,7 @@ spec:
                   name: appdaemon-secret
             image:
               repository: docker.io/acockburn/appdaemon
-              tag: 4.4.2@sha256:9619fc18bc53082ae2dc680e80f1bcb634c793a74b2114779df1b381ffa0736c
+              tag: 4.5.1@sha256:5d63be2b0bd4dedafd742a173d81f447534efbff049d6c2556c058af3bd3ed52
             resources:
               limits:
                 memory: 4Gi
