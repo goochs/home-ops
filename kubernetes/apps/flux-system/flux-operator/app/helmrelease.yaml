@@ -20,7 +20,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: uninstall #UNDO
+      strategy: rollback
   valuesFrom:
     - kind: ConfigMap
       name: flux-operator-helm-values

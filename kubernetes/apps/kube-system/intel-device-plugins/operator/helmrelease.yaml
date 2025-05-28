@@ -25,4 +25,4 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-      strategy: uninstall #UNDO
+      strategy: rollback
