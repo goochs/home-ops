@@ -32,7 +32,7 @@ spec:
         containers:
           app:
             env:
-              DASH_URL: "http://$HOSTNAME:5050"
+              DASH_URL: "http://0.0.0.0:5050"
               HA_URL: "http://home-assistant.default.svc.cluster.local:8123"
               TZ: America/New_York
             envFrom:
@@ -40,7 +40,7 @@ spec:
                   name: appdaemon-secret
             image:
               repository: docker.io/acockburn/appdaemon
-              tag: 4.5.1@sha256:5d63be2b0bd4dedafd742a173d81f447534efbff049d6c2556c058af3bd3ed52
+              tag: 4.5.3@sha256:3ba02c96703faefe38b0edb1d1f8ef43872fb38f93af2ffa8f862d3d9bc94ea2
             resources:
               limits:
                 memory: 4Gi
