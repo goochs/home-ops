@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name ddns
+  name: &app ddns
 spec:
   chart:
     spec:
@@ -68,7 +68,7 @@ spec:
         type: emptyDir
     service:
       app:
-        controller: *name
+        controller: *app
         ports:
           http:
             port: 8000

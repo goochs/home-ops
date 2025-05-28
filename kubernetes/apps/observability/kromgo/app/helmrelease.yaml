@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name kromgo
+  name: &app kromgo
 spec:
   chart:
     spec:
@@ -86,7 +86,7 @@ spec:
         type: configMap
     service:
       app:
-        controller: *name
+        controller: *app
         ports:
           health:
             port: *healthPort

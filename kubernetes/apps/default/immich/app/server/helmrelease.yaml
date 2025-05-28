@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name immich-server
+  name: &app immich-server
 spec:
   chart:
     spec:

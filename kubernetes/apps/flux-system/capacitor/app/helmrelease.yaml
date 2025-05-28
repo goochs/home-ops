@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name capacitor
+  name: &app capacitor
 spec:
   chart:
     spec:
@@ -63,7 +63,7 @@ spec:
                   port: http
     service:
       app:
-        controller: *name
+        controller: *app
         ports:
           http:
             port: 9000
