@@ -35,7 +35,7 @@ spec:
               TZ: America/New_York
             image:
               repository: docker.io/chuot/rdio-scanner
-              tag: latest@sha256:7a34dda5949ff44a1b7c0f5a1b4bb445f606000d1309d29272bf28d5f566afb3
+              tag: latest@sha256:aa3bd0b5137580e813836f7e0705af7d66412a28bc73f912c95eacbe70bcd4ef
             probes:
               liveness: &probes
                 spec:
