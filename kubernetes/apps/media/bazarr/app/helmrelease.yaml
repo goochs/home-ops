@@ -23,7 +23,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall #UNDO
   values:
     controllers:
       bazarr:

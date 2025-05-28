@@ -23,7 +23,7 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall #UNDO
   values:
     prometheus:
       enabled: true

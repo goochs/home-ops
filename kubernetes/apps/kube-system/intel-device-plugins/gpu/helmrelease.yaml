@@ -23,7 +23,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall #UNDO
   values:
     name: intel-device-plugin-gpu
     nodeFeatureRule: false

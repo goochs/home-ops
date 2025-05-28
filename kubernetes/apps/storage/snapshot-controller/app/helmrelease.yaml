@@ -22,7 +22,7 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall #UNDO
   values:
     controller:
       replicaCount: 2

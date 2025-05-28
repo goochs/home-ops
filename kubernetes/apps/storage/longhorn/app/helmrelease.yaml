@@ -21,7 +21,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall #UNDO
   values:
     defaultSettings:
       defaultDataPath: /var/mnt/extra/longhorn

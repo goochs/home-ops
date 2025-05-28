@@ -20,7 +20,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall #UNDO
   valuesFrom:
     - kind: ConfigMap
       name: coredns-helm-values

@@ -25,7 +25,7 @@ spec:
     crds: Skip
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall #UNDO
   values:
     backend:
       replicas: 3
