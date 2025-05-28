@@ -81,8 +81,8 @@ spec:
               requests:
                 cpu: 10m
             restartPolicy: Always
-      serviceAccount:
-        identifier: *app
+        serviceAccount:
+          identifier: *app
     defaultPodOptions:
       securityContext:
         fsGroup: 3000
