@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      version: 3.7.3
+      version: 4.0.1
   install:
     remediation:
       retries: 3
@@ -45,6 +45,8 @@ spec:
             image:
               repository: ghcr.io/home-operations/cni-plugins
               tag: 1.7.1@sha256:a2b59b11a9cd50b5e699d7162a899a81c9b30a9386378b1deb01c054eedb38fe
+        serviceAccount:
+          identifier: *app
         type: daemonset
     defaultPodOptions:
       hostNetwork: true
@@ -60,5 +62,4 @@ spec:
         hostPath: /opt/cni/bin
         type: hostPath
     serviceAccount:
-      create: true
-      name: *app
+      multus:
