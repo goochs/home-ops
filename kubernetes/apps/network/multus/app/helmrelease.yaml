@@ -62,4 +62,4 @@ spec:
         hostPath: /opt/cni/bin
         type: hostPath
     serviceAccount:
-      multus:
+      multus: {}

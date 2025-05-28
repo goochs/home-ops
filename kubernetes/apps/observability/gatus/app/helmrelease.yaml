@@ -118,7 +118,7 @@ spec:
           http:
             port: *port
     serviceAccount:
-      gatus:
+      gatus: {}
     serviceMonitor:
       app:
         endpoints:
