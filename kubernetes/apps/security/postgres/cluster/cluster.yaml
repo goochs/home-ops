@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres16
+  name: security-pg
 spec:
   backup:
     barmanObjectStore: &barmanObjectStore
@@ -14,18 +14,18 @@ spec:
       s3Credentials:
         accessKeyId:
           key: s3-access-key
-          name: cloudnative-pg-secret
+          name: security-pg-secret
         secretAccessKey:
           key: s3-secret-key
-          name: cloudnative-pg-secret
-      serverName: &currentCluster postgres16-v2
+          name: security-pg-secret
+      serverName: &currentCluster security-pg-v1
       wal:
         compression: bzip2
         maxParallel: 8
     retentionPolicy: 30d
   # bootstrap:
   #   recovery:
-  #     source: &previousCluster postgres16-v1
+  #     source: &previousCluster security-pg-v1
   # externalClusters:
   #   - name: *previousCluster
   #     barmanObjectStore:
@@ -37,29 +37,9 @@ spec:
   managed:
     roles:
       - login: true
-        name: authentik
+        name: lldap
         passwordSecret:
-          name: authentik-pg-secret
-      - login: true
-        name: bazarr
-        passwordSecret:
-          name: bazarr-pg-secret
-      - login: true
-        name: prowlarr
-        passwordSecret:
-          name: prowlarr-pg-secret
-      - login: true
-        name: radarr
-        passwordSecret:
-          name: radarr-pg-secret
-      - login: true
-        name: sonarr
-        passwordSecret:
-          name: sonarr-pg-secret
-      - login: true
-        name: gatus
-        passwordSecret:
-          name: gatus-pg-secret
+          name: lldap-pg-secret
   monitoring:
     enablePodMonitor: true
   postgresql:
@@ -80,4 +60,4 @@ spec:
     size: 20Gi
     storageClass: openebs-hostpath
   superuserSecret:
-    name: cloudnative-pg-secret
+    name: security-pg-secret

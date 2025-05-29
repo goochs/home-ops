@@ -49,6 +49,15 @@ spec:
     shared_preload_libraries:
       - "vectors.so"
   primaryUpdateStrategy: unsupervised
+  resources:
+    limits:
+      cpu: 1
+      hugepages-2Mi: 512Mi
+      memory: 2Gi
+    requests:
+      cpu: 1
+      hugepages-2Mi: 512Mi
+      memory: 2Gi
   storage:
     size: 20Gi
     storageClass: openebs-hostpath
