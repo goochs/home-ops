@@ -26,13 +26,13 @@ spec:
       strategy: rollback
   values:
     catalog:
-      faster-whisper-medium-en-cpu:
-        enabled: true
-        minReplicas: 3
       faster-whisper-large-cpu:
         enabled: true
-        features: ["SpeechToText"]
-        url: "hf://Systran/faster-whisper-large-v3"
         engine: FasterWhisper
+        features: ["SpeechToText"]
+        minReplicas: 3
         resourceProfile: cpu:2
+        url: "hf://Systran/faster-whisper-large-v3"
+      faster-whisper-medium-en-cpu:
+        enabled: true
         minReplicas: 3
