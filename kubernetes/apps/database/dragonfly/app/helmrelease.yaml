@@ -1,0 +1,98 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app dragonfly-operator
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.0.1
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      dragonfly-operator:
+        containers:
+          app:
+            args:
+              - --health-probe-bind-address=:8081
+              - --metrics-bind-address=:8080
+            command: ["/manager"]
+            image:
+              repository: ghcr.io/dragonflydb/operator
+              tag: v1.1.11@sha256:11cef45ec1079b9d97930fc99ecd08ba29d4eca55cdb45887cb0ac40ee4e4d24
+            probes:
+              liveness:
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /healthz
+                    port: &port 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+                  timeoutSeconds: 1
+              readiness:
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /readyz
+                    port: *port
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 10m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+        replicas: 1
+        serviceAccount:
+          identifier: *app
+        strategy: RollingUpdate
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+          metrics:
+            port: 8080
+    serviceAccount:
+      dragonfly-operator: {}
+    serviceMonitor:
+      app:
+        endpoints:
+          - interval: 1m
+            path: /metrics
+            port: metrics
+            scheme: http
+            scrapeTimeout: 10s
+        serviceName: *app
