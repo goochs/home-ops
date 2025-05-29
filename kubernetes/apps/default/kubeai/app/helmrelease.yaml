@@ -1,0 +1,23 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kubeai-operator
+spec:
+  chart:
+    spec:
+      chart: kubeai
+      sourceRef:
+        kind: HelmRepository
+        name: kubeai
+        namespace: flux-system
+      version: 0.21.0
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback

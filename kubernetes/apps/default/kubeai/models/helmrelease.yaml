@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kubeai-models
+spec:
+  chart:
+    spec:
+      chart: models
+      sourceRef:
+        kind: HelmRepository
+        name: kubeai
+        namespace: flux-system
+      version: 0.21.0
+  dependsOn:
+    - name: kubeapi-operator
+      namespace: default
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    catalog:
+      faster-whisper-medium-en-cpu:
+        enabled: true
