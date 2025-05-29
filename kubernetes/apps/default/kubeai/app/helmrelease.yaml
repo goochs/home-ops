@@ -30,8 +30,3 @@ spec:
           paths:
             - path: /
               pathType: ImplementationSpecific
-    modelServers:
-      FasterWhisper:
-        images:
-          default: "ghcr.io/speaches-ai/speaches:latest-cpu"
-          nvidia-gpu: "ghcr.io/speaches-ai/speaches:latest-cuda"
