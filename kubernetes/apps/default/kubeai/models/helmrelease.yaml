@@ -28,11 +28,11 @@ spec:
     catalog:
       faster-whisper-medium-en-cpu:
         enabled: true
-        minReplicas: 2
-      faster-distil-whisper-large-cpu:
+        minReplicas: 3
+      faster-whisper-large-cpu:
         enabled: true
         features: ["SpeechToText"]
-        url: "hf://Systran/faster-distil-whisper-large-v3"
+        url: "hf://Systran/faster-whisper-large-v3"
         engine: FasterWhisper
         resourceProfile: cpu:2
         minReplicas: 3
