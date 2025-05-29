@@ -21,3 +21,12 @@ spec:
     remediation:
       retries: 3
       strategy: rollback
+  values:
+    ingress:
+      className: internal
+      enabled: true
+      rules:
+        - host: kubeai.serek.xyz
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
