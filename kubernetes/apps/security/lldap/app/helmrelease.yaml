@@ -39,7 +39,7 @@ spec:
                   name: lldap-secret
             image:
               repository: ghcr.io/lldap/lldap
-              tag: v0.6.1-alpine-rootless@sha256:0ea51b492af8670859e0826d0625c5d557cf3089308a12983c5fd871059d81a4
+              tag: v0.6.1-alpine-rootless@sha256:7e1c16090167c49d34e9e98f9f7d3fce97d3d86de8d2f62eedefad3dca3d270b
             probes:
               liveness:
                 enabled: true
