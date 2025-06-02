@@ -36,6 +36,7 @@
       automerge: true,
       automergeType: 'pr',
       matchUpdateTypes: ['patch', 'digest'],
+      matchCurrentVersion: '!/^0/',
     },
   ]
 }
