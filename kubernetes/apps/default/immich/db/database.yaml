@@ -14,5 +14,7 @@ spec:
       version: 0.3.0
     - ensure: present
       name: earthdistance
+    - ensure: present
+      name: cube
   name: immich
   owner: immich
