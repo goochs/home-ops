@@ -32,7 +32,7 @@ spec:
   #       <<: *barmanObjectStore
   #       serverName: *previousCluster
   enableSuperuserAccess: true
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0
   instances: 3
   managed:
     roles:
@@ -46,8 +46,6 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
-    shared_preload_libraries:
-      - "vectors.so"
   primaryUpdateStrategy: unsupervised
   resources:
     limits:
