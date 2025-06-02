@@ -23,14 +23,14 @@ spec:
         compression: bzip2
         maxParallel: 8
     retentionPolicy: 30d
-  bootstrap:
-    recovery:
-      source: &previousCluster immich-pg-v2
-  externalClusters:
-    - name: *previousCluster
-      barmanObjectStore:
-        <<: *barmanObjectStore
-        serverName: *previousCluster
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster immich-pg-v2
+  # externalClusters:
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       <<: *barmanObjectStore
+  #       serverName: *previousCluster
   enableSuperuserAccess: true
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
   instances: 3
