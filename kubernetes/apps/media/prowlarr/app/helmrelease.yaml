@@ -52,11 +52,11 @@ spec:
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
-        fsGroup: 568
+        fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 568
+        runAsGroup: 3000
         runAsNonRoot: true
-        runAsUser: 568
+        runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
