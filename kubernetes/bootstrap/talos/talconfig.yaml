@@ -27,10 +27,15 @@ nodes:
     installDiskSelector:
       size: '<= 300GB'
     ipAddress: 10.0.30.31
-    machineDisks:
-      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230711NV01KG23208
-        partitions:
-          - mountpoint: /var/mnt/extra
+    userVolumes:
+      - name: extra
+        provisioning:
+          diskSelector:
+            match: disk.size > 300u * GB
+          grow: true
+          minSize: 500GiB
+        filesystem:
+          type: xfs
     networkInterfaces:
       - interface: bond0
         addresses:
@@ -61,10 +66,15 @@ nodes:
     installDiskSelector:
       size: '<= 300GB'
     ipAddress: 10.0.30.32
-    machineDisks:
-      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG03651
-        partitions:
-          - mountpoint: /var/mnt/extra
+    userVolumes:
+      - name: extra
+        provisioning:
+          diskSelector:
+            match: disk.size > 300u * GB
+          grow: true
+          minSize: 500GiB
+        filesystem:
+          type: xfs
     networkInterfaces:
       - interface: bond0
         addresses:
@@ -81,10 +91,15 @@ nodes:
     installDiskSelector:
       size: '<= 300GB'
     ipAddress: 10.0.30.33
-    machineDisks:
-      - device: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_AA230731NV01KG04096
-        partitions:
-          - mountpoint: /var/mnt/extra
+    userVolumes:
+      - name: extra
+        provisioning:
+          diskSelector:
+            match: disk.size > 300u * GB
+          grow: true
+          minSize: 500GiB
+        filesystem:
+          type: xfs
     networkInterfaces:
       - interface: bond0
         addresses:
@@ -254,4 +269,13 @@ controlPlane:
               endpoints: ["http://nas.serek.xyz:5002"]
             ghcr.io:
               endpoints: ["http://nas.serek.xyz:5003"]
+
+    # Enable kubernetes Talos API access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles: ["os:admin"]
+            allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
 
