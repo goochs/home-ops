@@ -4,10 +4,10 @@ kind: PodMonitor
 metadata:
   name: immich-dragonfly
 spec:
+  fallbackScrapeProtocol: PrometheusText1.0.0
+  podMetricsEndpoints:
+    - port: admin
+  podTargetLabels: ["app"]
   selector:
     matchLabels:
       app: immich-dragonfly
-  podTargetLabels: ["app"]
-  podMetricsEndpoints:
-    - port: admin
-  fallbackScrapeProtocol: PrometheusText1.0.0

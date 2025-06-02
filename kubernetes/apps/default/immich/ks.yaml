@@ -68,4 +68,4 @@ spec:
     name: home-kubernetes
   targetNamespace: default
   timeout: 5m
-  wait: true  
+  wait: true
