@@ -10,11 +10,11 @@
       matchUpdateTypes: ['minor', 'patch']
     },
     {
-      description: 'Auto-merge container updates for trusted containers',
+      description: 'Auto-merge container patches for trusted containers',
       matchDatasources: ['docker'],
       automerge: true,
       automergeType: 'pr',
-      matchUpdateTypes: ['minor', 'patch', 'digest'],
+      matchUpdateTypes: ['minor'],
       matchPackagePrefixes: [
         'ghcr.io/bjw-s',
         'ghcr.io/bjw-s-labs',
@@ -23,12 +23,20 @@
       ]
     },
     {
-      description: 'Auto merge KPS minors and patches',
+      description: 'Auto merge KPS minors',
       matchDatasources: ['helm', 'docker'],
       automerge: true,
       automergeType: 'pr',
-      matchUpdateTypes: ['minor', 'patch'],
+      matchUpdateTypes: ['minor',],
       matchDepNames: ['kube-prometheus-stack', 'prometheus-operator-crds'],
+    },
+    {
+      description: 'Auto merge all patches',
+      matchDatasources: ['helm', 'docker'],
+      automerge: true,
+      automergeType: 'pr',
+      matchUpdateTypes: ['patch', 'digest'],
+      matchCurrentVersion: '!/^0/',
     },
   ]
 }
