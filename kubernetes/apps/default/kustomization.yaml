@@ -5,7 +5,7 @@ resources:
   - ./actual/ks.yaml
   - ./esphome/ks.yaml
   - ./home-assistant/ks.yaml
-  - ./immich/ks.yaml
+  # - ./immich/ks.yaml
   - ./kubeai/ks.yaml
   - ./node-red/ks.yaml
   - ./rdio-scanner/ks.yaml

@@ -16,7 +16,7 @@ tasks:
     dir: "{{.TALOS_DIR}}"
     cmds:
       - task: gensecret
-      - task: genconfig
+      - task talos:genconfig
       - task: apply
       - task: install
       - task: fetch-kubeconfig
@@ -55,7 +55,7 @@ tasks:
     dir: "{{.TALOS_DIR}}"
     cmds:
       - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
-      - helmfile --kubeconfig {{.KUBECONFIG_FILE}} --file ./apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - helmfile --kubeconfig {{.KUBECONFIG_FILE}} --file ../apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
       - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} wait --for=condition=Ready nodes --all --timeout=600s; do sleep 10; done
     preconditions:
       - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }

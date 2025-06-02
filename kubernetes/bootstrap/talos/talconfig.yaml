@@ -3,7 +3,7 @@
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 talosVersion: v1.10.3
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.33.1
+kubernetesVersion: v1.32.3
 
 clusterName: &cluster home
 endpoint: https://10.0.30.31:6443
@@ -31,7 +31,7 @@ nodes:
       - name: extra
         provisioning:
           diskSelector:
-            match: disk.size > 300u * GB
+            match: disk.transport == 'nvme' && !system_disk
           grow: true
           minSize: 500GiB
         filesystem:
@@ -70,7 +70,7 @@ nodes:
       - name: extra
         provisioning:
           diskSelector:
-            match: disk.size > 300u * GB
+            match: disk.transport == 'nvme' && !system_disk
           grow: true
           minSize: 500GiB
         filesystem:
@@ -95,7 +95,7 @@ nodes:
       - name: extra
         provisioning:
           diskSelector:
-            match: disk.size > 300u * GB
+            match: disk.transport == 'nvme' && !system_disk
           grow: true
           minSize: 500GiB
         filesystem:
