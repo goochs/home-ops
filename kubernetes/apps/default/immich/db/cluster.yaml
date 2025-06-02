@@ -46,6 +46,8 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
+    shared_preload_libraries:
+      - "vchord.so"
   primaryUpdateStrategy: unsupervised
   resources:
     limits:
