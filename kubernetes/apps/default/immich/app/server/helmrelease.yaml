@@ -12,9 +12,6 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.0.1
-  dependsOn:
-    - name: immich-valkey
-      namespace: default
   install:
     remediation:
       retries: 3

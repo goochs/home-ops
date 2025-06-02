@@ -6,7 +6,7 @@ data:
   LOG_LEVEL: verbose
   NODE_ENV: production
   PUBLIC_IMMICH_SERVER_URL: https://immich.serek.xyz
-  REDIS_HOSTNAME: immich-valkey.default.svc.cluster.local
+  REDIS_HOSTNAME: immich-dragonfly.default.svc.cluster.local
   REDIS_PORT: "6379"
 kind: ConfigMap
 metadata:

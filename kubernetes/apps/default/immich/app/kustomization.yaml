@@ -4,6 +4,5 @@ resources:
   - ./machine-learning/helmrelease.yaml
   - ./microservices/helmrelease.yaml
   - ./server/helmrelease.yaml
-  - ./valkey/helmrelease.yaml
   - ./configmap.yaml
   - ./externalsecret.yaml
