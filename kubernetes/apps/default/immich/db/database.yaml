@@ -5,7 +5,7 @@ metadata:
   name: immich
 spec:
   cluster:
-    name: immich-db
+    name: immich-pg
   extensions:
     - ensure: present
       name: vector
