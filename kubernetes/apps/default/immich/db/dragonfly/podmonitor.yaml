@@ -1,0 +1,13 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: immich-dragonfly
+spec:
+  selector:
+    matchLabels:
+      app: immich-dragonfly
+  podTargetLabels: ["app"]
+  podMetricsEndpoints:
+    - port: admin
+  fallbackScrapeProtocol: PrometheusText1.0.0
