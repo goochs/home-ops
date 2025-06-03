@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: prowlarr
 spec:
-  accessModes: 
+  accessModes:
     - ReadWriteOnce
   resources:
     requests:
