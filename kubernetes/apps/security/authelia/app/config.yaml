@@ -45,4 +45,4 @@ session:
       domain: serek.xyz
       name: serek_session
   redis:
-    host: authelia-dragonfly.dbms.svc.cluster.local
+    host: authelia-dragonfly.security.svc.cluster.local
