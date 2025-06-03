@@ -37,10 +37,6 @@ spec:
   managed:
     roles:
       - login: true
-        name: authentik
-        passwordSecret:
-          name: authentik-pg-secret
-      - login: true
         name: bazarr
         passwordSecret:
           name: bazarr-pg-secret
