@@ -40,6 +40,10 @@ spec:
         name: lldap
         passwordSecret:
           name: lldap-pg-secret
+      - login: true
+        name: authelia
+        passwordSecret:
+          name: authelia-pg-secret
   monitoring:
     enablePodMonitor: true
   postgresql:

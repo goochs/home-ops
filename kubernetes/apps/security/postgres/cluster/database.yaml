@@ -8,3 +8,13 @@ spec:
     name: security-pg
   name: *app
   owner: *app
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: &app authelia
+spec:
+  cluster:
+    name: security-pg
+  name: *app
+  owner: *app

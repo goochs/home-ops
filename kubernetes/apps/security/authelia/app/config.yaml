@@ -1,0 +1,27 @@
+---
+access_control:
+  default_policy: deny
+  rules:
+    - domain: '*.serek.xyz'
+      policy: one_factor
+      subject:
+        - group:sso
+authentication_backend:
+  ldap:
+    address: ldap://lldap.security.svc.cluster.local:389
+    base_dn: dc=serek,dc=xyz
+    implementation: lldap
+    user: uid=authelia,ou=people,dc=serek,dc=xyz
+    users_filter: (&({username_attribute}={input})(objectClass=person))
+  refresh_interval: 1m
+notifier:
+  smtp:
+    address: submissions://smtp.mail.me.com:587
+    sender: Authelia <authelia@serek.xyz>
+session:
+  cookies:
+    - authelia_url: https://sso.serek.xyz
+      domain: serek.xyz
+      name: serek_session
+  redis:
+    host: authelia-dragonfly.dbms.svc.cluster.local

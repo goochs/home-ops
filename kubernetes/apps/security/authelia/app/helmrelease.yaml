@@ -1,0 +1,110 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app authelia
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.0.1
+  dependsOn:
+    - name: lldap
+      namespace: security
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      authelia:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
+              AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
+              AUTHELIA_THEME: dark
+              X_AUTHELIA_CONFIG: /config/config.yaml
+              X_AUTHELIA_CONFIG_FILTERS: template
+            envFrom:
+              - secretRef:
+                  name: authelia-secret
+            image:
+              repository: ghcr.io/authelia/authelia
+              tag: 4.39.4@sha256:64b356c30fd817817a4baafb4dbc0f9f8702e46b49e1edb92ff42e19e487b517
+            probes:
+              liveness: &probes
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /api/health
+                    port: &port 9091
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+              readiness: *probes
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 10m
+                memory: 32Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+        replicas: 2
+        strategy: RollingUpdate
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        className: external
+        hosts:
+          - host: sso.serek.xyz
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        globalMounts:
+          - path: /config/config.yaml
+            readOnly: true
+            subPath: config.yaml
+        name: authelia-configmap
+        type: configMap
+    service:
+      app:
+        controller: &app
+        ports:
+          http:
+            port: *port
+            primary: true
+          metrics:
+            port: 9959
+    serviceMonitor:
+      app:
+        endpoints:
+          - port: metrics
+        serviceName: &app
