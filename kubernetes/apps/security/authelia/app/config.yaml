@@ -14,6 +14,27 @@ authentication_backend:
     user: uid=authelia,ou=people,dc=serek,dc=xyz
     users_filter: (&({username_attribute}={input})(objectClass=person))
   refresh_interval: 1m
+identity_providers:
+  oidc:
+    clients:
+      - authorization_policy: one_factor
+        client_id: '{{ .Env.IMMICH_ID }}'
+        client_name: Immich
+        client_secret: '{{ .Env.IMMICH_HASH }}'
+        public: false
+        redirect_uris:
+          - https://immich.serek.xyz/auth/login
+          - https://immich.serek.xyz/user-settings
+          - app.immich:///oauth-callback
+        scopes:
+          - openid
+          - profile
+          - email
+        token_endpoint_auth_method: client_secret_post
+        userinfo_signed_response_alg: none
+    cors:
+      allowed_origins_from_client_redirect_uris: true
+      endpoints: ["authorization", "token", "revocation", "introspection"]
 notifier:
   smtp:
     address: submissions://smtp.mail.me.com:587
