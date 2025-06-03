@@ -96,7 +96,7 @@ spec:
         type: configMap
     service:
       app:
-        controller: &app
+        controller: *app
         ports:
           http:
             port: *port
@@ -107,4 +107,4 @@ spec:
       app:
         endpoints:
           - port: metrics
-        serviceName: &app
+        serviceName: *app
