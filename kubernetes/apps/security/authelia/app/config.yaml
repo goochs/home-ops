@@ -18,9 +18,9 @@ identity_providers:
   oidc:
     clients:
       - authorization_policy: one_factor
-        client_id: '{{ .Env "IMMICH_ID" }}'
+        client_id: '{{ env "IMMICH_ID" }}'
         client_name: Immich
-        client_secret: '{{ .Env "IMMICH_HASH" }}'
+        client_secret: '{{ env "IMMICH_HASH" }}'
         public: false
         redirect_uris:
           - https://immich.serek.xyz/auth/login
