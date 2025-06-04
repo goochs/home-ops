@@ -60,17 +60,13 @@ spec:
       bindings:
         rabbitmq-cluster-leader-election-rolebinding:
           roleRef:
-            apiGroup: rbac.authorization.k8s.io
-            kind: Role
-            name: rabbitmq-cluster-leader-election-role
+            identifier: rabbitmq-cluster-leader-election-role
           subjects:
             - identifier: rabbitmq-operator
           type: RoleBinding
         rabbitmq-cluster-operator-rolebinding:
           roleRef:
-            apiGroup: rbac.authorization.k8s.io
-            kind: ClusterRole
-            name: rabbitmq-cluster-operator-role
+            identifier: rabbitmq-cluster-operator-role
           subjects:
             - identifier: rabbitmq-operator
           type: ClusterRoleBinding
