@@ -84,7 +84,6 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
-              readOnlyRootFilesystem: true
         replicas: 3
         serviceAccount:
           identifier: *app
@@ -111,8 +110,6 @@ spec:
                 subPath: log
               - path: /tmp
                 subPath: tmp
-              - path: /vernemq/etc
-                subPath: etc
         type: emptyDir
     rbac:
       bindings:
