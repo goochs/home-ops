@@ -111,6 +111,8 @@ spec:
                 subPath: log
               - path: /tmp
                 subPath: tmp
+              - path: /vernemq/etc
+                subPath: etc
         type: emptyDir
     rbac:
       bindings:
