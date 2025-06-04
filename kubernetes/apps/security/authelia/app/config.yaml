@@ -36,6 +36,7 @@ identity_providers:
         client_id: '{{ env "MINIO_ID" }}'
         client_name: Minio
         client_secret: '{{ env "MINIO_HASH" }}'
+        pre_configured_consent_duration: 1w
         public: false
         redirect_uris:
           - https://minio.serek.xyz/oauth_callback
