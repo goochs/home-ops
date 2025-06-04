@@ -11,7 +11,7 @@ spec:
         paths:
           - backend:
               service:
-                name: emqx-dashboard
+                name: rabbitmq
                 port:
                   number: 15672
             path: /
