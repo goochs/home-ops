@@ -26,12 +26,12 @@ spec:
       rabbitmq-cluster-operator:
         containers:
           app:
+            command: ["/manager"]
             env:
               OPERATOR_NAMESPACE:
                 valueFrom:
                   fieldRef:
                     fieldPath: metadata.namespace
-            command: ["/manager"]
             image:
               repository: quay.io/rabbitmqoperator/cluster-operator
               tag: 2.14.0@sha256:084a07a89a3f038cf354e2b3ba71f2ec6a5541ec82481cf425f227484accd083
@@ -43,7 +43,7 @@ spec:
                 cpu: 200m
                 memory: 500Mi
         serviceAccount:
-          identifier: rabbitmq-cluster-operator
+          identifier: rabbitmq-operator
     rbac:
       bindings:
         rabbitmq-cluster-leader-election-rolebinding:
@@ -52,9 +52,7 @@ spec:
             kind: Role
             name: rabbitmq-cluster-leader-election-role
           subjects:
-            - kind: ServiceAccount
-              name: rabbitmq-cluster-operator
-              namespace: database
+            - identifier: rabbitmq-operator
           type: RoleBinding
         rabbitmq-cluster-operator-rolebinding:
           roleRef:
@@ -62,9 +60,7 @@ spec:
             kind: ClusterRole
             name: rabbitmq-cluster-operator-role
           subjects:
-            - kind: ServiceAccount
-              name: rabbitmq-cluster-operator
-              namespace: database
+            - identifier: rabbitmq-operator
           type: ClusterRoleBinding
       roles:
         rabbitmq-cluster-leader-election-role:
@@ -116,4 +112,4 @@ spec:
               verbs: ["get", "list", "watch"]
           type: ClusterRole
     serviceAccount:
-      rabbitmq-cluster-operator: {}
+      rabbitmq-operator: {}
