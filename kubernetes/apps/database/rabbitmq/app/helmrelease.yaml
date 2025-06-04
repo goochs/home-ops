@@ -23,7 +23,7 @@ spec:
       strategy: rollback
   values:
     controllers:
-      rabbitmq-cluster-operator:
+      rabbitmq-operator:
         containers:
           app:
             command: ["/manager"]
@@ -44,6 +44,17 @@ spec:
                 memory: 500Mi
         serviceAccount:
           identifier: rabbitmq-operator
+    rawResources:
+      rabbitmq-cluster-service-binding-role:
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRole
+        labels:
+          servicebinding.io/controller: "true"
+        spec:
+          rules:
+            - apiGroups: ["rabbitmq.com"]
+              resources: ["rabbitmqclusters"]
+              verbs: ["get", "list", "watch"]
     rbac:
       bindings:
         rabbitmq-cluster-leader-election-rolebinding:
@@ -104,12 +115,6 @@ spec:
             - apiGroups: ["rbac.authorization.k8s.io"]
               resources: ["rolebindings", "roles"]
               verbs: ["create", "get", "list", "update", "watch"]
-          type: ClusterRole
-        rabbitmq-cluster-service-binding-role:
-          rules:
-            - apiGroups: ["rabbitmq.com"]
-              resources: ["rabbitmqclusters"]
-              verbs: ["get", "list", "watch"]
           type: ClusterRole
     serviceAccount:
       rabbitmq-operator: {}
