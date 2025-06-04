@@ -20,12 +20,12 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall
   values:
     controllers:
       rabbitmq-operator:
         containers:
-          app:
+          operator:
             command: ["/manager"]
             env:
               OPERATOR_NAMESPACE:
@@ -47,6 +47,7 @@ spec:
     rawResources:
       rabbitmq-cluster-service-binding-role:
         apiVersion: rbac.authorization.k8s.io/v1
+        forceRename: "rabbitmq-cluster-service-binding-role"
         kind: ClusterRole
         labels:
           servicebinding.io/controller: "true"
