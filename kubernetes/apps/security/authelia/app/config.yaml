@@ -34,7 +34,7 @@ identity_providers:
       - authorization_policy: one_factor
         client_id: '{{ env "JELLYFIN_CLIENT" }}'
         client_name: Jellyfin
-        lient_secret: '{{ env "JELLYFIN_DIGEST" }}'
+        client_secret: '{{ env "JELLYFIN_DIGEST" }}'
         pkce_challenge_method: S256
         pre_configured_consent_duration: 1w
         redirect_uris:
