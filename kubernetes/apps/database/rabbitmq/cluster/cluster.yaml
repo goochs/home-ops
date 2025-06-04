@@ -12,4 +12,6 @@ spec:
       lbipam.cilium.io/ips: 10.0.41.47
   persistence:
     storageClassName: openebs-hostpath
-    
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_mqtt
