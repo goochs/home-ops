@@ -2,17 +2,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: emqx-dashboard
+  name: rabbitmq-dashboard
 spec:
   ingressClassName: internal
   rules:
-    - host: emqx.serek.xyz
+    - host: rabbitmq.serek.xyz
       http:
         paths:
           - backend:
               service:
                 name: emqx-dashboard
                 port:
-                  number: 18083
+                  number: 15672
             path: /
             pathType: Prefix

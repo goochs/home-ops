@@ -27,15 +27,15 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  # components:
-  #   - ../../../../flux/components/gatus/internal
+  components:
+    - ../../../../flux/components/gatus/internal
   dependsOn:
     - name: rabbitmq-operator
   interval: 30m
   path: ./kubernetes/apps/database/rabbitmq/cluster
   postBuild:
     substitute:
-      APP: *app
+      APP: rabbitmq
   prune: true
   sourceRef:
     kind: GitRepository
