@@ -1,0 +1,119 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app rabbitmq-operator
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.0.1
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      rabbitmq-cluster-operator:
+        containers:
+          app:
+            env:
+              OPERATOR_NAMESPACE:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+            command: ["/manager"]
+            image:
+              repository: quay.io/rabbitmqoperator/cluster-operator
+              tag: 2.14.0@sha256:084a07a89a3f038cf354e2b3ba71f2ec6a5541ec82481cf425f227484accd083
+            resources:
+              limits:
+                cpu: 200m
+                memory: 500Mi
+              requests:
+                cpu: 200m
+                memory: 500Mi
+        serviceAccount:
+          identifier: rabbitmq-cluster-operator
+    rbac:
+      bindings:
+        rabbitmq-cluster-leader-election-rolebinding:
+          roleRef:
+            apiGroup: rbac.authorization.k8s.io
+            kind: Role
+            name: rabbitmq-cluster-leader-election-role
+          subjects:
+            - kind: ServiceAccount
+              name: rabbitmq-cluster-operator
+              namespace: database
+          type: ClusterRoleBinding
+        rabbitmq-cluster-operator-rolebinding:
+          roleRef:
+            apiGroup: rbac.authorization.k8s.io
+            kind: ClusterRole
+            name: rabbitmq-cluster-operator-role
+          subjects:
+            - kind: ServiceAccount
+              name: rabbitmq-cluster-operator
+              namespace: database
+          type: ClusterRoleBinding
+      roles:
+        rabbitmq-cluster-leader-election-role:
+          rules:
+            - apiGroups: ["coordination.k8s.io"]
+              resources: ["leases"]
+              verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+            - apiGroups: [""]
+              resources: ["events"]
+              verbs: ["create"]
+          type: Role
+        rabbitmq-cluster-operator-role:
+          rules:
+            - apiGroups: [""]
+              resources: ["configmaps", "persistentvolumeclaims", "secrets", "serviceaccounts", "services"]
+              verbs: ["create", "get", "list", "update", "watch"]
+            - apiGroups: [""]
+              resources: ["endpoints"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: [""]
+              resources: [events]
+              verbs: ["create", "get", "patch"]
+            - apiGroups: [""]
+              resources: ["pods"]
+              verbs: ["get", "list", "update", "watch"]
+            - apiGroups: [""]
+              resources: [pods/exec]
+              verbs: ["create"]
+            - apiGroups: ["apps"]
+              resources: ["statefulsets"]
+              verbs: ["create", delete, "get", "list", "update", "watch"]
+            - apiGroups: ["rabbitmq.com"]
+              resources: ["rabbitmqclusters"]
+              verbs: ["create", "get", "list", "update", "watch"]
+            - apiGroups: ["rabbitmq.com"]
+              resources: ["rabbitmqclusters/finalizers"]
+              verbs: ["update"]
+            - apiGroups: ["rabbitmq.com"]
+              resources: ["rabbitmqclusters/status"]
+              verbs: ["get", "update"]
+            - apiGroups: ["rbac.authorization.k8s.io"]
+              resources: ["rolebindings", "roles"]
+              verbs: ["create", "get", "list", "update", "watch"]
+          type: ClusterRole
+        rabbitmq-cluster-service-binding-role:
+          rules:
+            - apiGroups: ["rabbitmq.com"]
+              resources: ["rabbitmqclusters"]
+              verbs: ["get", "list", "watch"]
+          type: ClusterRole
+    serviceAccount:
+      rabbitmq-cluster-operator: {}

@@ -1,0 +1,45 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app rabbitmq-operator
+  namespace: flux-system
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  interval: 30m
+  path: ./kubernetes/apps/database/rabbitmq/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  targetNamespace: database
+  timeout: 5m
+  wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: &app rabbitmq-cluster
+#   namespace: flux-system
+# spec:
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: *app
+#   components:
+#     - ../../../../flux/components/gatus/internal
+#   dependsOn:
+#     - name: rabbitmq
+#   interval: 30m
+#   path: ./kubernetes/apps/database/rabbitmq/cluster
+#   postBuild:
+#     substitute:
+#       APP: *app
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: home-kubernetes
+#   targetNamespace: database
+#   timeout: 5m
+#   wait: true
