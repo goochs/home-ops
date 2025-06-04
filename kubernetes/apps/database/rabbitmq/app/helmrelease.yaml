@@ -55,7 +55,7 @@ spec:
             - kind: ServiceAccount
               name: rabbitmq-cluster-operator
               namespace: database
-          type: ClusterRoleBinding
+          type: RoleBinding
         rabbitmq-cluster-operator-rolebinding:
           roleRef:
             apiGroup: rbac.authorization.k8s.io
