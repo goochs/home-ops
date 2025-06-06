@@ -114,9 +114,6 @@ spec:
         ingressClassName: internal
         pathType: Prefix
       prometheusSpec:
-        enableAdminAPI: true
-        enableFeatures:
-          - memory-snapshot-on-shutdown
         image:
           registry: docker.io
           repository: prompp/prompp
@@ -127,6 +124,11 @@ spec:
         retentionSize: 50GB
         ruleSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
+        securityContext:
+          fsGroup: 64535
+          runAsGroup: 64535
+          runAsNonRoot: true
+          runAsUser: 64535
         serviceMonitorSelectorNilUsesHelmValues: false
         storageSpec:
           volumeClaimTemplate:
@@ -135,7 +137,6 @@ spec:
                 requests:
                   storage: 60Gi
               storageClassName: longhorn
-        walCompression: true
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
