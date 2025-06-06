@@ -5,15 +5,15 @@ kind: RabbitmqCluster
 metadata:
   name: rabbitmq
 spec:
-  # secretBackend:
-  #   externalSecret: 
-  #     name: rabbitmq-secret
   persistence:
     storageClassName: openebs-hostpath
   rabbitmq:
     additionalPlugins:
       - rabbitmq_mqtt
   replicas: 3
+  secretBackend:
+    externalSecret:
+      name: rabbitmq-secret
   service:
     annotations:
       lbipam.cilium.io/ips: 10.0.41.47
