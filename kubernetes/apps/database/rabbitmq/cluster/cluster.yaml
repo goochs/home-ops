@@ -11,10 +11,21 @@ spec:
     additionalPlugins:
       - rabbitmq_mqtt
   replicas: 3
-  secretBackend:
-    externalSecret:
-      name: rabbitmq-secret
   service:
     annotations:
       lbipam.cilium.io/ips: 10.0.41.47
     type: LoadBalancer
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/rabbitmq.com/user_v1beta1.json
+apiVersion: rabbitmq.com/v1beta1
+kind: User
+metadata:
+  name: admin-user
+  namespace: rabbitmq-system
+spec:
+  importCredentialsSecret:
+    name: rabbitmq-admin-secret
+  rabbitmqClusterReference:
+    name: rabbitmq
+  tags:
+    - administrator
