@@ -21,7 +21,6 @@ apiVersion: rabbitmq.com/v1beta1
 kind: User
 metadata:
   name: admin-user
-  namespace: rabbitmq-system
 spec:
   importCredentialsSecret:
     name: rabbitmq-admin-secret
@@ -29,3 +28,19 @@ spec:
     name: rabbitmq
   tags:
     - administrator
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/rabbitmq.com/permission_v1beta1.json
+apiVersion: rabbitmq.com/v1beta1
+kind: Permission
+metadata:
+  name: admin-user-permission
+spec:
+  permissions:
+    configure: ".*"
+    read: ".*"
+    write: ".*"
+  rabbitmqClusterReference:
+    name: rabbitmq
+  userReference:
+    name: admin-user
+  vhost: "/"
