@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: rabbitmq-admin
+spec:
+  dataFrom:
+    - extract:
+        key: admin-login
+  refreshInterval: 5m
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepass-connect
+  target:
+    name: rabbitmq-admin-secret
+    template:
+      data:
+        password: "{{ .password }}"
+        username: "{{ .username }}"
+      engineVersion: v2
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/rabbitmq.com/user_v1beta1.json
+apiVersion: rabbitmq.com/v1beta1
+kind: User
+metadata:
+  name: admin-user
+spec:
+  importCredentialsSecret:
+    name: rabbitmq-admin-secret
+  rabbitmqClusterReference:
+    name: rabbitmq
+  tags:
+    - administrator
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/rabbitmq.com/permission_v1beta1.json
+apiVersion: rabbitmq.com/v1beta1
+kind: Permission
+metadata:
+  name: admin-permission
+spec:
+  permissions:
+    configure: ".*"
+    read: ".*"
+    write: ".*"
+  rabbitmqClusterReference:
+    name: rabbitmq
+  userReference:
+    name: admin-user
+  vhost: "/"
