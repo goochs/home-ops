@@ -29,7 +29,6 @@ spec:
   name: mqtt
   rabbitmqClusterReference:
     name: rabbitmq
-
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/rabbitmq.com/user_v1beta1.json
 apiVersion: rabbitmq.com/v1beta1
