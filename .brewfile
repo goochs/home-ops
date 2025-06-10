@@ -1,0 +1,6 @@
+brew "kubectl"
+brew "talosctl"
+brew "direnv"
+brew "go-task"
+brew "gh"
+cask "1password-cli"
