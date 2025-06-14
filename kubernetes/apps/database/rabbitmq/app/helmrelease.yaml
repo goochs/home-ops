@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      version: 4.4.21
+      version: 4.4.22
   install:
     crds: CreateReplace
     remediation:
