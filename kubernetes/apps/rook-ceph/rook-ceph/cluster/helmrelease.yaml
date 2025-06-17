@@ -88,7 +88,7 @@ spec:
         config:
           osdsPerDevice: "1"
         devicePathFilter: /dev/disk/by-id/nvme-INTEL_SSDPEDME016T4S_.*
-        nearFullRatio: "0.67"
+        nearFullRatio: 0.67
         useAllDevices: false
         useAllNodes: true
     cephFileSystems: []
