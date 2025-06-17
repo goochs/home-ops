@@ -26,7 +26,7 @@ spec:
     crds: Skip
     remediation:
       retries: 3
-      strategy: uninstall
+      strategy: rollback
   values:
     additionalPrometheusRulesMap:
       dockerhub-rules:

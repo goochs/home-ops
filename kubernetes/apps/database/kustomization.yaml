@@ -5,5 +5,4 @@ resources:
   - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
   - ./emqx/ks.yaml
-  - ./rabbitmq/ks.yaml
   - ./namespace.yaml
