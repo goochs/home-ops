@@ -1,15 +1,15 @@
 endpoints:
-  - name: "${APP}"
-    group: guarded
-    url: 1.1.1.1
+  - alerts:
+      - type: pushover
+    conditions:
+      - "len([BODY]) == 0"
+    dns:
+      query-name: "${GATUS_SUBDOMAIN:=${APP}}.serek.xyz"
+      query-type: A
+    group: internal
     interval: 1m
+    name: "${APP}"
     ui:
       hide-hostname: true
       hide-url: true
-    dns:
-      query-name: "${GATUS_SUBDOMAIN:-${APP}}.serek.xyz"
-      query-type: A
-    conditions:
-      - "len([BODY]) == 0"
-    alerts:
-      - type: pushover
+    url: 1.1.1.1

@@ -27,23 +27,23 @@ metadata:
   name: "${APP}-minio"
 spec:
   restic:
-    accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:-ReadWriteOnce}"]
-    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-5Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
-    copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
+    accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}"]
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=5Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}"
+    copyMethod: "${VOLSYNC_COPYMETHOD:=Snapshot}"
     moverSecurityContext:
-      fsGroup: ${VOLSYNC_PGID:-3000}
-      runAsGroup: ${VOLSYNC_PGID:-3000}
-      runAsUser: ${VOLSYNC_PUID:-3000}
+      fsGroup: ${VOLSYNC_PGID:=3000}
+      runAsGroup: ${VOLSYNC_PGID:=3000}
+      runAsUser: ${VOLSYNC_PUID:=3000}
     pruneIntervalDays: 7
     repository: "${APP}-volsync-minio-secret"
     retain:
       daily: 7
       hourly: 24
       weekly: 5
-    storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn}"
-    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-longhorn}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:=longhorn}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=longhorn}"
   sourcePVC: "${APP}"
   trigger:
     schedule: "0 * * * *"
@@ -54,18 +54,18 @@ metadata:
   name: "${APP}-dst"
 spec:
   restic:
-    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-5Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
-    capacity: "${VOLSYNC_CAPACITY:-5Gi}"
+    accessModes: ["${VOLSYNC_ACCESSMODES:=ReadWriteOnce}"]
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=5Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}"
+    capacity: "${VOLSYNC_CAPACITY:=5Gi}"
     copyMethod: Snapshot
     moverSecurityContext:
-      fsGroup: ${VOLSYNC_PGID:-3000}
-      runAsGroup: ${VOLSYNC_PGID:-3000}
-      runAsUser: ${VOLSYNC_PUID:-3000}
+      fsGroup: ${VOLSYNC_PGID:=3000}
+      runAsGroup: ${VOLSYNC_PGID:=3000}
+      runAsUser: ${VOLSYNC_PUID:=3000}
     repository: "${APP}-volsync-minio-secret"
-    storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn}"
-    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-longhorn}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:=longhorn}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=longhorn}"
   trigger:
     manual: restore-once

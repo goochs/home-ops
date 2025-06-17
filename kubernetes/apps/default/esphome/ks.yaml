@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../flux/components/gatus/internal
-    - ../../../../flux/components/volsync
+    - ../../../../flux/components/volsync-longhorn
   interval: 30m
   path: ./kubernetes/apps/default/esphome/app
   postBuild:

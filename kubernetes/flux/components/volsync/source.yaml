@@ -1,0 +1,27 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: "${APP}"
+spec:
+  restic:
+    accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}"]
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=5Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}"
+    copyMethod: "${VOLSYNC_COPYMETHOD:=Snapshot}"
+    moverSecurityContext:
+      fsGroup: ${VOLSYNC_PGID:=3000}
+      runAsGroup: ${VOLSYNC_PGID:=3000}
+      runAsUser: ${VOLSYNC_PUID:=3000}
+    pruneIntervalDays: 7
+    repository: "${APP}-volsync-secret"
+    retain:
+      daily: 7
+      hourly: 24
+      weekly: 5
+    storageClassName: "${VOLSYNC_STORAGECLASS:=ceph-block}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}"
+  sourcePVC: "${APP}"
+  trigger:
+    schedule: "0 * * * *"

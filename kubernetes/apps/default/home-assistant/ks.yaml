@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../flux/components/gatus/external
-    - ../../../../flux/components/volsync
+    - ../../../../flux/components/volsync-longhorn
   dependsOn:
     - name: multus-networks
   interval: 30m
