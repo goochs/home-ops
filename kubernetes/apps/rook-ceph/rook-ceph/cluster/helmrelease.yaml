@@ -1,0 +1,107 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+spec:
+  chart:
+    spec:
+      chart: rook-ceph-cluster
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph
+        namespace: flux-system
+      version: v1.17.4
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    cephBlockPools:
+      - name: ceph-blockpool
+        spec:
+          failureDomain: host
+          replicated:
+            size: 3
+        storageClass:
+          allowVolumeExpansion: true
+          enabled: true
+          isDefault: false
+          mountOptions: ["discard"]
+          name: ceph-block
+          parameters:
+            compression_algorithm: zstd
+            compression_mode: aggressive
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/fstype: ext4
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+            csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+            imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
+            imageFormat: "2"
+          reclaimPolicy: Delete
+          volumeBindingMode: Immediate
+    cephBlockPoolsVolumeSnapshotClass:
+      deletionPolicy: Delete
+      enabled: true
+      isDefault: false
+      name: csi-ceph-blockpool
+    cephClusterSpec:
+      cephConfig:
+        global:
+          bdev_async_discard_threads: "1" # quote
+          bdev_enable_discard: "true" # quote
+          device_failure_prediction_mode: local # requires mgr module
+          osd_class_update_on_start: "false" # quote
+      crashCollector:
+        disable: false
+      csi:
+        readAffinity:
+          enabled: true
+      dashboard:
+        enabled: true
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+        ssl: false
+        urlPrefix: /
+      mgr:
+        modules:
+          - enabled: true
+            name: diskprediction_local
+          - enabled: true
+            name: insights
+          - enabled: true
+            name: pg_autoscaler
+          - enabled: true
+            name: rook
+      network:
+        connections:
+          requireMsgr2: true
+        provider: host
+      storage:
+        config:
+          osdsPerDevice: "1"
+        devicePathFilter: /dev/disk/by-id/nvme-INTEL_SSDPEDME016T4S_.*
+        nearFullRatio: "0.67"
+        useAllDevices: false
+        useAllNodes: true
+    cephFileSystems: []
+    cephObjectStores: []
+    ingress:
+      dashboard:
+        host:
+          name: rook.serek.xyz
+          path: /
+          pathType: Prefix
+        ingressClassName: internal
+    monitoring:
+      createPrometheusRules: true
+      enabled: true
+    toolbox:
+      enabled: true

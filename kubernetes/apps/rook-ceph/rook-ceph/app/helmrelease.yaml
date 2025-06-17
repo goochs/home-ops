@@ -24,6 +24,8 @@ spec:
   values:
     csi:
       cephFSKernelMountOptions: "ms_mode=prefer-secure,recover_session=clean"
+      enableCephfsDriver: false
+      enableCephfsSnapshotter: false
       enableLiveness: true
       serviceMonitor:
         enabled: true
