@@ -6,4 +6,3 @@ resources:
   - ./openebs/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
-  - ./longhorn/ks.yaml
