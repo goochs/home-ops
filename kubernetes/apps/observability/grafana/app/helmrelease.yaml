@@ -38,6 +38,21 @@ spec:
             type: file
     dashboards:
       default:
+        ceph-cluster:
+          datasource: Prometheus
+          # renovate: depName="Ceph Cluster"
+          gnetId: 2842
+          revision: 18
+        ceph-osd:
+          datasource: Prometheus
+          # renovate: depName="Ceph - OSD (Single)"
+          gnetId: 5336
+          revision: 9
+        ceph-pools:
+          datasource: Prometheus
+          # renovate: depName="Ceph - Pools"
+          gnetId: 5342
+          revision: 9
         cert-manager:
           datasource: Prometheus
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
@@ -90,11 +105,6 @@ spec:
           # renovate: depName="K8s / Storage / Volumes / Cluster"
           gnetId: 11454
           revision: 14
-        longhorn:
-          datasource: Prometheus
-          # renovate: depName="Longhorn"
-          gnetId: 16888
-          revision: 9
         nginx:
           datasource: Prometheus
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json

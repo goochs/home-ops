@@ -12,9 +12,6 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.1.1
-  dependsOn:
-    - name: longhorn
-      namespace: storage
   install:
     remediation:
       retries: 3

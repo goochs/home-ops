@@ -15,8 +15,6 @@ spec:
   dependsOn:
     - name: prometheus-operator-crds
       namespace: observability
-    - name: longhorn
-      namespace: storage
   install:
     crds: Skip
     remediation:
@@ -28,7 +26,7 @@ spec:
     crds: Skip
     remediation:
       retries: 3
-      strategy: rollback
+      strategy: uninstall
   values:
     additionalPrometheusRulesMap:
       dockerhub-rules:
@@ -64,7 +62,7 @@ spec:
               resources:
                 requests:
                   storage: 5Gi
-              storageClassName: longhorn
+              storageClassName: ceph-block
       ingress:
         enabled: true
         hosts: ["alertmanager.serek.xyz"]
@@ -136,7 +134,7 @@ spec:
               resources:
                 requests:
                   storage: 60Gi
-              storageClassName: longhorn
+              storageClassName: ceph-block
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
