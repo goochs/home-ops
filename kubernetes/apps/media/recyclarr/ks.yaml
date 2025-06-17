@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../flux/components/volsync-longhorn
+    - ../../../../flux/components/volsync
   dependsOn:
     - name: external-secrets-stores
   interval: 30m
