@@ -22,6 +22,8 @@ spec:
       retries: 3
       strategy: rollback
   values:
+    alloy:
+      enabled: false
     engines:
       local:
         lvm:
@@ -36,16 +38,21 @@ spec:
         image:
           registry: quay.io/
       hostpathClass:
-        basePath: /var/mnt/extra/openebs/hostpath
+        basePath: &hostPath /var/mnt/extra/openebs/hostpath
         enabled: true
         isDefaultClass: false
         name: openebs-hostpath
       localpv:
+        basePath: *hostPath
         image:
           registry: quay.io/
+    loki:
+      enabled: false
     lvm-localpv:
       enabled: false
     mayastor:
+      enabled: false
+    minio:
       enabled: false
     openebs-crds:
       csi:

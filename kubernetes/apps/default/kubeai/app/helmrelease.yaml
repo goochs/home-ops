@@ -22,8 +22,6 @@ spec:
       retries: 3
       strategy: rollback
   values:
-    open-webui:
-      enabled: false
     ingress:
       className: internal
       enabled: true
@@ -32,3 +30,5 @@ spec:
           paths:
             - path: /
               pathType: ImplementationSpecific
+    open-webui:
+      enabled: false
