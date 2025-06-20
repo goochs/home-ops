@@ -30,9 +30,9 @@ spec:
         enabled: true
         engine: FasterWhisper
         features: ["SpeechToText"]
-        minReplicas: 3
+        minReplicas: 2
         resourceProfile: cpu:2
         url: "hf://Systran/faster-whisper-large-v3"
       faster-whisper-medium-en-cpu:
         enabled: true
-        minReplicas: 3
+        minReplicas: 2
