@@ -27,7 +27,7 @@ spec:
         [OUTPUT]
             name  loki
             match *
-            host  loki-gateway.observability.svc.cluster.local
-            port  80
+            host  loki-headless.observability.svc.cluster.local
+            port  3100
             labels job=fluentbit
             auto_kubernetes_labels on
