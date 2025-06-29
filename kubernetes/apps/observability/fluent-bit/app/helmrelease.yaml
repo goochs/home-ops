@@ -30,5 +30,5 @@ spec:
             host  loki-headless.observability.svc.cluster.local
             port  3100
             labels job=fluentbit
-            auto_kubernetes_labels on
+            auto_kubernetes_labels off
             remove_keys rook_io_operator_namespace
