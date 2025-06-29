@@ -31,3 +31,4 @@ spec:
             port  3100
             labels job=fluentbit
             auto_kubernetes_labels on
+            remove_keys rook_io_operator_namespace
