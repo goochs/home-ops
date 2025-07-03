@@ -44,7 +44,7 @@ spec:
           secret:
             secretName: emqx-init-user-secret
       replicas: 2
-  image: public.ecr.aws/emqx/emqx:5.8.6
+  image: public.ecr.aws/emqx/emqx:5.8.7
   listenersServiceTemplate:
     metadata:
       annotations:
