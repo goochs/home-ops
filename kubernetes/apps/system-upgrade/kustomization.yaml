@@ -6,6 +6,7 @@ configMapGenerator:
 configurations:
   - ./kustomizeconfig.yaml
 kind: Kustomization
+namespace: system-upgrade
 resources:
   - ./namespace.yaml
   - ./controller/ks.yaml
