@@ -35,7 +35,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: system-upgrade-controller
-      namespace: &namespace system-upgrade
   interval: 1h
   path: ./kubernetes/apps/system-upgrade/controller/plans
   postBuild:
@@ -47,6 +46,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  targetNamespace: *namespace
+  targetNamespace: system-upgrade
   timeout: 5m
   wait: false
