@@ -7,8 +7,6 @@ affinity:
             - key: node-role.kubernetes.io/control-plane
               operator: Exists
 fullnameOverride: coredns
-image:
-  repository: mirror.gcr.io/coredns/coredns
 k8sAppLabelOverride: kube-dns
 replicaCount: 2
 servers:
