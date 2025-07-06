@@ -7,8 +7,10 @@ affinity:
             - key: node-role.kubernetes.io/control-plane
               operator: Exists
 fullnameOverride: coredns
+image:
+  repository: mirror.gcr.io/coredns/coredns
 k8sAppLabelOverride: kube-dns
-replicaCount: 3
+replicaCount: 2
 servers:
   - plugins:
       - name: errors
@@ -17,22 +19,26 @@ servers:
         name: health
       - name: ready
       - configBlock: |-
-          class error
-        name: log
-      - name: prometheus
-        parameters: 0.0.0.0:9153
-      - configBlock: |-
-          pods insecure
+          pods verified
           fallthrough in-addr.arpa ip6.arpa
         name: kubernetes
         parameters: cluster.local in-addr.arpa ip6.arpa
+      - name: autopath
+        parameters: "@kubernetes"
       - name: forward
         parameters: . /etc/resolv.conf
-      - name: cache
-        parameters: 30
+      - configBlock: |-
+          prefetch 20
+          serve_stale
+        name: cache
       - name: loop
       - name: reload
       - name: loadbalance
+      - name: prometheus
+        parameters: 0.0.0.0:9153
+      - configBlock: |-
+          class error
+        name: log
     port: 53
     zones:
       - scheme: dns://
