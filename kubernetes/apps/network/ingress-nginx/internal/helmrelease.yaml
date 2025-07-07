@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: ingress-nginx
         namespace: flux-system
-      version: 4.12.3
+      version: 4.13.0
   install:
     remediation:
       retries: 3
