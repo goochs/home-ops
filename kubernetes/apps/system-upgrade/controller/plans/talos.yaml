@@ -21,6 +21,5 @@ spec:
     args:
       - --node=$(SYSTEM_UPGRADE_NODE_NAME)
       - --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
-      - --powercycle
     image: ghcr.io/jfroy/tnu:0.4.3
   version: ${TALOS_VERSION}
