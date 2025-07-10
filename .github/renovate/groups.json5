@@ -23,5 +23,12 @@
       matchDatasources: ["docker"],
       group: { commitMessageTopic: "{{{groupName}}} group" },
     },
+    {
+      description: "Rook-Ceph Group",
+      groupName: "Rook-Ceph",
+      matchPackageNames: ["/rook-ceph/", "/rook-ceph-cluster/"],
+      matchDatasources: ["docker"],
+      group: { commitMessageTopic: "{{{groupName}}} group" },
+    },
   ],
 }
