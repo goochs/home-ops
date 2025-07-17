@@ -15,12 +15,14 @@ env:
 includes:
   kubernetes:
     aliases: ["k8s"]
-    taskfile: .task/kubernetes/Taskfile.yaml
-  talos: .task/talos/Taskfile.yaml
-  bootstrap: .task/bootstrap/Taskfile.yaml
-
+    taskfile: .task/kubernetes
+  talos: .task/talos
+  bootstrap: .task/bootstrap
+  volsync: .task/volsync
 tasks:
-  default: task -l
+  default:
+    cmd: task --list
+    silent: true
 
   reconcile:
     desc: Force update Flux to pull in changes from git
