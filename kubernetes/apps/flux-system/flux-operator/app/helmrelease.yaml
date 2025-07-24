@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: controlplaneio
         namespace: flux-system
-      version: 0.24.1
+      version: 0.25.0
   install:
     remediation:
       retries: 3
