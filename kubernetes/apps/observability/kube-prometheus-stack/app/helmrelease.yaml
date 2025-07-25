@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-      version: 75.13.0
+      version: 75.14.0
   dependsOn:
     - name: prometheus-operator-crds
       namespace: observability
