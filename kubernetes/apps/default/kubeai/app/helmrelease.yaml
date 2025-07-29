@@ -32,3 +32,8 @@ spec:
               pathType: ImplementationSpecific
     open-webui:
       enabled: false
+    resourceProfiles:
+      cpu:
+        limits:
+          cpu: 2
+          memory: 4Gi
