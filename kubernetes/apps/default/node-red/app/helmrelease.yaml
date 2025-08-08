@@ -35,7 +35,7 @@ spec:
                   name: node-red-secret
             image:
               repository: docker.io/nodered/node-red
-              tag: 4.0.9-18@sha256:8ee134421234c98ce2446aee89ee83fabed89c36284d6ca2bf5ca9c8cfba236d
+              tag: 4.1.0-18@sha256:78e5fae660e56d77c7079ba6c2fb05f0f397fa84c249b9561dd78f1c18fe86e9
             resources:
               limits:
                 memory: 1Gi
