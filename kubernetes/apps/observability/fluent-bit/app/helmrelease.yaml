@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: fluent
         namespace: flux-system
-      version: 0.51.0
+      version: 0.52.0
   install:
     remediation:
       retries: 3
