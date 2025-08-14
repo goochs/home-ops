@@ -20,6 +20,8 @@ spec:
     - name: http
       port: 80
 ---
+annotations:
+  nginx.ingress.kubernetes.io/use-regex: "true"
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -42,5 +44,5 @@ spec:
                 name: sovol-zero
                 port:
                   name: http
-            path: /webcam*
-            pathType: Prefix
+            path: /webcam[2-4]?/.*
+            pathType: ImplementationSpecific
