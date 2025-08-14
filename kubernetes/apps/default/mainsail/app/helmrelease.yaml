@@ -31,24 +31,33 @@ spec:
             env:
               TZ: America/New_York
             image:
-              repository: ghcr.io/mainsail-crew/mainsail
-              tag: v2.14.0@sha256:89a874f6e315e55d47b1b4315d2625103c590124c910aa00e4cf6d396bb9c3cf
+              repository: ghcr.io/goochs/mainsail
+              tag: 2.14.0@sha256:d69a37846563540e27facd7e017d71c0b8da84dbb44be7f181f76d8668d94b1e
             probes:
               readiness:
                 spec:
                   httpGet:
                     path: /
-                    port: &port 80
+                    port: &port 8080
             resources:
               limits:
-                memory: 500Mi
+                memory: 100Mi
               requests:
                 cpu: 100m
-                memory: 100Mi
+                memory: 50Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
     defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |
+          [{
+            "name": "multus-untrusted",
+            "namespace": "network",
+            "ips": ["10.0.20.71/24"],
+            "mac": "af:b0:6a:e5:87:8f"
+          }]
       securityContext:
         fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
@@ -74,6 +83,8 @@ spec:
             subPath: config.json
         name: mainsail-configmap
         type: configMap
+      tmp:
+        type: emptyDir
     service:
       app:
         controller: *app
