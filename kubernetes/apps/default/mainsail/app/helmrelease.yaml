@@ -56,7 +56,7 @@ spec:
             "name": "multus-untrusted",
             "namespace": "network",
             "ips": ["10.0.20.71/24"],
-            "mac": "af:b0:6a:e5:87:8f"
+            "mac": "fa:b0:6a:e5:87:8f"
           }]
       securityContext:
         fsGroup: 3000
