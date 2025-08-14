@@ -44,5 +44,5 @@ spec:
                 name: sovol-zero
                 port:
                   name: http
-            path: /webcam[2-4]?/.*
+            path: /webcam/
             pathType: ImplementationSpecific
