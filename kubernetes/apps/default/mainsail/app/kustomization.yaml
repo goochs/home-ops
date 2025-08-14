@@ -10,3 +10,4 @@ generatorOptions:
 kind: Kustomization
 resources:
   - ./helmrelease.yaml
+  - ./printers.yaml

@@ -1,7 +1,7 @@
 {
   "instancesDB": "json",
   "instances": [
-    { "hostname": "10.0.20.88", "port": 7125 },
-    { "hostname": "10.0.20.89", "port": 7125 }
+    { "hostname": "voron2.serek.xyz", "port": 443 },
+    { "hostname": "sovol-zero.serek.xyz", "port": 443 }
   ]
 }
