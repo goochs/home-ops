@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mainsail
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.2.0
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      mainsail:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              TZ: America/New_York
+            image:
+              repository: ghcr.io/mainsail-crew/mainsail
+              tag: v2.14.0@sha256:89a874f6e315e55d47b1b4315d2625103c590124c910aa00e4cf6d396bb9c3cf
+            probes:
+              readiness:
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 80
+            resources:
+              limits:
+                memory: 500Mi
+              requests:
+                cpu: 100m
+                memory: 100Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.serek.xyz"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config-file:
+        globalMounts:
+          - path: /usr/share/nginx/html/config.json
+            readOnly: true
+            subPath: config.json
+        name: mainsail-configmap
+        type: configMap
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
