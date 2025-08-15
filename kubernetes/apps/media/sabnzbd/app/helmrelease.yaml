@@ -34,7 +34,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/goochs/sabnzbd
-              tag: 4.5.2@sha256:e3f27e50ee51f950d89ce888cb3c3c4e74b46b42751333ee008f906906cbf05b
+              tag: 4.5.2@sha256:91538373241afbd0f670a38d9c84ac2106574a40014d2f2b1ca24cd4fc68812e
             # probes:
             #   liveness: &probes
             #     custom: true
