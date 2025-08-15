@@ -71,7 +71,7 @@ spec:
               UNIQUE_FILENAMES: true
             image:
               repository: ghcr.io/goochs/k8s-sidecar
-              tag: 1.30.9@sha256:74d65c3def9276b24b5bfe41f8efb773174e7a1ecf3c9b5a31bd02cfdee232c9
+              tag: 1.30.9@sha256:7ae20b8c682f5d537ac580d3ca40a58a8549447f6ed1fc43fef1c719842a0a18
             resources:
               limits:
                 memory: 128Mi
