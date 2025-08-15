@@ -29,7 +29,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/esphome
+              repository: ghcr.io/goochs/esphome
               tag: 2025.7.5@sha256:1238148c7536d406362c759380c939a10177ec5afe18cde2604a1585d38388db
             resources:
               limits:

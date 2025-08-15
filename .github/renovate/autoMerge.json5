@@ -19,7 +19,8 @@
         'ghcr.io/bjw-s',
         'ghcr.io/bjw-s-labs',
         'ghcr.io/onedr0p',
-        'ghcr.io/home-operations'
+        'ghcr.io/home-operations',
+        'ghcr.io/goochs/'
       ]
     },
     {
