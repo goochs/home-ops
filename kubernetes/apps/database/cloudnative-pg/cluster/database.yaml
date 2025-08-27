@@ -78,3 +78,13 @@ spec:
     name: postgres16
   name: gatus
   owner: gatus
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: jellyseerr
+spec:
+  cluster:
+    name: postgres16
+  name: jellyseerr
+  owner: jellyseerr

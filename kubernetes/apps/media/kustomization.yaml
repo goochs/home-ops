@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./bazarr/ks.yaml
   - ./jellyfin/ks.yaml
+  - ./jellyseerr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./radarr/ks.yaml
   - ./recyclarr/ks.yaml
