@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: *app
         namespace: flux-system
-      version: 4.3.2
+      version: 4.3.3
   install:
     remediation:
       retries: 3
