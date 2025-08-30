@@ -35,7 +35,7 @@ spec:
                   name: immich-configmap
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.138.1@sha256:f34e855424fd91c5990132e5b2bde91e1d178ec5205de293ebd8779839a4a77c
+              tag: v1.140.0@sha256:20b1a58406882400c25909054628ee98565dde88e3e028235f5da493ca33b11a
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
