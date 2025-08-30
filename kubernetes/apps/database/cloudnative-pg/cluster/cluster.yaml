@@ -60,6 +60,10 @@ spec:
         name: jellyseerr
         passwordSecret:
           name: jellyseerr-pg-secret
+      - login: true
+        name: atuin
+        passwordSecret:
+          name: atuin-pg-secret
   monitoring:
     enablePodMonitor: true
   postgresql:

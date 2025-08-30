@@ -88,3 +88,13 @@ spec:
     name: postgres16
   name: jellyseerr
   owner: jellyseerr
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: atuin
+spec:
+  cluster:
+    name: postgres16
+  name: atuin
+  owner: atuin
