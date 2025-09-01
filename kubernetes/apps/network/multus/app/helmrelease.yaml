@@ -44,7 +44,7 @@ spec:
           cni-plugins:
             image:
               repository: ghcr.io/goochs/cni-plugins
-              tag: 1.7.1@sha256:f1536ddbcb5b78e487fc17e8e308cf6616cf05fe3e6cdaa37f21563efab4022e
+              tag: 1.8.0@sha256:bbc389fa081833f5e5d988d95dba8868cf8da83d6836a4a213e24ee173343529
         serviceAccount:
           identifier: *app
         type: daemonset
