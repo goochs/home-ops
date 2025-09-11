@@ -30,5 +30,12 @@
       matchDatasources: ["docker"],
       group: { commitMessageTopic: "{{{groupName}}} group" },
     },
+    {
+      description: "1Password Group",
+      groupName: "1Password",
+      matchPackageNames: ["/1password/"],
+      matchDatasources: ["docker"],
+      group: { commitMessageTopic: "{{{groupName}}} group" },
+    },
   ],
 }
