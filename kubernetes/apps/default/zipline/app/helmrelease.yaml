@@ -79,7 +79,7 @@ spec:
                   port: http
     persistence:
       tmp:
-        type: EmptyDir
+        type: emptyDir
       config:
         advancedMounts:
           zipline:
