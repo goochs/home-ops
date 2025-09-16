@@ -84,7 +84,10 @@ spec:
         advancedMounts:
           zipline:
             app:
-              - path: /zipline
+              - path: /zipline/public
+                subPath: /public
+              - path: /zipline/themes
+                subPath: /themes
         existingClaim: *app
     service:
       app:
