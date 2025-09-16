@@ -85,9 +85,9 @@ spec:
           zipline:
             app:
               - path: /zipline/public
-                subPath: /public
+                subPath: public/
               - path: /zipline/themes
-                subPath: /themes
+                subPath: themes/
         existingClaim: *app
     service:
       app:
