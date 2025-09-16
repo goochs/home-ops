@@ -64,6 +64,10 @@ spec:
         name: atuin
         passwordSecret:
           name: atuin-pg-secret
+      - login: true
+        name: zipline
+        passwordSecret:
+          name: zipline-pg-secret
   monitoring:
     enablePodMonitor: true
   postgresql:

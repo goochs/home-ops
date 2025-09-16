@@ -98,3 +98,13 @@ spec:
     name: postgres16
   name: atuin
   owner: atuin
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: zipline
+spec:
+  cluster:
+    name: postgres16
+  name: zipline
+  owner: zipline

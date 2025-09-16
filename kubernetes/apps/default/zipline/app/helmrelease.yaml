@@ -1,0 +1,94 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app zipline
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.3.0
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      zipline:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              CORE_PORT: &port 80
+              TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: zipline-secret
+            image:
+              repository: ghcr.io/diced/zipline
+              tag: 4.3.1@sha256:1bca5e54d44ddc2677a364da22dc583c4281e4daa1fee42bb95bf94db5b6e419
+            probes:
+              liveness: &probes
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /api/healthcheck
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+              readiness: *probes
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 1
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.serek.xyz"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      tmp:
+        type: EmptyDir
+      config:
+        advancedMounts:
+          zipline:
+            app:
+              - path: /zipline
+        existingClaim: *app
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port

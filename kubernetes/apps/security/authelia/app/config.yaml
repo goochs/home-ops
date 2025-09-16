@@ -58,6 +58,23 @@ identity_providers:
           - email
           - groups
         token_endpoint_auth_method: client_secret_basic
+      - authorization_policy: one_factor
+        client_id: '{{ env "ZIPLINE_CLIENT" }}'
+        client_name: 'Zipline'
+        client_secret: '{{ env "ZIPLINE_DIGEST" }}'
+        grant_types:
+          - 'refresh_token'
+          - 'authorization_code'
+        redirect_uris:
+          - 'https://zipline.serek.xyz/api/auth/oauth/oidc'
+        response_types:
+          - 'code'
+        scopes:
+          - 'openid'
+          - 'offline_access'
+          - 'email'
+          - 'profile'
+        token_endpoint_auth_method: 'client_secret_post'
     cors:
       allowed_origins_from_client_redirect_uris: true
       endpoints: ["authorization", "token", "revocation", "introspection"]
