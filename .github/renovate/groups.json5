@@ -8,6 +8,7 @@
       versioning: "semver",
       group: { commitMessageTopic: "{{{groupName}}} group" },
       matchPackageNames: ["/flux/"],
+      minimumGroupSize: 2,
     },
     {
       description: "Talos Group",
@@ -15,6 +16,7 @@
       matchPackageNames: ["/siderolabs/"],
       matchDatasources: ["docker"],
       group: { commitMessageTopic: "{{{groupName}}} group" },
+      minimumGroupSize: 2,
     },
     {
       description: "Immich Group",
@@ -22,6 +24,7 @@
       matchPackageNames: ["/immich-app/"],
       matchDatasources: ["docker"],
       group: { commitMessageTopic: "{{{groupName}}} group" },
+      minimumGroupSize: 2,
     },
     {
       description: "Rook-Ceph Group",
@@ -29,6 +32,7 @@
       matchPackageNames: ["/rook-ceph/", "/rook-ceph-cluster/"],
       matchDatasources: ["docker"],
       group: { commitMessageTopic: "{{{groupName}}} group" },
+      minimumGroupSize: 2,
     },
     {
       description: "1Password Group",
@@ -36,6 +40,15 @@
       matchPackageNames: ["/1password/"],
       matchDatasources: ["docker"],
       group: { commitMessageTopic: "{{{groupName}}} group" },
+      minimumGroupSize: 2,
+    },
+    {
+      description: "Intel Device Plugins Group",
+      groupName: "intel-device-plugins",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/intel-device-plugins-operator/", "/intel-device-plugins-gpu/"],
+      group: { commitMessageTopic: "{{{groupName}}} group", },
+      minimumGroupSize: 2,
     },
   ],
 }
