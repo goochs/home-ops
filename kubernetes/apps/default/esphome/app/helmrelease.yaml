@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/goochs/esphome
-              tag: 2025.8.4@sha256:0d990c01a766d68d226e85c84888197b0580a0460cf6bf1675b3a2c657fbace5
+              tag: 2025.9.0@sha256:b4ff63b1b2293fd9380a6c7978bd0deb3a3115070a9e4c1c8a9734f2c7f225ff
             resources:
               limits:
                 memory: 4Gi
