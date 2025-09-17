@@ -61,12 +61,9 @@ spec:
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
-        fsGroup: 3000
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 3000
         runAsNonRoot: true
-        runAsUser: 3000
-        seccompProfile: {type: RuntimeDefault}
+        runAsUser: 1000
+        runAsGroup: 1000
     ingress:
       app:
         className: internal
@@ -78,12 +75,10 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      tmp:
+      tmpfs:
         type: emptyDir
-      cache:
         globalMounts:
-          - path: /.cache/
-        type: emptyDir
+          - path: /tmp
     service:
       app:
         controller: *app
