@@ -58,7 +58,6 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
-              readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
         fsGroup: 3000
@@ -79,8 +78,6 @@ spec:
                   port: http
     persistence:
       tmp:
-        type: emptyDir
-      ".cache":
         type: emptyDir
       config:
         advancedMounts:
