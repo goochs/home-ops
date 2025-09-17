@@ -80,6 +80,10 @@ spec:
     persistence:
       tmp:
         type: emptyDir
+      cache:
+        globalMounts:
+          - path: /.cache/
+        type: emptyDir
     service:
       app:
         controller: *app
