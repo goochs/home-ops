@@ -40,7 +40,7 @@ spec:
               FEATURES_VERSION_CHECKING: false
               OAUTH_LOGIN_ONLY: true
               OAUTH_OIDC_AUTHORIZE_URL: "https://sso.serek.xyz/api/oidc/authorization"
-              OAUTH_OIDC_REDIRECT_URI: "https://zipline.serek.xyz/api/auth/oauth/oidc"
+              OAUTH_OIDC_REDIRECT_URI: "https://zl.serek.xyz/api/auth/oauth/oidc"
               OAUTH_OIDC_TOKEN_URL: "https://sso.serek.xyz/api/oidc/token"
               OAUTH_OIDC_USERINFO_URL: "https://sso.serek.xyz/api/oidc/userinfo"
               DATASOURCE_S3_USE_SSL: "true"
