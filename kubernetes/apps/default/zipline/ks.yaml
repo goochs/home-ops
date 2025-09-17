@@ -18,7 +18,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: share
+      GATUS_SUBDOMAIN: zl
   prune: true
   sourceRef:
     kind: GitRepository
