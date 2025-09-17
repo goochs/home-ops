@@ -36,7 +36,7 @@ spec:
                   name: zipline-secret
             image:
               repository: ghcr.io/diced/zipline
-              tag: 4.3.0@sha256:eb26f93d155cd25f5bcab80d967aa5457a4a58a1f863ed4e441c64e4f61a70d5
+              tag: 4.3.1@sha256:1bca5e54d44ddc2677a364da22dc583c4281e4daa1fee42bb95bf94db5b6e419
             probes:
               liveness: &probes
                 custom: true
