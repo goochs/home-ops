@@ -185,7 +185,7 @@ spec:
         folderAnnotation: grafana_folder
         label: grafana_dashboard
         provider:
-          disableDelete: true
+          disableDelete: false
           foldersFromFilesStructure: true
         searchNamespace: ALL
       datasources:
