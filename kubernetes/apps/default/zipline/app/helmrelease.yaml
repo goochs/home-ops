@@ -58,6 +58,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
         fsGroup: 3000
@@ -79,15 +80,6 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-      config:
-        advancedMounts:
-          zipline:
-            app:
-              - path: /zipline/public
-                subPath: public/
-              - path: /zipline/themes
-                subPath: themes/
-        existingClaim: *app
     service:
       app:
         controller: *app
