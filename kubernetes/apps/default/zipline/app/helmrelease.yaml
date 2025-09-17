@@ -36,7 +36,7 @@ spec:
                   name: zipline-secret
             image:
               repository: ghcr.io/diced/zipline
-              tag: 4.3.1@sha256:1bca5e54d44ddc2677a364da22dc583c4281e4daa1fee42bb95bf94db5b6e419 
+              tag: 4.3.1@sha256:1bca5e54d44ddc2677a364da22dc583c4281e4daa1fee42bb95bf94db5b6e419
             probes:
               liveness: &probes
                 custom: true
@@ -61,9 +61,9 @@ spec:
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
+        runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-        runAsGroup: 1000
     ingress:
       app:
         className: internal
@@ -76,9 +76,9 @@ spec:
                   port: http
     persistence:
       tmpfs:
-        type: emptyDir
         globalMounts:
           - path: /tmp
+        type: emptyDir
     service:
       app:
         controller: *app
