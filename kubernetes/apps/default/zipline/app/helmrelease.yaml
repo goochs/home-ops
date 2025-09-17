@@ -95,7 +95,7 @@ spec:
         runAsUser: 1000
     ingress:
       app:
-        className: internal
+        className: external
         hosts:
           - host: zl.serek.xyz
             paths:
