@@ -5,7 +5,6 @@ resources:
   - ./actual/ks.yaml
   - ./atuin/ks.yaml
   - ./esphome/ks.yaml
-  - ./headlamp/ks.yaml
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
   - ./kubeai/ks.yaml
