@@ -35,7 +35,7 @@ spec:
                   name: bazarr-secret
             image:
               repository: ghcr.io/goochs/bazarr
-              tag: 1.5.2@sha256:2c95a5054264c0d230b656f889a4300779fc180560ae50819d875dd22187ea5d
+              tag: 1.5.3@sha256:d5f53a2156f84d1259269aca09e944d7036bd273ec25fc11789a77a6297df7f2
             probes:
               liveness: &probes
                 custom: true
