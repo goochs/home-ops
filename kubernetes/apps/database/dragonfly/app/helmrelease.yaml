@@ -92,9 +92,6 @@ spec:
       roles:
         dragonfly-operator:
           rules:
-            - apiGroups: ["coordination.k8s.io"]
-              resources: ["leases"]
-              verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
             - apiGroups: [""]
               resources: ["events"]
               verbs: ["create", "patch"]
@@ -113,6 +110,9 @@ spec:
             - apiGroups: ["dragonflydb.io"]
               resources: ["dragonflies/status"]
               verbs: ["get", "patch", "update"]
+            - apiGroups: ["policy"]
+              resources: ["poddisruptionbudgets"]
+              verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
           type: ClusterRole
     service:
       app:
