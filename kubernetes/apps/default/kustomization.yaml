@@ -11,6 +11,7 @@ resources:
   - ./mainsail/ks.yaml
   - ./node-red/ks.yaml
   - ./rdio-scanner/ks.yaml
+  - ./speaches/ks.yaml
   - ./z2m/ks.yaml
   - ./zipline/ks.yaml
   - ./namespace.yaml
