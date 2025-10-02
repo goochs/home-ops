@@ -29,10 +29,10 @@ spec:
         containers:
           app:
             env:
+              ENABLE_UI: "False"
+              HF_HUB_CACHE: /models
               PORT: &port 8000
               TZ: America/New_York
-              HF_HUB_CACHE: /models
-              ENABLE_UI: "False"
               WHISPER__CPU_THREADS: 8
               WHISPER__NUM_WORKERS: 2
               WHISPER__USE_BATCHED_MODE: "True"
@@ -54,12 +54,14 @@ spec:
               readiness: *probes
             resources:
               limits:
-                memory: 12Gi
+                memory: 16Gi
               requests:
                 cpu: 1
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
+        replicas: 2
+        strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
@@ -80,7 +82,9 @@ spec:
                   port: http
     persistence:
       models:
-        existingClaim: *app
+        path: /mnt/flash/scratch
+        server: 10.0.30.40
+        type: nfs
     service:
       app:
         controller: *app
