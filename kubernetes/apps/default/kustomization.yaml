@@ -7,7 +7,6 @@ resources:
   - ./esphome/ks.yaml
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
-  - ./kubeai/ks.yaml
   - ./mainsail/ks.yaml
   - ./node-red/ks.yaml
   - ./rdio-scanner/ks.yaml
