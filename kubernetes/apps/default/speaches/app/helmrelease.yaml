@@ -54,13 +54,14 @@ spec:
               readiness: *probes
             resources:
               limits:
-                memory: 16Gi
+                memory: 20Gi
               requests:
                 cpu: 1
+                memory: 10Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
-        replicas: 2
+        replicas: 3
         strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
