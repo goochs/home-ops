@@ -1,0 +1,21 @@
+[tools]
+k9s = "latest"
+kubectl = "latest"
+talosctl = "latest"
+talhelper = "latest"
+helm = "latest"
+restic = "latest"
+cilium-cli = "latest"
+kustomize = "latest"
+yq = "latest"
+flux2 = "latest"
+uv = "latest"
+act = "latest"
+actionlint = "latest"
+lefthook = "latest"
+
+[env]
+KUBECONFIG = "{{config_root}}/kubeconfig"
+SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
+KUBERNETES_DIR = "{{config_root}}/kubernetes"
+TALOSCONFIG = "{{config_root}}/kubernetes/bootstrap/talos/clusterconfig/talosconfig"
