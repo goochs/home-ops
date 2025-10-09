@@ -41,8 +41,8 @@ spec:
               - secretRef:
                   name: radarr-secret
             image:
-              repository: ghcr.io/goochs/radarr
-              tag: 6.0.2.10271@sha256:6f605d7d1eabe55fa3499728d55318e7f9a4f00c37f6d77ce9c56d247facc1d0
+              repository: ghcr.io/home-operations/radarr
+              tag: 6.0.2.10271@sha256:2b54f4a396892376ab5603b6cfc3674fedcf45d895a0355894d59fe7fc4d2850
             probes:
               liveness: &probes
                 custom: true

@@ -43,8 +43,8 @@ spec:
         initContainers:
           cni-plugins:
             image:
-              repository: ghcr.io/goochs/cni-plugins
-              tag: 1.8.0@sha256:bbc389fa081833f5e5d988d95dba8868cf8da83d6836a4a213e24ee173343529
+              repository: ghcr.io/home-operations/cni-plugins
+              tag: 1.8.0@sha256:3a858d637ba8d3105ff1af4507df90cfdb8790d04b53d8b0f416e21ec1067bab
         serviceAccount:
           identifier: *app
         type: daemonset

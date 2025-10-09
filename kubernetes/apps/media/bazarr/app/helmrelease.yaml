@@ -34,8 +34,8 @@ spec:
               - secretRef:
                   name: bazarr-secret
             image:
-              repository: ghcr.io/goochs/bazarr
-              tag: 1.5.3@sha256:d5f53a2156f84d1259269aca09e944d7036bd273ec25fc11789a77a6297df7f2
+              repository: ghcr.io/home-operations/bazarr
+              tag: 1.5.3@sha256:30783ea74fe6c2392d3eb40ada1781028458ea492f5ba42272bb45a4af02856c
             probes:
               liveness: &probes
                 custom: true

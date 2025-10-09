@@ -40,8 +40,8 @@ spec:
                   name: prowlarr-secret
             image:
               pullPolicy: IfNotPresent
-              repository: ghcr.io/goochs/prowlarr
-              tag: 2.1.3.5208@sha256:315c4a1e657f6ed1026b0aeccbfba91b44c0cd82e4d48e5f5c77404184260367
+              repository: ghcr.io/home-operations/prowlarr
+              tag: 2.1.3.5208@sha256:b8e5790c6df4d5b81ba5583d90864ed5978e1113a67809fcba339b161a6a16a2
             resources:
               limits:
                 memory: 250Mi

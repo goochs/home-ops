@@ -70,8 +70,8 @@ spec:
               RESOURCE: both
               UNIQUE_FILENAMES: true
             image:
-              repository: ghcr.io/goochs/k8s-sidecar
-              tag: 1.30.10@sha256:d8e3ba68781326349cca54a2e2df2293a34982fca0377cc977c0c2ca38d5e011
+              repository: ghcr.io/home-operations/k8s-sidecar
+              tag: 1.30.10@sha256:03963c757dd55fd93aed6dfe6a4f0fe927fb651b9f596097c98e49f0cb74127d 
             resources:
               limits:
                 memory: 128Mi
