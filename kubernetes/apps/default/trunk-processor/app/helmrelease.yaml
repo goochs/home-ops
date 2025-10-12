@@ -31,8 +31,8 @@ spec:
             env:
               AWS_ENDPOINT: https://s3.serek.xyz:443
               BUCKET_NAME: trunk-recorder
-              TRANSCRIPTION_ENDPOINT: https://speaches.svc.default.cluster.local/v1/audio/transcriptions
               MODEL_NAME: Systran/faster-whisper-medium.en
+              TRANSCRIPTION_ENDPOINT: http://speaches.default.svc.cluster.local/v1/audio/transcriptions
               TZ: America/New_York
             envFrom:
               - secretRef:
@@ -62,6 +62,8 @@ spec:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
+        replicas: 3
+        strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
         fsGroup: 3000
