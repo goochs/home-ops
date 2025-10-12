@@ -31,7 +31,7 @@ spec:
             env:
               ENABLE_UI: "False"
               HF_HUB_CACHE: /models
-              PORT: &port 80
+              UVICORN_PORT: &port 80
               TZ: America/New_York
               WHISPER__CPU_THREADS: 8
               WHISPER__NUM_WORKERS: 2

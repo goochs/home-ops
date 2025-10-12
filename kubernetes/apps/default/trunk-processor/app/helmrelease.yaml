@@ -62,7 +62,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
-        replicas: 3
+        replicas: 2
         strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
