@@ -12,7 +12,6 @@ spec:
     - ../../../../flux/components/gatus/internal
   dependsOn:
     - name: rook-ceph-cluster
-      namespace: rook-ceph
   interval: 30m
   path: ./kubernetes/apps/observability/victoria-logs/app
   postBuild:
