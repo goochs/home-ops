@@ -63,7 +63,7 @@ spec:
           revision: 9
         cert-manager:
           datasource: Prometheus
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          url: https://grafana.com/api/dashboards/20842/revisions/3/download
         external-dns:
           datasource: Prometheus
           # renovate: depName="External-dns"
