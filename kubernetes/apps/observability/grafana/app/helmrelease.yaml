@@ -1,17 +1,25 @@
 ---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: grafana
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 10.1.1
+  url: oci://ghcr.io/grafana/helm-charts/grafana
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: grafana
 spec:
-  chart:
-    spec:
-      chart: grafana
-      sourceRef:
-        kind: HelmRepository
-        name: grafana
-        namespace: flux-system
-      version: 10.1.1
+  chartRef:
+    kind: OCIRepository
+    name: grafana
   install:
     remediation:
       retries: 3
@@ -136,9 +144,11 @@ spec:
         apiVersion: 1
         datasources:
           - access: proxy
+            name: VictoriaLogs
+            type: victoriametrics-logs-datasource
+            url: http://victoria-logs-server.observability.svc.cluster.local:9428
+          - access: proxy
             isDefault: true
-            jsonData:
-              timeInterval: 1m
             name: Prometheus
             type: prometheus
             uid: prometheus
@@ -175,8 +185,12 @@ spec:
         - grafana.serek.xyz
       ingressClassName: internal
     persistence:
-      enabled: true
-      existingClaim: grafana
+      enabled: false
+    plugins:
+      - grafana-clock-panel
+      - grafana-piechart-panel
+      - grafana-worldmap-panel
+      - victoriametrics-logs-datasource
     serviceMonitor:
       enabled: true
     sidecar:

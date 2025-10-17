@@ -31,28 +31,13 @@ spec:
       strategy: rollback
   values:
     config:
-      service: |-
-        [SERVICE]
-          daemon off
-          flush {{ .Values.flush }}
-          log_level {{ .Values.logLevel }}
-          parsers_file /fluent-bit/etc/parsers.conf
-          parsers_file /fluent-bit/etc/conf/custom_parsers.conf
-          http_server on
-          http_listen 0.0.0.0
-          http_port {{ .Values.metricsPort }}
-          health_check on
-
-      inputs: |-
-        [INPUT]
-          name tail
-          alias kubernetes
-          path /var/log/containers/*.log
-          parser containerd
-          tag kubernetes.*
-          skip_empty_lines on
-          skip_long_lines on
-
+      customParsers: |-
+        [PARSER]
+          name containerd
+          format regex
+          regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log>.*)$
+          time_key time
+          time_format %Y-%m-%dT%H:%M:%S.%L%z
       filters: |-
         [FILTER]
           name kubernetes
@@ -85,15 +70,15 @@ spec:
           rename k_labels_app.kubernetes.io/name app
           rename k_labels_app app
           rename k_labels_k8s-app app
-
-      customParsers: |-
-        [PARSER]
-          name containerd
-          format regex
-          regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log>.*)$
-          time_key time
-          time_format %Y-%m-%dT%H:%M:%S.%L%z
-
+      inputs: |-
+        [INPUT]
+          name tail
+          alias kubernetes
+          path /var/log/containers/*.log
+          parser containerd
+          tag kubernetes.*
+          skip_empty_lines on
+          skip_long_lines on
       outputs: |-
         [OUTPUT]
           Name http
@@ -104,6 +89,17 @@ spec:
           format json_lines
           json_date_format iso8601
           compress gzip
+      service: |-
+        [SERVICE]
+          daemon off
+          flush {{ .Values.flush }}
+          log_level {{ .Values.logLevel }}
+          parsers_file /fluent-bit/etc/parsers.conf
+          parsers_file /fluent-bit/etc/conf/custom_parsers.conf
+          http_server on
+          http_listen 0.0.0.0
+          http_port {{ .Values.metricsPort }}
+          health_check on
     dashboards:
       enabled: true
     serviceMonitor:
