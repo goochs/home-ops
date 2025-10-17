@@ -1,0 +1,53 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: victoria-logs
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.11.15
+  url: oci://ghcr.io/victoriametrics/helm-charts/victoria-logs-single
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: victoria-logs
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: victoria-logs
+  install:
+    crds: Skip
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    dashboards:
+      enabled: true
+      labels:
+        grafana_dashboard: "1"
+    fullnameOverride: victoria-logs
+    retentionPeriod: 30d
+    server:
+      ingress:
+        enabled: true
+        hosts:
+          - name: logs.serek.xyz
+            path: /
+            port: http
+        ingressClassName: internal
+      persistentVolume:
+        enabled: true
+        size: 100Gi
+        storageClassName: ceph-block
+      serviceMonitor:
+        enabled: true
