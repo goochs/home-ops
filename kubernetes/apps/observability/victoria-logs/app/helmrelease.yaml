@@ -35,9 +35,9 @@ spec:
       enabled: true
       labels:
         grafana_dashboard: "1"
-    fullnameOverride: victoria-logs
-    retentionPeriod: 30d
     server:
+      fullnameOverride: victoria-logs
+      retentionPeriod: 30d
       extraArgs:
         syslog.listenAddr.udp: :5140
       ingress:
