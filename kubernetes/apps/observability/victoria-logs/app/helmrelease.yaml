@@ -38,6 +38,8 @@ spec:
     fullnameOverride: victoria-logs
     retentionPeriod: 30d
     server:
+      extraArgs:
+        syslog.listenAddr.udp: :5140
       ingress:
         enabled: true
         hosts:
@@ -49,5 +51,14 @@ spec:
         enabled: true
         size: 100Gi
         storageClassName: ceph-block
+      service:
+        annotations:
+          lbipam.cilium.io/ips: 10.0.41.51
+        extraPorts:
+          - name: syslog
+            port: 5140
+            protocol: TCP
+            targetPort: 5140
+        type: LoadBalancer
       serviceMonitor:
         enabled: true
