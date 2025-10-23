@@ -12,7 +12,7 @@ spec:
       protocol: UDP
       targetPort: 5140
   selector:
+    app: server
     app.kubernetes.io/instance: victoria-logs
     app.kubernetes.io/name: victoria-logs-single
-    app: server
   type: LoadBalancer

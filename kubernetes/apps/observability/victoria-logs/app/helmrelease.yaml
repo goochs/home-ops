@@ -36,10 +36,9 @@ spec:
       labels:
         grafana_dashboard: "1"
     server:
-      fullnameOverride: victoria-logs
-      retentionPeriod: 30d
       extraArgs:
         syslog.listenAddr.udp: :5140
+      fullnameOverride: victoria-logs
       ingress:
         enabled: true
         hosts:
@@ -51,5 +50,6 @@ spec:
         enabled: true
         size: 100Gi
         storageClassName: ceph-block
+      retentionPeriod: 30d
       serviceMonitor:
         enabled: true
