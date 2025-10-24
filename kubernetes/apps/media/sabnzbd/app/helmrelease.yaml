@@ -34,7 +34,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/home-operations/sabnzbd
-              tag: 4.5.4@sha256:7773930a493c5f07805a5197f50c9a261703e7c68133467dc84f897b11cb7f54
+              tag: 4.5.5@sha256:f1778f06159a1d69763cca1f7e49e39eaedf59085801073bbe6ba98d51c9caa6
             # probes:
             #   liveness: &probes
             #     custom: true
