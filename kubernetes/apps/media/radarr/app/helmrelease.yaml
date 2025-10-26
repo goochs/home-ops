@@ -42,7 +42,7 @@ spec:
                   name: radarr-secret
             image:
               repository: ghcr.io/home-operations/radarr
-              tag: 6.0.2.10271@sha256:2b54f4a396892376ab5603b6cfc3674fedcf45d895a0355894d59fe7fc4d2850
+              tag: 6.0.3.10276@sha256:1666000163458827acb2f7f81aeb8cb8d37903fe4231a9b3f2766c9905677211
             probes:
               liveness: &probes
                 custom: true
