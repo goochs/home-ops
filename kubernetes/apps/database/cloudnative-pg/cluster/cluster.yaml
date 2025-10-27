@@ -68,6 +68,10 @@ spec:
         name: zipline
         passwordSecret:
           name: zipline-pg-secret
+      - login: true
+        name: trunk-processor
+        passwordSecret:
+          name: trunk-processor-pg-secret
   monitoring:
     enablePodMonitor: true
   postgresql:
