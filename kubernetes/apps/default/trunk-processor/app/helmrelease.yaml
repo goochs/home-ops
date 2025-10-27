@@ -39,7 +39,7 @@ spec:
                   name: trunk-processor-secret
             image:
               repository: ghcr.io/goochs/trunk-processor
-              tag: v0.0.2@sha256:551a5e0f5b0e18b7346479b4656f8fc93d46d81e126edc0081dd7afe4178a369
+              tag: v0.0.2@sha256:d4d3b6ab7203fa4493570b7f2ca55d55bbead3f72477cf5566191a2b22032a42
             probes:
               liveness: &probes
                 custom: true
@@ -55,7 +55,7 @@ spec:
               readiness: *probes
             resources:
               limits:
-                memory: 256Mi
+                memory: 1500Mi
               requests:
                 cpu: 10m
             securityContext:
