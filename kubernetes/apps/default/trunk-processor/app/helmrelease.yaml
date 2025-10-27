@@ -39,7 +39,7 @@ spec:
                   name: trunk-processor-secret
             image:
               repository: ghcr.io/goochs/trunk-processor
-              tag: v0.0.1@sha256:957d37f8a276921a6bae8e66e83b3c8bcb449a6d0397d8aaacb66e24a762ee7b
+              tag: v0.0.2@sha256:551a5e0f5b0e18b7346479b4656f8fc93d46d81e126edc0081dd7afe4178a369
             probes:
               liveness: &probes
                 custom: true
