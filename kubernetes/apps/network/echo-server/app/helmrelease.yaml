@@ -34,7 +34,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/mendhak/http-https-echo
-              tag: 37
+              tag: 38
             probes:
               liveness: &probes
                 custom: true
