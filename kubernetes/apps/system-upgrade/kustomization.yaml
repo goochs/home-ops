@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./controller/ks.yaml
+components:
+  - ../../flux/components/alerts

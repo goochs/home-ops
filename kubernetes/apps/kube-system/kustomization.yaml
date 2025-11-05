@@ -10,3 +10,5 @@ resources:
   - ./node-feature-discovery/ks.yaml
   - ./reloader/ks.yaml
   - ./namespace.yaml
+components:
+  - ../../flux/components/alerts

@@ -5,3 +5,5 @@ resources:
   - ./capacitor/ks.yaml
   - ./flux-operator/ks.yaml
   - ./namespace.yaml
+components:
+  - ../../flux/components/alerts

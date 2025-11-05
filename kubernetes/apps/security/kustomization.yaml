@@ -8,3 +8,5 @@ resources:
   - ./onepass-connect/ks.yaml
   - ./postgres/ks.yaml
   - ./namespace.yaml
+components:
+  - ../../flux/components/alerts

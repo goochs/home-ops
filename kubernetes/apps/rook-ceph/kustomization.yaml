@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./rook-ceph/ks.yaml
+components:
+  - ../../flux/components/alerts
