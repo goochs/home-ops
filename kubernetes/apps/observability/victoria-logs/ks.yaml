@@ -22,6 +22,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
+    namespace: flux-system
   targetNamespace: observability
   timeout: 15m
   wait: false

@@ -14,6 +14,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
+    namespace: flux-system
   targetNamespace: network
   timeout: 5m
   wait: true
@@ -36,6 +37,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
+    namespace: flux-system
   targetNamespace: network
   timeout: 5m
   wait: true
