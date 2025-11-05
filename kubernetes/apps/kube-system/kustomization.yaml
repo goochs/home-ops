@@ -11,4 +11,4 @@ resources:
   - ./reloader/ks.yaml
   - ./namespace.yaml
 components:
-  - ../../../flux/components/alerts
+  - ../../flux/components/alerts
