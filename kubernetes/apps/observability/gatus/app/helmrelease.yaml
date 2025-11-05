@@ -65,6 +65,7 @@ spec:
           init-config:
             env:
               FOLDER: /config
+              HEALTH_PORT: &initport 8081
               LABEL: gatus.io/enabled
               METHOD: WATCH
               NAMESPACE: ALL
@@ -74,21 +75,19 @@ spec:
               repository: ghcr.io/home-operations/k8s-sidecar
               tag: 2.0.3@sha256:59f017b06b4a21a83f7e9a80952e81635563155346a7827c891ce9e02c1ebe15
             probes:
-              liveness: &probes
+              liveness: &initprobes
                 custom: true
                 enabled: true
                 spec:
                   failureThreshold: 3
                   httpGet:
                     path: /healthz
-                    port: &port 8080
+                    port: *initport
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-              readiness: *probes
+              readiness: *initprobes
             resources:
-              limits:
-                memory: 128Mi
               requests:
                 cpu: 10m
             restartPolicy: Always
