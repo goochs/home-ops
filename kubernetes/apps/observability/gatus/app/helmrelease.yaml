@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/heads/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -37,7 +38,7 @@ spec:
                   name: gatus-secret
             image:
               repository: ghcr.io/twin/gatus
-              tag: v5.29.0@sha256:b4afbcaf1cdfcda0b87e732914f101b0e2fab71485ae5d691ceb7b97d021b642
+              tag: v5.30.0@sha256:bab5a31cb3cfde7fd9913a5ff97652883e4db08f3b429a62a7a188c746df4219
             probes:
               liveness: &probes
                 custom: true
@@ -71,7 +72,20 @@ spec:
               UNIQUE_FILENAMES: true
             image:
               repository: ghcr.io/home-operations/k8s-sidecar
-              tag: 1.30.11@sha256:3483a2e8ee9d404357eb94ea7dd570d0c483d8211a4b09ffac60aba9ecfca2cc
+              tag: 2.0.3@sha256:59f017b06b4a21a83f7e9a80952e81635563155346a7827c891ce9e02c1ebe15
+            probes:
+              liveness: &probes
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /healthz
+                    port: &port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+              readiness: *probes
             resources:
               limits:
                 memory: 128Mi
