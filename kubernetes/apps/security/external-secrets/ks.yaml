@@ -3,7 +3,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: external-secrets
-  namespace: flux-system
 spec:
   commonMetadata:
     labels:
@@ -23,14 +22,15 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: external-secrets-stores
-  namespace: flux-system
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: external-secrets-stores
   dependsOn:
     - name: external-secrets
+      namespace: security
     - name: onepass-connect
+      namespace: security
   interval: 30m
   path: ./kubernetes/apps/security/external-secrets/stores
   prune: true

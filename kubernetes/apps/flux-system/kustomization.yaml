@@ -5,6 +5,5 @@ components:
 kind: Kustomization
 namespace: flux-system
 resources:
-  - ./capacitor/ks.yaml
   - ./flux-operator/ks.yaml
   - ./namespace.yaml

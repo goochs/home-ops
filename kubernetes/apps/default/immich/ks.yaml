@@ -3,7 +3,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app immich
-  namespace: flux-system
 spec:
   commonMetadata:
     labels:
@@ -12,8 +11,11 @@ spec:
     - ../../../../flux/components/gatus/external
   dependsOn:
     - name: external-secrets-stores
+      namespace: security
     - name: immich-pg
+      namespace: default
     - name: immich-dragonfly
+      namespace: default
   interval: 30m
   path: ./kubernetes/apps/default/immich/app
   postBuild:
@@ -32,14 +34,15 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app immich-pg
-  namespace: flux-system
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: security
     - name: cloudnative-pg
+      namespace: database
   interval: 30m
   path: ./kubernetes/apps/default/immich/db
   prune: true
@@ -55,13 +58,13 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app immich-dragonfly
-  namespace: flux-system
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: dragonfly-operator
+      namespace: database
   interval: 30m
   path: ./kubernetes/apps/default/immich/dragonfly
   prune: true

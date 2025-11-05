@@ -3,12 +3,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-meta
-  namespace: flux-system
 spec:
   decryption:
     provider: sops
-    secretRef:
-      name: sops-age
   interval: 30m
   path: ./kubernetes/flux/meta
   prune: true
@@ -25,14 +22,12 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps
-  namespace: flux-system
 spec:
   decryption:
     provider: sops
-    secretRef:
-      name: sops-age
   dependsOn:
     - name: cluster-meta
+      namespace: flux-system
   interval: 30m
   path: ./kubernetes/apps
   prune: true
@@ -43,17 +38,41 @@ spec:
   timeout: 5m
   wait: false
   patches:
-    # Add Sops decryption to child Kustomizations
+    # Add kustomization defaults
     - patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
         metadata:
-          name: not-used
+          name: _
         spec:
           decryption:
             provider: sops
-            secretRef:
-              name: sops-age
+          deletionPolicy: WaitForTermination
+          patches:
+            - patch: |-
+                apiVersion: helm.toolkit.fluxcd.io/v2
+                kind: HelmRelease
+                metadata:
+                  name: _
+                spec:
+                  install:
+                    crds: CreateReplace
+                    strategy:
+                      name: RetryOnFailure
+                  rollback:
+                    cleanupOnFail: true
+                    recreate: true
+                  upgrade:
+                    cleanupOnFail: true
+                    crds: CreateReplace
+                    strategy:
+                      name: RemediateOnFailure
+                    remediation:
+                      remediateLastFailure: true
+                      retries: 2
+              target:
+                group: helm.toolkit.fluxcd.io
+                kind: HelmRelease
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
