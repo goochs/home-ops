@@ -1,66 +1,33 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/heads/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: multus
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.0.1
+  url: oci://ghcr.io/bjw-s-labs/helm/multus
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app multus
+  name: multus
 spec:
-  chart:
-    spec:
-      chart: app-template
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-      version: 4.4.0
-  install:
-    remediation:
-      retries: 3
-  interval: 30m
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-      strategy: rollback
+  chartRef:
+    kind: OCIRepository
+    name: multus
+  interval: 1h
   values:
-    controllers:
-      multus:
-        containers:
-          multus:
-            args:
-              - --cleanup-config-on-exit=true
-            command:
-              - /thin_entrypoint
-            image:
-              repository: ghcr.io/k8snetworkplumbingwg/multus-cni
-              tag: v4.2.3@sha256:54f120a6f8fede8e2da0d0fe3bed3da2c92edcb2cd895e4f382784a9a708e1b9
-            resources:
-              limits:
-                memory: 128Mi
-              requests:
-                cpu: 10m
-            securityContext:
-              privileged: true
-        initContainers:
-          cni-plugins:
-            image:
-              repository: ghcr.io/home-operations/cni-plugins
-              tag: 1.8.0@sha256:3a858d637ba8d3105ff1af4507df90cfdb8790d04b53d8b0f416e21ec1067bab
-        serviceAccount:
-          identifier: *app
-        type: daemonset
-    defaultPodOptions:
-      hostNetwork: true
-    persistence:
-      etc-cni-net-d:
-        globalMounts:
-          - path: /host/etc/cni/net.d
-        hostPath: /etc/cni/net.d
-        type: hostPath
-      opt-cni-bin:
-        globalMounts:
-          - path: /host/opt/cni/bin
-        hostPath: /opt/cni/bin
-        type: hostPath
-    serviceAccount:
-      multus: {}
+    cni:
+      binPath: /opt/cni/bin
+      netPath: /etc/cni/net.d
+    multus:
+      resources:
+        requests:
+          cpu: 10m
+        limits:
+          memory: 32Mi
