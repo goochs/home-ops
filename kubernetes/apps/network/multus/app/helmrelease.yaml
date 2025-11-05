@@ -27,7 +27,7 @@ spec:
       netPath: /etc/cni/net.d
     multus:
       resources:
-        requests:
-          cpu: 10m
         limits:
           memory: 32Mi
+        requests:
+          cpu: 10m
