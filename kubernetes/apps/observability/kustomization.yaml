@@ -11,4 +11,4 @@ resources:
   - ./kromgo/ks.yaml
   - ./victoria-logs/ks.yaml
 components:
-  - ../../flux/components/alerts
+  - ../../../flux/components/alerts
