@@ -8,7 +8,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../flux/components/gatus/internal
+    - ../../../../components/gatus/internal
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph

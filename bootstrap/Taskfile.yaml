@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+
+  default:
+    desc: Bootstrap the Talos cluster
+    cmds:
+      - task: gensecret
+      - task talos:genconfig
+      - task: install
+      - task: fetch-kubeconfig
+      - task: namespaces
+      - task: resources
+      - task: apps
+      - talosctl health --server=false
+
+  gensecret:
+    desc: Generate the Talos secrets
+    dir: "{{.TALOS_DIR}}"
+    cmds:
+      - op inject -i "{{.TALHELPER_SECRET_TEMPLATE}}" -o "{{.TALHELPER_SECRET_FILE}}"
+    preconditions:
+      - { msg: "Missing talhelper config file", sh: "test -f {{.TALHELPER_CONFIG_FILE}}" }
+    status:
+      - test -f "{{.TALHELPER_SECRET_FILE}}"
+
+  apply:
+    desc: Apply the Talos configs to the nodes in maintenance mode, using insecure
+    dir: "{{.TALOS_DIR}}"
+    cmd: talhelper gencommand apply --extra-flags=--insecure | bash
+    preconditions:
+      - { msg: "Missing talhelper config file", sh: "test -f {{.TALHELPER_CONFIG_FILE}}" }
+
+  apply-node:
+    desc: Apply Talos configs to a node in maintenance mode, using insecure
+    dir: "{{.TALOS_DIR}}"
+    cmd: talosctl apply-config --talosconfig="{{.TALOSCONFIG}}" --nodes={{.NODE}} --file=./clusterconfig/home-{{.NODE}}.yaml --insecure
+    requires:
+      vars: [NODE]
+    preconditions:
+      - { msg: "Missing talosconfig file", sh: "test -f {{.TALOSCONFIG}}" }
+
+  bootstrap:
+    internal: true
+    dir: "{{.TALOS_DIR}}"
+    cmds:
+      - echo "Installing Talos... ignore the errors and be patient"
+      - until talosctl bootstrap --talosconfig="{{.TALOSCONFIG}}" --nodes={{.NODE}}; do sleep 10; done
+      - sleep 10
+    requires:
+      vars: [NODE]
+    preconditions:
+      - { msg: "Missing talosconfig file", sh: "test -f {{.TALOSCONFIG}}" }
+
+  install:
+    desc: Install the Talos cluster
+    dir: "{{.TALOS_DIR}}"
+    cmds:
+      - task: apply-node
+        vars: { NODE: 'k8s-m1' }
+      - task: bootstrap
+        vars: { NODE: 'k8s-m1' }
+      - task: apply-node
+        vars: { NODE: 'k8s-m2' }
+      - sleep 10 # for etcd join
+      - task: apply-node
+        vars: { NODE: 'k8s-m3' }
+      - sleep 10
+    preconditions:
+      - { msg: "Missing talosconfig file", sh: "test -f {{.TALOSCONFIG}}" }
+
+  namespaces:
+    silent: true
+    internal: true
+    vars:
+      NAMESPACES:
+        sh: find "{{.KUBERNETES_DIR}}/apps" -type d -depth 1
+    cmds:
+      - for:
+          var: NAMESPACES
+        cmd: kustomize build "{{.ITEM}}" | yq ea -e 'select(.kind == "Namespace")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -
+
+  resources:
+    desc: Bootstrap resources needed
+    silent: true
+    cmd: op inject -i {{.BOOTSTRAP_DIR}}/resources.yaml | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -
+
+  apps:
+    desc: Bootstrap core apps needed for Talos
+    dir: "{{.BOOTSTRAP_DIR}}"
+    cmds:
+      - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
+      - helmfile --kubeconfig {{.KUBECONFIG_FILE}} --file ./helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} wait --for=condition=Ready nodes --all --timeout=600s; do sleep 10; done
+    preconditions:
+      - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }
+
+  fetch-kubeconfig:
+    desc: Generate talos kubeconfig
+    dir: "{{.TALOS_DIR}}"
+    cmd: until talhelper gencommand kubeconfig --extra-flags "{{.ROOT_DIR}} --force" | bash; do sleep 10; done
+

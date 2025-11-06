@@ -6,6 +6,8 @@ vars:
   # Directories
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
+  TALOS_DIR: "{{.ROOT_DIR}}/talos"
+  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
   # Files
   KUBECONFIG_FILE: "{{.ROOT_DIR}}/kubeconfig"
 
@@ -15,10 +17,9 @@ env:
 includes:
   kubernetes:
     aliases: ["k8s"]
-    taskfile: .task/kubernetes
-  talos: .task/talos
-  bootstrap: .task/bootstrap
-  volsync: .task/volsync
+    taskfile: kubernetes/
+  talos: talos/
+  bootstrap: bootstrap/
 tasks:
   default:
     cmd: task --list
@@ -29,3 +30,9 @@ tasks:
     cmd: flux --kubeconfig {{.KUBECONFIG_FILE}} reconcile --namespace flux-system kustomization cluster-apps --with-source
     preconditions:
       - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }
+
+  unlock:
+    desc: Unlock all Restic repositories
+    cmd: >
+      kubectl get replicationsources --all-namespaces --no-headers -A | awk '{print $1, $2}'
+      | xargs --max-procs=2 -L 1 bash -c 'kubectl --namespace "$0" patch --field-manager=flux-client-side-apply replicationsources "$1" --type merge --patch "{\"spec\":{\"restic\":{\"unlock\":\"{{now | unixEpoch}}\"}}}"'

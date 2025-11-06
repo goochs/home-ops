@@ -13,9 +13,10 @@ uv = "latest"
 act = "latest"
 actionlint = "latest"
 lefthook = "latest"
+helmfile = "latest"
 
 [env]
 KUBECONFIG = "{{config_root}}/kubeconfig"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
 KUBERNETES_DIR = "{{config_root}}/kubernetes"
-TALOSCONFIG = "{{config_root}}/kubernetes/bootstrap/talos/clusterconfig/talosconfig"
+TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"

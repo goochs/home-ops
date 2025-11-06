@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: onepass-connect-secret
+  namespace: security
+stringData:
+  1password-credentials.json: op://home-k8s/bootstrap/onepassCredential
+  token: op://home-k8s/bootstrap/onepassToken
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: github-webhook-token-secret
+stringData:
+    token: op://home-k8s/bootstrap/githubWebhookToken
