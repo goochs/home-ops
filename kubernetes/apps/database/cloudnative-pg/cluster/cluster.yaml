@@ -81,12 +81,12 @@ spec:
   primaryUpdateStrategy: unsupervised
   resources:
     limits:
-      cpu: 1
-      hugepages-2Mi: 1024Mi
+      cpu: 2
+      hugepages-1Gi: 1Gi
       memory: 2Gi
     requests:
-      cpu: 1
-      hugepages-2Mi: 1024Mi
+      cpu: 2
+      hugepages-1Gi: 1Gi
       memory: 2Gi
   storage:
     size: 20Gi
