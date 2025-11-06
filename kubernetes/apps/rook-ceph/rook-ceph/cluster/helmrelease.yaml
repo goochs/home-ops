@@ -22,6 +22,8 @@ spec:
       retries: 3
       strategy: rollback
   values:
+    cleanupPolicy:
+        wipeDevicesFromOtherClusters: true
     cephBlockPools:
       - name: ceph-blockpool
         spec:
