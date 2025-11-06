@@ -21,7 +21,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: onepassword
+    name: onepass-connect
   interval: 1h
   valuesFrom:
     - kind: ConfigMap
