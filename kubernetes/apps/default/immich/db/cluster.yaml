@@ -23,15 +23,15 @@ spec:
         compression: bzip2
         maxParallel: 8
     retentionPolicy: 30d
-  bootstrap:
-    recovery:
-      source: &previousCluster immich-pg-v3
   enableSuperuserAccess: true
-  externalClusters:
-    - barmanObjectStore:
-        !!merge <<: *barmanObjectStore
-        serverName: *previousCluster
-      name: *previousCluster
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster immich-pg-v3
+  # externalClusters:
+  #   - barmanObjectStore:
+  #       !!merge <<: *barmanObjectStore
+  #       serverName: *previousCluster
+  #     name: *previousCluster
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0
   instances: 3
   managed:
