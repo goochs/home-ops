@@ -8,6 +8,7 @@ configurations:
   - kustomizeconfig.yaml
 kind: Kustomization
 resources:
-  - ./webhook
+  - ./ingress.yaml
+  - ./reciever.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
