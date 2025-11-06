@@ -9,6 +9,6 @@ configurations:
 kind: Kustomization
 resources:
   - ./ingress.yaml
-  - ./reciever.yaml
+  - ./receiver.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
