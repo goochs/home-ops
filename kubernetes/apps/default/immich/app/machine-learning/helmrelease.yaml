@@ -65,8 +65,8 @@ spec:
         globalMounts:
           - path: /cache
             subPath: cache/
-          - path: /.config
-            subPath: config/
+          - path: /.cache
+            subPath: dotcache/
         size: 20Gi
         storageClass: ceph-block
         type: persistentVolumeClaim
