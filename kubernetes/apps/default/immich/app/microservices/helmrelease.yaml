@@ -41,23 +41,23 @@ spec:
               tag: v2.2.3@sha256:4504d794123c3f5410cc45bbc61e4d7dbcacec1e1b0cd2e599691430c94e5849
             resources:
               limits:
-                gpu.intel.com/i915: "1"
               requests:
                 cpu: 50m
-                gpu.intel.com/i915: "1"
                 memory: 3Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
               readOnlyRootFilesystem: true
-              runAsGroup: 568
-              runAsNonRoot: true
-              runAsUser: 568
-              seccompProfile: {type: RuntimeDefault}
-        replicas: 2
+        replicas: 3
         strategy: RollingUpdate
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
     persistence:
       media:
         advancedMounts:
@@ -69,7 +69,7 @@ spec:
         type: nfs
     service:
       immich-microservices:
-        controller: immich-microservices
+        controller: *app
         ports:
           http:
             port: 2283

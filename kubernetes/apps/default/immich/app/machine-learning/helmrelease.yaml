@@ -36,17 +36,29 @@ spec:
                   name: immich-configmap
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v2.2.3@sha256:bf339cbb44af6c2ef25d9128e1da51b2bec0cfd524846a83e3017c21bd71ddb4
+              tag: v2.2.3-openvino@sha256:4d4807c3171715941f085d1c980510d695b786463f1569bd0af8e644a735ed2b
+            resources:
+              limits:
+                gpu.intel.com/i915: "1"
+              requests:
+                cpu: 50m
+                gpu.intel.com/i915: "1"
+                memory: 3Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
               readOnlyRootFilesystem: true
-              runAsGroup: 568
-              runAsNonRoot: true
-              runAsUser: 568
-              seccompProfile: {type: RuntimeDefault}
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+        supplementalGroups:
+          - 44
+          - 109
     persistence:
       model-cache:
         advancedMounts:

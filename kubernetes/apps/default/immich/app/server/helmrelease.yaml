@@ -42,13 +42,15 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
               readOnlyRootFilesystem: true
-              runAsGroup: 568
-              runAsNonRoot: true
-              runAsUser: 568
-              seccompProfile: {type: RuntimeDefault}
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
     ingress:
       app:
         className: external
@@ -88,7 +90,7 @@ spec:
         type: emptyDir
     service:
       immich-server:
-        controller: immich-server
+        controller: *app
         ports:
           http:
             port: 2283
