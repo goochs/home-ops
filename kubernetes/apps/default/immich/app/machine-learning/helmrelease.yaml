@@ -60,17 +60,17 @@ spec:
           - 44
           - 109
     persistence:
-      model-cache:
-        advancedMounts:
-          immich-machine-learning:
-            main:
-              - path: /cache
-        type: emptyDir
+      cache:
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: /cache
+            subPath: cache/
+          - path: /.config
+            subPath: config/
+        size: 20Gi
+        storageClass: ceph-block
+        type: persistentVolumeClaim
       tmp:
-        advancedMounts:
-          immich-machine-learning:
-            main:
-              - path: /tmp
         type: emptyDir
     service:
       immich-machine-learning:
