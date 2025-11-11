@@ -71,9 +71,9 @@ spec:
                   port: http
     persistence:
       config:
+        existingClaim: *app
         globalMounts:
           - path: /app/data
-        existingClaim: *app
     service:
       app:
         controller: *app
