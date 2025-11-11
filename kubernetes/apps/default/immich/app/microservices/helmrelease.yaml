@@ -41,8 +41,10 @@ spec:
               tag: v2.2.3@sha256:4504d794123c3f5410cc45bbc61e4d7dbcacec1e1b0cd2e599691430c94e5849
             resources:
               limits:
+                gpu.intel.com/i915: "1"
               requests:
                 cpu: 50m
+                gpu.intel.com/i915: "1"
                 memory: 3Gi
             securityContext:
               allowPrivilegeEscalation: false
