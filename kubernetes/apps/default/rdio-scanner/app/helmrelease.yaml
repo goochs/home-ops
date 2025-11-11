@@ -71,10 +71,8 @@ spec:
                   port: http
     persistence:
       config:
-        advancedMounts:
-          rdio-scanner:
-            app:
-              - path: /app/data
+        globalMounts:
+          - path: /app/data
         existingClaim: *app
     service:
       app:

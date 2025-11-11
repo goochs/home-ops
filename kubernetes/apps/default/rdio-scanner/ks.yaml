@@ -9,7 +9,6 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/internal
-    - ../../../../components/volsync
   interval: 30m
   path: ./kubernetes/apps/default/rdio-scanner/app
   postBuild:
