@@ -64,9 +64,11 @@ spec:
         accessMode: ReadWriteOnce
         globalMounts:
           - path: /cache
-            subPath: cache/
+            subPath: cache
           - path: /.cache
-            subPath: dotcache/
+            subPath: dotcache
+          - path: /.config
+            subPath: dotconfig
         size: 20Gi
         storageClass: ceph-block
         type: persistentVolumeClaim
