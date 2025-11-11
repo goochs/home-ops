@@ -5,24 +5,6 @@ kind: Cluster
 metadata:
   name: immich-pg
 spec:
-  backup:
-    barmanObjectStore: &barmanObjectStore
-      data:
-        compression: bzip2
-      destinationPath: s3://cnpg/
-      endpointURL: https://s3.serek.xyz
-      s3Credentials:
-        accessKeyId:
-          key: s3-access-key
-          name: immich-admin-pg-secret
-        secretAccessKey:
-          key: s3-secret-key
-          name: immich-admin-pg-secret
-      serverName: &currentCluster immich-pg-v4
-      wal:
-        compression: bzip2
-        maxParallel: 8
-    retentionPolicy: 30d
   enableSuperuserAccess: true
   # bootstrap:
   #   recovery:
@@ -42,6 +24,12 @@ spec:
           name: immich-pg-secret
   monitoring:
     enablePodMonitor: true
+  plugins:
+    - isWALArchiver: true
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: minio
+        serverName: immich-pg-v5
   postgresql:
     parameters:
       max_connections: "300"

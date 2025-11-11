@@ -8,4 +8,7 @@ spec:
   cluster:
     name: security-pg
   immediate: true
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
   schedule: "@daily"
