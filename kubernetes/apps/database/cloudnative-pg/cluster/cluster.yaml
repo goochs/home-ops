@@ -5,33 +5,7 @@ kind: Cluster
 metadata:
   name: postgres16
 spec:
-  backup:
-    barmanObjectStore: &barmanObjectStore
-      data:
-        compression: bzip2
-      destinationPath: s3://cnpg/
-      endpointURL: https://s3.serek.xyz
-      s3Credentials:
-        accessKeyId:
-          key: s3-access-key
-          name: cloudnative-pg-secret
-        secretAccessKey:
-          key: s3-secret-key
-          name: cloudnative-pg-secret
-      serverName: &currentCluster postgres16-v4
-      wal:
-        compression: bzip2
-        maxParallel: 8
-    retentionPolicy: 30d
   enableSuperuserAccess: true
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster postgres16-v3
-  # externalClusters:
-  #   - barmanObjectStore:
-  #       !!merge <<: *barmanObjectStore
-  #       serverName: *previousCluster
-  #     name: *previousCluster
   imageName: ghcr.io/cloudnative-pg/postgresql:16.10@sha256:3f0ef6da782d2872dda3b51202795e2d8ca361a2ea3070f9f7bee937319a9048
   instances: 3
   managed:
@@ -74,6 +48,12 @@ spec:
           name: trunk-processor-pg-secret
   monitoring:
     enablePodMonitor: true
+  plugins:
+    - isWALArchiver: true
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: minio
+        serverName: postgres16-v5
   postgresql:
     parameters:
       max_connections: "300"
