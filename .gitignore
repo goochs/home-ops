@@ -8,3 +8,4 @@ talsecret.yaml
 .config.env
 
 .venv
+resticpass
