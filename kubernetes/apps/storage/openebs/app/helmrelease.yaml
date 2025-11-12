@@ -36,6 +36,8 @@ spec:
         mayastor:
           enabled: false
     localpv-provisioner:
+      analytics:
+        enabled: false
       helperPod:
         image:
           registry: quay.io/
@@ -61,5 +63,7 @@ spec:
         volumeSnapshots:
           enabled: false
           keep: false
+    preUpgradeHook:
+      enabled: false
     zfs-localpv:
       enabled: false
