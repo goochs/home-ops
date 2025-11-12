@@ -2,12 +2,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app node-feature-discovery
+  name: node-feature-discovery
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/kube-system/node-feature-discovery/app
   prune: true
   sourceRef:
@@ -15,18 +12,14 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: kube-system
-  timeout: 5m
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app node-feature-discovery-rules
+  name: node-feature-discovery-rules
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/kube-system/node-feature-discovery/rules
   prune: true
   sourceRef:
@@ -34,5 +27,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: kube-system
-  timeout: 5m
   wait: true

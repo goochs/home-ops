@@ -4,12 +4,9 @@ kind: Kustomization
 metadata:
   name: &app speaches
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/internal
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/default/speaches/app
   postBuild:
     substitute:
@@ -20,5 +17,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: default
-  timeout: 5m
   wait: false

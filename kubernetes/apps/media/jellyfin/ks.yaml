@@ -4,13 +4,10 @@ kind: Kustomization
 metadata:
   name: &app jellyfin
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
     - ../../../../components/volsync
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/media/jellyfin/app
   postBuild:
     substitute:
@@ -21,5 +18,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: media
-  timeout: 5m
   wait: false

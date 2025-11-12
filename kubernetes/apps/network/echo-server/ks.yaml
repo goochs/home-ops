@@ -4,12 +4,9 @@ kind: Kustomization
 metadata:
   name: &app echo-server
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/network/echo-server/app
   postBuild:
     substitute:
@@ -20,5 +17,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: network
-  timeout: 5m
   wait: false

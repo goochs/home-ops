@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: &app lldap
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/internal
   dependsOn:
@@ -14,7 +11,7 @@ spec:
       namespace: security
     - name: security-pg
       namespace: security
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/security/lldap/app
   postBuild:
     substitute:
@@ -25,5 +22,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: security
-  timeout: 5m
   wait: false

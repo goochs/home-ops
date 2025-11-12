@@ -5,9 +5,6 @@ kind: Kustomization
 metadata:
   name: &app system-upgrade-controller
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
@@ -22,17 +19,13 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 5m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app system-upgrade-controller-plans
+  name: system-upgrade-controller-plans
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: system-upgrade-controller
       namespace: system-upgrade
@@ -51,5 +44,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: system-upgrade
-  timeout: 5m
   wait: false

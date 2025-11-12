@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: &app zipline
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
   dependsOn:
@@ -14,7 +11,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: security
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/default/zipline/app
   postBuild:
     substitute:
@@ -26,5 +23,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: default
-  timeout: 5m
   wait: false

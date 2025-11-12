@@ -5,7 +5,7 @@ kind: OCIRepository
 metadata:
   name: external-secrets
 spec:
-  interval: 15m
+  interval: 1h
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
@@ -21,15 +21,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: external-secrets
-  install:
-    remediation:
-      retries: 3
-  interval: 30m
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-      strategy: rollback
+  interval: 1h
   valuesFrom:
     - kind: ConfigMap
       name: external-secrets-helm-values

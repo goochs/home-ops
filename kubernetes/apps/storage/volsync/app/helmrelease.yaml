@@ -15,15 +15,7 @@ spec:
   dependsOn:
     - name: snapshot-controller
       namespace: storage
-  install:
-    remediation:
-      retries: 3
-  interval: 30m
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-      strategy: rollback
+  interval: 1h
   values:
     manageCRDs: true
     metrics:

@@ -15,18 +15,8 @@ spec:
   dependsOn:
     - name: prometheus-operator-crds
       namespace: observability
-  install:
-    crds: Skip
-    remediation:
-      retries: 3
-  interval: 30m
+  interval: 1h
   timeout: 15m
-  upgrade:
-    cleanupOnFail: true
-    crds: Skip
-    remediation:
-      retries: 3
-      strategy: rollback
   values:
     additionalPrometheusRulesMap:
       dockerhub-rules:

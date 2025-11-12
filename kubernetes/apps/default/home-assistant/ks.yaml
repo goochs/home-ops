@@ -4,16 +4,13 @@ kind: Kustomization
 metadata:
   name: &app home-assistant
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
     - ../../../../components/volsync
   dependsOn:
     - name: multus-networks
       namespace: network
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/default/home-assistant/app
   postBuild:
     substitute:
@@ -26,7 +23,6 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: default
-  timeout: 5m
   wait: false
 # ---
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -35,10 +31,7 @@ spec:
 #   name: &app appdaemon
 #   namespace: flux-system
 # spec:
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: *app
-#   interval: 30m
+#   interval: 1h
 #   path: ./kubernetes/apps/default/home-assistant/appdaemon
 #   prune: true
 #   sourceRef:
@@ -46,5 +39,4 @@ spec:
 #     name: home-kubernetes
 #     namespace: flux-system
 #   targetNamespace: default
-#   timeout: 5m
 #   wait: false

@@ -4,10 +4,7 @@ kind: Kustomization
 metadata:
   name: onepass-connect
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: onepass-connect
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/security/onepass-connect/app
   prune: true
   sourceRef:
@@ -15,5 +12,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: security
-  timeout: 5m
   wait: true

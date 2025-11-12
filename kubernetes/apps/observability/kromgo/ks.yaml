@@ -4,12 +4,9 @@ kind: Kustomization
 metadata:
   name: &app kromgo
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/observability/kromgo/app
   postBuild:
     substitute:
@@ -21,5 +18,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: observability
-  timeout: 5m
   wait: false

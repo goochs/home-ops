@@ -4,13 +4,10 @@ kind: Kustomization
 metadata:
   name: gatus
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: gatus
   dependsOn:
     - name: external-secrets-stores
       namespace: security
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/observability/gatus/app
   prune: true
   sourceRef:
@@ -18,5 +15,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: observability
-  timeout: 5m
   wait: false

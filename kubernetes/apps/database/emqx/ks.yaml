@@ -2,15 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app emqx
+  name: emqx
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
       namespace: security
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/database/emqx/app
   prune: true
   sourceRef:
@@ -18,23 +15,19 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: database
-  timeout: 5m
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app emqx-cluster
+  name: emqx-cluster
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/internal
   dependsOn:
     - name: emqx
       namespace: database
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/database/emqx/cluster
   postBuild:
     substitute:
@@ -45,5 +38,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: database
-  timeout: 5m
   wait: true

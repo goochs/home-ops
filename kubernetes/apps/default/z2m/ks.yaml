@@ -4,9 +4,6 @@ kind: Kustomization
 metadata:
   name: &app z2m
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/internal
     - ../../../../components/volsync
@@ -17,7 +14,7 @@ spec:
       namespace: security
     - name: volsync
       namespace: storage
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/default/z2m/app
   postBuild:
     substitute:
@@ -28,5 +25,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: default
-  timeout: 5m
   wait: false

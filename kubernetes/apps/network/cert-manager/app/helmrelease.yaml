@@ -12,15 +12,7 @@ spec:
         name: jetstack
         namespace: flux-system
       version: v1.19.1
-  install:
-    remediation:
-      retries: 3
-  interval: 30m
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-      strategy: rollback
+  interval: 1h
   values:
     dns01RecursiveNameservers: 1.1.1.1:53,9.9.9.9:53
     dns01RecursiveNameserversOnly: true

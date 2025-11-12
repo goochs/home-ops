@@ -4,15 +4,12 @@ kind: Kustomization
 metadata:
   name: &app authelia
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
       namespace: security
     - name: security-pg
       namespace: security
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/security/authelia/app
   postBuild:
     substitute:
@@ -24,21 +21,17 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: security
-  timeout: 5m
   wait: false
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app authelia-dragonfly
+  name: authelia-dragonfly
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: dragonfly-operator
       namespace: database
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/security/authelia/dragonfly
   prune: true
   sourceRef:
@@ -46,5 +39,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: security
-  timeout: 5m
   wait: false

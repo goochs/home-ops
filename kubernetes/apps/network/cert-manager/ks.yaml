@@ -2,12 +2,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cert-manager
+  name: cert-manager
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/network/cert-manager/app
   prune: true
   sourceRef:
@@ -15,23 +12,19 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: network
-  timeout: 5m
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cert-manager-issuers
+  name: cert-manager-issuers
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: cert-manager
       namespace: network
     - name: external-secrets-stores
       namespace: security
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/network/cert-manager/issuers
   prune: true
   sourceRef:
@@ -39,5 +32,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: network
-  timeout: 5m
   wait: true

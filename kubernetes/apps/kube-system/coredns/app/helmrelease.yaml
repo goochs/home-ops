@@ -12,15 +12,7 @@ spec:
         name: coredns
         namespace: flux-system
       version: 1.45.0
-  install:
-    remediation:
-      retries: 3
-  interval: 30m
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-      strategy: rollback
+  interval: 1h
   valuesFrom:
     - kind: ConfigMap
       name: coredns-helm-values

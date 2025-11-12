@@ -12,12 +12,4 @@ spec:
         name: prometheus-community
         namespace: flux-system
       version: 24.0.2
-  install:
-    remediation:
-      retries: 3
-  interval: 30m
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-      strategy: rollback
+  interval: 1h

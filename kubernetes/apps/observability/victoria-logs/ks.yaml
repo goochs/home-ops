@@ -4,15 +4,12 @@ kind: Kustomization
 metadata:
   name: &app victoria-logs
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/internal
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/observability/victoria-logs/app
   postBuild:
     substitute:
@@ -24,5 +21,4 @@ spec:
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: observability
-  timeout: 15m
   wait: false

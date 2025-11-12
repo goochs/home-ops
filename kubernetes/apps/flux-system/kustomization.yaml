@@ -7,3 +7,4 @@ namespace: flux-system
 resources:
   - ./flux-operator/ks.yaml
   - ./namespace.yaml
+  - ./ocirepository.yaml

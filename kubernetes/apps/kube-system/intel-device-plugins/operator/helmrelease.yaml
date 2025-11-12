@@ -15,14 +15,4 @@ spec:
   dependsOn:
     - name: node-feature-discovery
       namespace: kube-system
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: 3
-  interval: 30m
-  upgrade:
-    cleanupOnFail: true
-    crds: CreateReplace
-    remediation:
-      retries: 3
-      strategy: rollback
+  interval: 1h
