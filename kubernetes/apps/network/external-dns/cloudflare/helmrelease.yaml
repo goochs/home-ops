@@ -5,14 +5,9 @@ kind: HelmRelease
 metadata:
   name: &app external-dns-cloudflare
 spec:
-  chart:
-    spec:
-      chart: external-dns
-      sourceRef:
-        kind: HelmRepository
-        name: external-dns
-        namespace: flux-system
-      version: 1.19.0
+  chartRef:
+    kind: OCIRepository
+    name: *app
   interval: 1h
   values:
     domainFilters:
