@@ -88,9 +88,10 @@ spec:
                 port: &esphome-port 6052
     service:
       app:
-        controller: *app
         ports:
-          code-server:
-            port: *code-server-port
           http:
             port: *esphome-port
+      code-server:
+        ports:
+          http:
+            port: *code-server-port

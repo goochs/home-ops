@@ -34,7 +34,8 @@ spec:
           allowVolumeExpansion: true
           enabled: true
           isDefault: true
-          mountOptions: ["discard"]
+          mountOptions:
+            - discard
           name: ceph-block
           parameters:
             compression_algorithm: zstd
@@ -97,15 +98,17 @@ spec:
         useAllNodes: true
     cephFileSystems: []
     cephObjectStores: []
-    ingress:
+    monitoring:
+      createPrometheusRules: true
+      enabled: true
+    route:
       dashboard:
         host:
           name: rook.serek.xyz
           path: /
-          pathType: Prefix
-        ingressClassName: internal
-    monitoring:
-      createPrometheusRules: true
-      enabled: true
+          pathType: PathPrefix
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
     toolbox:
       enabled: true
