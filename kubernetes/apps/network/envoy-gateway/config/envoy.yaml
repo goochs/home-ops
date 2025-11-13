@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoyproxies.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/gateway.envoyproxy.io/envoyproxy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy
 metadata:
@@ -103,7 +103,7 @@ spec:
           - kind: Secret
             name: serek-xyz-tls
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
@@ -112,9 +112,7 @@ spec:
   compression:
     - type: Brotli
     - type: Gzip
-    - chooseFirst: true
-      removeAcceptEncodingHeader: true
-      type: Zstd
+    - type: Zstd
   connection:
     bufferLimit: 8Mi
   targetSelectors:
@@ -125,7 +123,7 @@ spec:
     http:
       requestTimeout: 0s
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.envoyproxy.io/clienttrafficpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: ClientTrafficPolicy
 metadata:
