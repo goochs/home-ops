@@ -49,6 +49,11 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
+    persistence:
+      config:
+        existingClaim: *app
+      tmp:
+        type: emptyDir
     route:
       app:
         hostnames:
@@ -57,11 +62,6 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
-    persistence:
-      config:
-        existingClaim: *app
-      tmp:
-        type: emptyDir
     service:
       app:
         controller: *app

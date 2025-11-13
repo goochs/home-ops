@@ -24,6 +24,7 @@ spec:
       - --crd-source-kind=DNSEndpoint
       - --ignore-ingress-tls-spec
       - --ingress-class=external
+      - --gateway-name=envoy-external
       - --cloudflare-proxied
     fullnameOverride: *app
     podAnnotations:
@@ -33,7 +34,10 @@ spec:
       name: cloudflare
     serviceMonitor:
       enabled: true
-    sources: ["crd", "ingress"]
+    sources:
+      - crd
+      - ingress
+      - gateway-httproute
     triggerLoopOnEvent: true
     txtOwnerId: default
     txtPrefix: k8s.
