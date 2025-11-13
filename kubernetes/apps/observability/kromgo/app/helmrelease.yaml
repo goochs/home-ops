@@ -55,16 +55,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: external
-        hosts:
-          - host: "{{ .Release.Name }}.serek.xyz"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config-file:
         globalMounts:
@@ -73,6 +63,14 @@ spec:
             subPath: config.yaml
         name: kromgo-configmap
         type: configMap
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.serek.xyz"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app

@@ -57,18 +57,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: external
-        hosts:
-          - host: "{{ .Release.Name }}.serek.xyz"
-            paths: &paths
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-          - host: requests.serek.xyz
-            paths: *paths
     persistence:
       cache:
         existingClaim: "{{ .Release.Name }}-cache"
@@ -87,6 +75,15 @@ spec:
               - path: /tmp
                 subPath: tmp
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.serek.xyz"
+          - requests.serek.xyz
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app

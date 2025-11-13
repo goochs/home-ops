@@ -82,21 +82,19 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-    ingress:
-      app:
-        className: external
-        hosts:
-          - host: zl.serek.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       tmpfs:
         globalMounts:
           - path: /tmp
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - zl.serek.xyz
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app

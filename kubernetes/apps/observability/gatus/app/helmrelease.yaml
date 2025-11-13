@@ -91,16 +91,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: status.serek.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config:
         type: emptyDir
@@ -111,6 +101,14 @@ spec:
             subPath: config.yaml
         name: gatus-configmap
         type: configMap
+    route:
+      app:
+        hostnames:
+          - status.serek.xyz
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app

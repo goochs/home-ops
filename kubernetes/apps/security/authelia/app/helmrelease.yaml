@@ -65,16 +65,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: external
-        hosts:
-          - host: sso.serek.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config:
         globalMounts:
@@ -83,6 +73,14 @@ spec:
             subPath: config.yaml
         name: authelia-configmap
         type: configMap
+    route:
+      app:
+        hostnames:
+          - sso.serek.xyz
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app

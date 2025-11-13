@@ -43,18 +43,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: node-red.serek.xyz
-            paths: &paths
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-          - host: nr.serek.xyz
-            paths: *paths
     persistence:
       data:
         existingClaim: *app
@@ -62,6 +50,15 @@ spec:
           - path: /data
       tmp:
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - node-red.serek.xyz
+          - nr.serek.xyz
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app

@@ -39,16 +39,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: external
-        hosts:
-          - host: immich.serek.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: immich-server
-                  port: http
     persistence:
       geocoding-dump:
         advancedMounts:
@@ -76,6 +66,14 @@ spec:
             main:
               - path: /usr/src/app/.transformers_cache
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - immich.serek.xyz
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
     service:
       immich-server:
         controller: *app

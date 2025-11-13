@@ -76,19 +76,17 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: z2m.serek.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config:
         existingClaim: *app
+    route:
+      app:
+        hostnames:
+          - z2m.serek.xyz
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app

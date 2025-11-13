@@ -54,16 +54,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: "{{ .Release.Name }}.serek.xyz"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config-file:
         globalMounts:
@@ -74,6 +64,14 @@ spec:
         type: configMap
       tmp:
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.serek.xyz"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app

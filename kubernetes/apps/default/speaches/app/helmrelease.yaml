@@ -60,21 +60,19 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         seccompProfile: {type: RuntimeDefault}
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: "{{ .Release.Name }}.serek.xyz"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       models:
         path: /mnt/flash/scratch
         server: 10.0.30.40
         type: nfs
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.serek.xyz"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     service:
       app:
         controller: *app
