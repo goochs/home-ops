@@ -171,11 +171,6 @@ spec:
         reporting_enabled: false
       news:
         news_feed_enabled: false
-    ingress:
-      enabled: true
-      hosts:
-        - grafana.serek.xyz
-      ingressClassName: internal
     persistence:
       enabled: false
     plugins:
@@ -183,6 +178,14 @@ spec:
       - grafana-piechart-panel
       - grafana-worldmap-panel
       - victoriametrics-logs-datasource
+    route:
+      main:
+        enabled: true
+        hostnames:
+          - grafana.serek.xyz
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
     serviceMonitor:
       enabled: true
     sidecar:
