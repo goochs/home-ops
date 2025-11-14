@@ -13,7 +13,6 @@ spec:
     domainFilters:
       - serek.xyz
     extraArgs:
-      - --ignore-ingress-tls-spec
       - --managed-record-types=A
       - --managed-record-types=AAAA
       - --managed-record-types=CNAME
@@ -70,7 +69,6 @@ spec:
       enabled: true
     sources:
       - service
-      - ingress
       - gateway-httproute
     triggerLoopOnEvent: true
     txtOwnerId: main

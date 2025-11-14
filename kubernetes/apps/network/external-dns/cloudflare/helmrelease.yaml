@@ -22,8 +22,6 @@ spec:
       - --cloudflare-dns-records-per-page=1000
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --ignore-ingress-tls-spec
-      - --ingress-class=external
       - --gateway-name=envoy-external
       - --cloudflare-proxied
     fullnameOverride: *app
@@ -36,7 +34,6 @@ spec:
       enabled: true
     sources:
       - crd
-      - ingress
       - gateway-httproute
     triggerLoopOnEvent: true
     txtOwnerId: default
