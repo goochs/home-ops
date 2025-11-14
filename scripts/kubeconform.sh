@@ -16,7 +16,7 @@ kubeconform_args=(
     "-schema-location"
     "default"
     "-schema-location"
-    "https://schemas-xyz.pages.dev/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
+    "https://schemas.serek.xyz/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
     "-verbose"
 )
 
