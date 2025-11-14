@@ -22,9 +22,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: *app
-  dependsOn:
-    - name: prometheus-operator-crds
-      namespace: observability
   interval: 1h
   timeout: 15m
   values:

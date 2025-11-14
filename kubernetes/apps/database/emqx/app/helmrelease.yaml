@@ -12,9 +12,6 @@ spec:
         name: emqx
         namespace: flux-system
       version: 2.2.29
-  dependsOn:
-    - name: cert-manager
-      namespace: network
   interval: 1h
   values:
     fullnameOverride: *app
