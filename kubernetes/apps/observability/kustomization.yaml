@@ -8,6 +8,7 @@ resources:
   - ./fluent-bit/ks.yaml
   - ./gatus/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
+  - ./smartctl-exporter/ks.yaml
   - ./grafana/ks.yaml
   - ./namespace.yaml
   - ./snmp-exporter/ks.yaml

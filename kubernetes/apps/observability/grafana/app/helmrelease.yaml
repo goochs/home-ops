@@ -118,6 +118,11 @@ spec:
           # renovate: depName="Prometheus"
           gnetId: 19105
           revision: 8
+        smartctl-exporter:
+          datasource: Prometheus
+          # renovate: depName="SMARTctl Exporter Dashboard"
+          gnetId: 22604
+          revision: 2
         volsync:
           datasource:
             - {name: DS_PROMETHEUS, value: Prometheus}
