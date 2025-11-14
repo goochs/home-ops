@@ -9,7 +9,7 @@ helmDefaults:
 
 releases:
   - name: envoy-gateway
-    namespace: networking
+    namespace: network
     chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
     version: 1.6.0
 

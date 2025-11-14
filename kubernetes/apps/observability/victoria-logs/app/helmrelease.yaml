@@ -41,6 +41,6 @@ spec:
           - logs.serek.xyz
         parentRefs:
           - name: envoy-internal
-            namespace: networking
+            namespace: network
       serviceMonitor:
         enabled: true
