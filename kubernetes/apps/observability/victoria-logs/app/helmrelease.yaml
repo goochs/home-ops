@@ -30,17 +30,17 @@ spec:
       extraArgs:
         syslog.listenAddr.udp: :5140
       fullnameOverride: victoria-logs
-      ingress:
-        enabled: true
-        hosts:
-          - name: logs.serek.xyz
-            path: /
-            port: http
-        ingressClassName: internal
       persistentVolume:
         enabled: true
-        size: 100Gi
+        size: 50Gi
         storageClassName: ceph-block
       retentionPeriod: 30d
+      route:
+        enabled: true
+        hostnames:
+          - logs.serek.xyz
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
       serviceMonitor:
         enabled: true

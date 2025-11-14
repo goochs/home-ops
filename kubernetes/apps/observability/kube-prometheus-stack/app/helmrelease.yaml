@@ -63,14 +63,15 @@ spec:
                 requests:
                   storage: 5Gi
               storageClassName: ceph-block
-      ingress:
-        enabled: true
-        hosts: ["alertmanager.serek.xyz"]
-        ingressClassName: internal
-        pathType: Prefix
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - alertmanager.serek.xyz
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
     cleanPrometheusOperatorObjectNames: true
-    crds:
-      enabled: false
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -106,16 +107,11 @@ spec:
         selector:
           k8s-app: kube-scheduler
     prometheus:
-      ingress:
-        enabled: true
-        hosts: ["prometheus.serek.xyz"]
-        ingressClassName: internal
-        pathType: Prefix
       prometheusSpec:
         image:
           registry: docker.io
           repository: prompp/prompp
-          tag: 2.53.2-0.2.5
+          tag: 0.6.3
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         retention: 14d
@@ -133,8 +129,17 @@ spec:
             spec:
               resources:
                 requests:
-                  storage: 60Gi
+                  storage: 50Gi
               storageClassName: ceph-block
+        version: v2.55.1
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - prometheus.serek.xyz
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
