@@ -7,10 +7,11 @@ on:
   schedule:
     - cron: "0 * * * *"
   push:
-    branches: ["main"]
+    branches:
+      - main
     paths:
-      - .github/renovate.json5
-      - .github/renovate/**.json5
+      - .renovaterc.json5
+      - .renovate/**.json5
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -39,6 +40,7 @@ jobs:
           repositories: |
             home-ops
             containers
+
       - name: Checkout
         uses: actions/checkout@v5
         with:
