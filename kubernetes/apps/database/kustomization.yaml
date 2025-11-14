@@ -5,7 +5,7 @@ components:
 kind: Kustomization
 namespace: database
 resources:
+  - ./namespace.yaml
   - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
-  - ./emqx/ks.yaml
-  - ./namespace.yaml
+  - ./mosquitto/ks.yaml

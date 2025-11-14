@@ -1,0 +1,72 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/heads/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mosquitto
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  interval: 1h
+  values:
+    configMaps:
+      config:
+        data:
+          mosquitto.conf: |-
+            allow_anonymous true
+            autosave_interval 60
+            connection_messages false
+            listener 1883
+            per_listener_settings false
+            persistence true
+            persistence_location /config
+    controllers:
+      mosquitto:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              TZ: America/New_York
+            image:
+              repository: public.ecr.aws/docker/library/eclipse-mosquitto
+              tag: 2.0.22@sha256:fd9982f5ed92a6c2a90805601d2275f8fbd7f2d47c4cb3836f7db0bdc7a91bec
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 100Mi
+              requests:
+                cpu: 10m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    persistence:
+      config:
+        existingClaim: *app
+      config-file:
+        globalMounts:
+          - path: /mosquitto/config/mosquitto.conf
+            subPath: mosquitto.conf
+        identifier: config
+        type: configMap
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 1883
