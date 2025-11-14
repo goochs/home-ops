@@ -6,7 +6,6 @@ kind: Kustomization
 namespace: network
 resources:
   - ./namespace.yaml
-  - ./cert-manager/ks.yaml
   - ./ddns/ks.yaml
   - ./echo-server/ks.yaml
   - ./envoy-gateway/ks.yaml

@@ -6,13 +6,13 @@ metadata:
   name: cert-manager
 spec:
   interval: 1h
-  path: ./kubernetes/apps/network/cert-manager/app
+  path: ./kubernetes/apps/cert-manager/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
     namespace: flux-system
-  targetNamespace: network
+  targetNamespace: cert-manager
   wait: true
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -23,15 +23,14 @@ metadata:
 spec:
   dependsOn:
     - name: cert-manager
-      namespace: network
     - name: external-secrets-stores
       namespace: security
   interval: 1h
-  path: ./kubernetes/apps/network/cert-manager/issuers
+  path: ./kubernetes/apps/cert-manager/cert-manager/issuers
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
     namespace: flux-system
-  targetNamespace: network
+  targetNamespace: cert-manager
   wait: true

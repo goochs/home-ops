@@ -23,6 +23,123 @@ spec:
     kind: OCIRepository
     name: onepass-connect
   interval: 1h
-  valuesFrom:
-    - kind: ConfigMap
-      name: onepass-connect-helm-values
+  values:
+    controllers:
+      onepass-connect:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          api:
+            env:
+              OP_BUS_PEERS: localhost:11221
+              OP_BUS_PORT: 11220
+              OP_HTTP_PORT: 8080
+              OP_SESSION:
+                valueFrom:
+                  secretKeyRef:
+                    key: 1password-credentials.json
+                    name: onepass-connect-secret
+              TZ: America/New_York
+              XDG_DATA_HOME: /config
+            image:
+              repository: docker.io/1password/connect-api
+              tag: 1.8.1
+            probes:
+              liveness:
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /heartbeat
+                    port: 8080
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  timeoutSeconds: 1
+              readiness:
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /health
+                    port: 8080
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+            resources:
+              limits:
+                memory: 250Mi
+              requests:
+                cpu: 10m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+          sync:
+            env:
+              OP_BUS_PEERS: localhost:11220
+              OP_BUS_PORT: 11221
+              OP_HTTP_PORT: 8081
+              OP_SESSION:
+                valueFrom:
+                  secretKeyRef:
+                    key: 1password-credentials.json
+                    name: onepass-connect-secret
+              TZ: America/New_York
+              XDG_DATA_HOME: /config
+            image:
+              repository: docker.io/1password/connect-sync
+              tag: 1.8.1
+            probes:
+              liveness:
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /heartbeat
+                    port: 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  timeoutSeconds: 1
+              readiness:
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /health
+                    port: 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+            resources:
+              limits:
+                memory: 250Mi
+              requests:
+                cpu: 10m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+        strategy: RollingUpdate
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 999
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 999
+        runAsNonRoot: true
+        runAsUser: 999
+        seccompProfile: {type: RuntimeDefault}
+    persistence:
+      config:
+        globalMounts:
+          - path: /config
+        type: emptyDir
+    service:
+      app:
+        controller: onepass-connect
+        ports:
+          http:
+            port: 8080

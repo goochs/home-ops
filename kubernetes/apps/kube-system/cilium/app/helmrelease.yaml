@@ -23,6 +23,111 @@ spec:
     kind: OCIRepository
     name: *app
   interval: 1h
-  valuesFrom:
-    - kind: ConfigMap
-      name: cilium-helm-values
+  values:
+    autoDirectNodeRoutes: true
+    bandwidthManager:
+      bbr: true
+      enabled: true
+    bgpControlPlane:
+      enabled: true
+    bpf:
+      datapathMode: netkit
+      masquerade: true # See https://github.com/siderolabs/talos/issues/8836 (forwardKubeDNSToHost)
+      preallocateMaps: true
+      tproxy: true
+    cgroup:
+      automount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
+    cluster:
+      id: 1
+      name: home
+    cni:
+      exclusive: false
+    dashboards:
+      annotations:
+        grafana_folder: Cilium
+      enabled: true
+    endpointRoutes:
+      enabled: true
+    hubble:
+      enabled: true
+      metrics:
+        dashboards:
+          annotations:
+            grafana_folder: Cilium
+          enabled: true
+        enabled:
+          - dns:query
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
+        serviceMonitor:
+          enabled: true
+      relay:
+        enabled: true
+        prometheus:
+          serviceMonitor:
+            enabled: true
+        rollOutPods: true
+      ui:
+        enabled: true
+        ingress:
+          className: internal
+          enabled: true
+          hosts:
+            - hubble.serek.xyz
+        rollOutPods: true
+    ipam:
+      mode: kubernetes
+    ipv4NativeRoutingCIDR: 10.1.0.0/17
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 7445
+    kubeProxyReplacement: true
+    kubeProxyReplacementHealthzBindAddr: "0.0.0.0:10256"
+    l2announcements:
+      enabled: false
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
+    localRedirectPolicy: true
+    operator:
+      dashboards:
+        annotations:
+          grafana_folder: Cilium
+        enabled: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      rollOutPods: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        trustCRDsExist: true
+    rollOutCiliumPods: true
+    routingMode: native
+    securityContext:
+      capabilities:
+        ciliumAgent:
+          - BPF
+          - CHOWN
+          - DAC_OVERRIDE
+          - FOWNER
+          - IPC_LOCK
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - PERFMON
+          - SETGID
+          - SETUID
+          - SYS_ADMIN
+          - SYS_RESOURCE
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE

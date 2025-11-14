@@ -5,15 +5,17 @@ kind: Cluster
 metadata:
   name: immich-pg
 spec:
+  bootstrap:
+    recovery:
+      source: source
   enableSuperuserAccess: true
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster immich-pg-v3
-  # externalClusters:
-  #   - barmanObjectStore:
-  #       !!merge <<: *barmanObjectStore
-  #       serverName: *previousCluster
-  #     name: *previousCluster
+  externalClusters:
+    - name: source
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: minio
+          serverName: immich-pg-v5
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0
   instances: 3
   managed:
@@ -29,7 +31,7 @@ spec:
       name: barman-cloud.cloudnative-pg.io
       parameters:
         barmanObjectName: minio
-        serverName: immich-pg-v5
+        serverName: immich-pg-v6
   postgresql:
     parameters:
       max_connections: "300"

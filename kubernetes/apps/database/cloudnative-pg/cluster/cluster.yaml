@@ -5,7 +5,17 @@ kind: Cluster
 metadata:
   name: postgres16
 spec:
+  bootstrap:
+    recovery:
+      source: source
   enableSuperuserAccess: true
+  externalClusters:
+    - name: source
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: minio
+          serverName: postgres16-v5
   imageName: ghcr.io/cloudnative-pg/postgresql:16.10@sha256:3f0ef6da782d2872dda3b51202795e2d8ca361a2ea3070f9f7bee937319a9048
   instances: 3
   managed:
@@ -53,7 +63,7 @@ spec:
       name: barman-cloud.cloudnative-pg.io
       parameters:
         barmanObjectName: minio
-        serverName: postgres16-v5
+        serverName: postgres16-v6
   postgresql:
     parameters:
       max_connections: "300"

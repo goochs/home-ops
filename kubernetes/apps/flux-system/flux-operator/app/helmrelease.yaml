@@ -23,6 +23,6 @@ spec:
     kind: OCIRepository
     name: *app
   interval: 1h
-  valuesFrom:
-    - kind: ConfigMap
-      name: flux-operator-helm-values
+  values:
+    serviceMonitor:
+      create: true

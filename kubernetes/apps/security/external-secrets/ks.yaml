@@ -23,9 +23,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets
-      namespace: security
     - name: onepass-connect
-      namespace: security
   interval: 1h
   path: ./kubernetes/apps/security/external-secrets/stores
   prune: true
