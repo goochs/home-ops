@@ -119,14 +119,18 @@ spec:
           gnetId: 19105
           revision: 8
         smartctl-exporter:
-          datasource: Prometheus
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
           # renovate: depName="SMARTctl Exporter Dashboard"
           gnetId: 22604
           revision: 2
         volsync:
           datasource:
-            - {name: DS_PROMETHEUS, value: Prometheus}
-            - {name: VAR_REPLICATIONDESTNAME, value: .*-dst}
+            - name: DS_PROMETHEUS
+              value: Prometheus
+            - name: VAR_REPLICATIONDESTNAME
+              value: .*-dst
           # renovate: depName="VolSync Dashboard"
           gnetId: 21356
           revision: 3
