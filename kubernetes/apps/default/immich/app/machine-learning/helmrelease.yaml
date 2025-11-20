@@ -24,7 +24,7 @@ spec:
                   name: immich-configmap
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v2.2.3-openvino@sha256:4d4807c3171715941f085d1c980510d695b786463f1569bd0af8e644a735ed2b
+              tag: v2.3.1-openvino@sha256:8bf3548e27d5a4ae01e84fd76b1bebadea1f66e98062f8c5107e8008e417caf1
             resources:
               limits:
                 gpu.intel.com/i915: "1"
