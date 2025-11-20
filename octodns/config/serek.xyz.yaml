@@ -3,15 +3,15 @@
   - type: TXT
     ttl: 3600
     values:
-      - v=spf1 include:spf.mailjet.com include:icloud.com ~all
-      - apple-domain=DXq8hfXCTrjt9AZw
+    - v=spf1 include:spf.mailjet.com include:icloud.com ~all
+    - apple-domain=DXq8hfXCTrjt9AZw
   - type: MX
     ttl: 3600
     values:
-      - exchange: mx01.mail.icloud.com.
-        preference: 10
-      - exchange: mx02.mail.icloud.com.
-        preference: 10
+    - exchange: mx01.mail.icloud.com.
+      preference: 10
+    - exchange: mx02.mail.icloud.com.
+      preference: 10
 mailjet._domainkey:
   type: TXT
   value: k=rsa\; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAywFZjE6lfwCByRxYNfIpuxEqo84VjoYrtQfOElvP2/aMbpB9I73b5ZDt4YoN08DfHbkLM27hn6Fuod6gCZKO8AFsZenwoY4lcwKLQREY09koYhsOCM8YENk5KPwq4eLjKII76ZpSUBMTywxKpSCv65QU3rZWIKmOpHUf8U/ztXfdIzsS2kvS1xvA0YuZlOFVdL1h4GzTDDmfAnaFa2nP/0c+j+1zaxKTpqPTB2V4JbIdkpCZTwVROXTwvtN7awdHkDai2zNdjJd8VsXmhBia8ybLb7pCh546lmBVAfY6bnY8UlBn5Qip937wVrrGXM1D1LUbYQ1wloCIdQHb6Aq75QIDAQAB
