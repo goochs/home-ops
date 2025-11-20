@@ -8,9 +8,9 @@
   - type: MX
     ttl: 3600
     values:
-      - exchange: mx01.mail.icloud.com
+      - exchange: mx01.mail.icloud.com.
         preference: 10
-      - exchange: mx02.mail.icloud.com
+      - exchange: mx02.mail.icloud.com.
         preference: 10
 mailjet._domainkey:
   type: TXT
@@ -18,4 +18,4 @@ mailjet._domainkey:
 sig1._domainkey:
   type: CNAME
   ttl: 3600
-  values: sig1.dkim.serek.xyz.at.icloudmailadmin.com
+  values: sig1.dkim.serek.xyz.at.icloudmailadmin.com.
