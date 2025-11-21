@@ -1,0 +1,59 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/heads/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mktxp-exporter
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  interval: 1h
+  values:
+    controllers:
+      mktxp-exporter:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            args: ["--cfg-dir", "/config", "export"]
+            env:
+              TZ: America/New_York
+            image:
+              repository: ghcr.io/akpw/mktxp-exporter
+              tag: 1.2.15@sha256:44c28e84ffec3ee5c08131b4aa77aa988952e5b0b5f98b4eb26d6f661c764e4a
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 500m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+    persistence:
+      config:
+        enabled: true
+        name: mktxp-exporter-secret
+        type: secret
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 49090
+    serviceMonitor:
+      app:
+        endpoints:
+          - interval: 45s
+            path: /metrics
+            port: http
+            scheme: http
+            scrapeTimeout: 30s
+        serviceName: *app

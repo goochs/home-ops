@@ -5,12 +5,13 @@ components:
 kind: Kustomization
 namespace: observability
 resources:
+  - ./namespace.yaml
   - ./fluent-bit/ks.yaml
   - ./gatus/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
-  - ./smartctl-exporter/ks.yaml
   - ./grafana/ks.yaml
-  - ./namespace.yaml
-  - ./snmp-exporter/ks.yaml
   - ./kromgo/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+  - ./mktxp-exporter/ks.yaml
+  - ./smartctl-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
   - ./victoria-logs/ks.yaml
