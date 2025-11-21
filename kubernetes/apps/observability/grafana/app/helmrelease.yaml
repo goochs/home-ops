@@ -106,7 +106,9 @@ spec:
           gnetId: 11454
           revision: 14
         mktxp-exporter:
-          datasource: Prometheus
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
           # renovate: depName="Mikrotik MKTXP Exporter"
           gnetId: 13679
           revision: 23
