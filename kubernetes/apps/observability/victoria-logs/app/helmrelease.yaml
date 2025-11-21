@@ -29,6 +29,9 @@ spec:
     server:
       extraArgs:
         syslog.listenAddr.udp: :5140
+        syslog.tenantID.udp: 0:1
+        syslog.extraFields.udp: '{"source":"syslog"}'
+        syslog.useRemoteIP.udp: true
       fullnameOverride: victoria-logs
       persistentVolume:
         enabled: true
