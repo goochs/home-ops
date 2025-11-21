@@ -51,9 +51,9 @@ spec:
     serviceMonitor:
       app:
         endpoints:
-          - interval: 45s
+          - interval: 15s
             path: /metrics
             port: http
             scheme: http
-            scrapeTimeout: 30s
+            scrapeTimeout: 15s
         serviceName: *app
