@@ -105,6 +105,11 @@ spec:
           # renovate: depName="K8s / Storage / Volumes / Cluster"
           gnetId: 11454
           revision: 14
+        mktxp-exporter:
+          datasource: Prometheus
+          # renovate: depName="Mikrotik MKTXP Exporter"
+          gnetId: 13679
+          revision: 23
         node-exporter-full:
           datasource: Prometheus
           # renovate: depName="Node Exporter Full"
