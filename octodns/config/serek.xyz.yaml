@@ -19,3 +19,8 @@ sig1._domainkey:
 mailjet._domainkey:
   type: TXT
   value: k=rsa\; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAywFZjE6lfwCByRxYNfIpuxEqo84VjoYrtQfOElvP2/aMbpB9I73b5ZDt4YoN08DfHbkLM27hn6Fuod6gCZKO8AFsZenwoY4lcwKLQREY09koYhsOCM8YENk5KPwq4eLjKII76ZpSUBMTywxKpSCv65QU3rZWIKmOpHUf8U/ztXfdIzsS2kvS1xvA0YuZlOFVdL1h4GzTDDmfAnaFa2nP/0c+j+1zaxKTpqPTB2V4JbIdkpCZTwVROXTwvtN7awdHkDai2zNdjJd8VsXmhBia8ybLb7pCh546lmBVAfY6bnY8UlBn5Qip937wVrrGXM1D1LUbYQ1wloCIdQHb6Aq75QIDAQAB
+chr.ord:
+  - type: A
+    value: 173.199.90.31
+  - type: AAAA
+    value: 2001:19f0:5c01:123c:5400:05ff:fec6:9b4e
