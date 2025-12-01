@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: vm-operator
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.56.4
+  url: oci://ghcr.io/victoriametrics/helm-charts/victoria-metrics-operator
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app vm-operator
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  dependsOn:
+    - name: vm-operator-crds
+      namespace: observability
+  interval: 1h
+  values:
+    crds:
+      cleanup:
+        enabled: false
+      enabled: false
+    fullnameOverride: *app
+    operator:
+      disable_prometheus_converter: false
