@@ -78,7 +78,7 @@ spec:
     kubelet:
       enabled: true
     prometheus-node-exporter:
-      enabled: true
+      enabled: false # TODO: revert when prometheus fully removed
     victoria-metrics-operator:
       enabled: false
     vmagent:
