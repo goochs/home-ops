@@ -43,8 +43,7 @@ spec:
     grafana:
       enabled: false
     kube-state-metrics:
-      enabled: true
-      fullnameOverride: vm-kube-state-metrics
+      enabled: false # TODO: revert when prometheus fully removed
     kubeApiServer:
       enabled: true
     kubeControllerManager:
