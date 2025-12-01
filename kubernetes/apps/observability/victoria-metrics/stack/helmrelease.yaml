@@ -23,6 +23,8 @@ spec:
     kind: OCIRepository
     name: *app
   dependsOn:
+    - name: vm-operator
+      namespace: observability
     - name: vm-operator-crds
       namespace: observability
   interval: 1h
