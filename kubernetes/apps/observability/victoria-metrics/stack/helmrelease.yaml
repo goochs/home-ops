@@ -106,6 +106,13 @@ spec:
       enabled: false
     vmagent:
       enabled: true
+      route:
+        enabled: true
+        hostnames:
+          - vmagent.serek.xyz
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
       spec:
         scrapeInterval: 20s
         selectAllByDefault: true
