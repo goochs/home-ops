@@ -75,13 +75,23 @@ spec:
       enabled: false
     kubeScheduler:
       enabled: true
+      vmScrape:
+        spec:
+          endpoints:
+            - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+              port: http-metrics
+              scheme: https
+              tlsConfig:
+                insecureSkipVerify: true
     kubelet:
       enabled: true
       vmScrape:
         spec:
           metricRelabelConfigs:
             - action: labeldrop
-              regex: (feature_node_kubernetes_io|plan_upgrade_cattle_io).*
+              regex: (feature_node_kubernetes_io.*)
+            - action: labeldrop
+              regex: (plan_upgrade_cattle_io.*)
             - action: labeldrop
               regex: (uid)
             - action: labeldrop
@@ -112,7 +122,7 @@ spec:
             namespace: network
       spec:
         extraArgs:
-          maxLabelsPerTimeseries: "40"
+          maxLabelsPerTimeseries: "100" # TODO: this seems insane? not sure why dropping isn't working
           search.maxUniqueTimeseries: "600000"
           search.minStalenessInterval: 5m
         replicaCount: 1
