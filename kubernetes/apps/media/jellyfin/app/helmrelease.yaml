@@ -38,8 +38,7 @@ spec:
               readiness: *probes
             resources:
               limits:
-                gpu.intel.com/i915: 1
-                memory: 20Gi
+                memory: 8Gi
               requests:
                 cpu: 100m
             securityContext:
@@ -47,6 +46,9 @@ spec:
               capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
     defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: jellyfin
       securityContext:
         fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
@@ -54,9 +56,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-        supplementalGroups:
-          - 44
-          - 109
     persistence:
       cache:
         type: emptyDir
