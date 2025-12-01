@@ -85,21 +85,6 @@ spec:
                 insecureSkipVerify: true
     kubelet:
       enabled: true
-      vmScrape:
-        spec:
-          metricRelabelConfigs:
-            - action: labeldrop
-              regex: (feature_node_kubernetes_io.*)
-            - action: labeldrop
-              regex: (plan_upgrade_cattle_io.*)
-            - action: labeldrop
-              regex: (uid)
-            - action: labeldrop
-              regex: (id|name)
-            - action: drop
-              regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
-              source_labels:
-                - __name__
     prometheus-node-exporter:
       enabled: false # TODO: revert when prometheus fully removed
     victoria-metrics-operator:
@@ -129,7 +114,7 @@ spec:
             namespace: network
       spec:
         extraArgs:
-          maxLabelsPerTimeseries: "100" # TODO: this seems insane? not sure why dropping isn't working
+          maxLabelsPerTimeseries: "40" # TODO: this seems insane? not sure why dropping isn't working
           search.maxUniqueTimeseries: "600000"
           search.minStalenessInterval: 5m
         replicaCount: 1
