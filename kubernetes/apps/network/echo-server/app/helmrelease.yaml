@@ -49,7 +49,7 @@ spec:
         strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
-        fsGroup: 568
+        fsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
         runAsGroup: 65534
         runAsNonRoot: true
