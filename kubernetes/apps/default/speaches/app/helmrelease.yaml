@@ -54,11 +54,11 @@ spec:
         strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
-        fsGroup: 3000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 3000
+        runAsGroup: 1000
         runAsNonRoot: true
-        runAsUser: 3000
+        runAsUser: 1000
         seccompProfile: {type: RuntimeDefault}
     persistence:
       models:
