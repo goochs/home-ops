@@ -77,6 +77,19 @@ spec:
       enabled: true
     kubelet:
       enabled: true
+      vmScrape:
+        spec:
+          metricRelabelConfigs:
+            - action: labeldrop
+              regex: (feature_node_kubernetes_io|plan_upgrade_cattle_io).*
+            - action: labeldrop
+              regex: (uid)
+            - action: labeldrop
+              regex: (id|name)
+            - action: drop
+              regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+              source_labels:
+                - __name__
     prometheus-node-exporter:
       enabled: false # TODO: revert when prometheus fully removed
     victoria-metrics-operator:
