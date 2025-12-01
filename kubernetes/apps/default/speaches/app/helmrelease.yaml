@@ -54,15 +54,15 @@ spec:
         strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
-        fsGroup: 1000
+        fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 1000
+        runAsGroup: 3000
         runAsNonRoot: true
-        runAsUser: 1000
+        runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
     persistence:
       models:
-        path: /mnt/flash/scratch
+        path: /mnt/flash/scratch/speaches
         server: 10.0.30.40
         type: nfs
     route:

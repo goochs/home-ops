@@ -60,7 +60,7 @@ spec:
       incomplete:
         globalMounts:
           - path: /incomplete
-        path: /mnt/flash/scratch
+        path: /mnt/flash/scratch/sabnzbd
         server: 10.0.30.40
         type: nfs
       media:
