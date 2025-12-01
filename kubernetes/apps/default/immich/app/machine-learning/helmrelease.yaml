@@ -26,17 +26,19 @@ spec:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v2.3.1-openvino@sha256:8bf3548e27d5a4ae01e84fd76b1bebadea1f66e98062f8c5107e8008e417caf1
             resources:
-              limits:
-                gpu.intel.com/i915: "1"
+              claims:
+                - name: gpu
               requests:
                 cpu: 50m
-                gpu.intel.com/i915: "1"
                 memory: 3Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
     defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: immich
       securityContext:
         fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
@@ -44,9 +46,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
-        supplementalGroups:
-          - 44
-          - 109
     persistence:
       cache:
         accessMode: ReadWriteOnce

@@ -28,19 +28,21 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v2.3.1@sha256:f8d06a32b1b2a81053d78e40bf8e35236b9faefb5c3903ce9ca8712c9ed78445
             resources:
-              limits:
-                gpu.intel.com/i915: "1"
+              claims:
+                - name: gpu
               requests:
                 cpu: 50m
-                gpu.intel.com/i915: "1"
                 memory: 3Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
               readOnlyRootFilesystem: true
-        replicas: 3
+        replicas: 2
         strategy: RollingUpdate
     defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: immich
       securityContext:
         fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
