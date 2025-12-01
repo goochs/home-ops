@@ -37,6 +37,8 @@ spec:
                   timeoutSeconds: 1
               readiness: *probes
             resources:
+              claims:
+                - name: gpu
               limits:
                 memory: 8Gi
               requests:
