@@ -40,6 +40,8 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+      spec:
+        disableNamespaceMatcher: true
     coreDns:
       enabled: true
     crds:
