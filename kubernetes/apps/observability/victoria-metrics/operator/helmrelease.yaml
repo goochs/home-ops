@@ -22,9 +22,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: *app
-  dependsOn:
-    - name: vm-operator-crds
-      namespace: observability
   interval: 1h
   values:
     crds:
@@ -35,3 +32,4 @@ spec:
     operator:
       disable_prometheus_converter: false
       enable_converter_ownership: true
+    serviceMonitor: true

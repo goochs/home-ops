@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: vm-operator-crds
+  name: vm-crds
 spec:
   interval: 1h
   path: ./kubernetes/apps/observability/victoria-metrics/crds
@@ -21,22 +21,27 @@ kind: Kustomization
 metadata:
   name: vm-operator
 spec:
+  dependsOn:
+    - name: vm-crds
   interval: 1h
-  path: ./kubernetes/apps/observability/victoria-metrics/app
+  path: ./kubernetes/apps/observability/victoria-metrics/operator
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
     namespace: flux-system
   targetNamespace: observability
-  wait: false
+  wait: true
 ---
 # yaml-language-server: $schema=https://schemas.serek.xyz/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: vm-operator-stack
+  name: vm-stack
 spec:
+  dependsOn:
+    - name: vm-crds
+    - name: vm-operator
   interval: 1h
   path: ./kubernetes/apps/observability/victoria-metrics/stack
   prune: true
