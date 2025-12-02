@@ -1,27 +1,25 @@
 ---
-# yaml-language-server: $schema=https://schemas.serek.xyz/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMScrapeConfig
 metadata:
   name: &name node-exporter
 spec:
-  metricsPath: /metrics
-  relabelings:
+  path: /metrics
+  relabelConfigs:
     - action: replace
       replacement: *name
       targetLabel: job
   staticConfigs:
     - targets:
-        - nas.serek.xyz:9100
+      - nas.serek.xyz:9100
 ---
-# yaml-language-server: $schema=https://schemas.serek.xyz/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMScrapeConfig
 metadata:
   name: &name smartctl-exporter
 spec:
-  metricsPath: /metrics
-  relabelings:
+  path: /metrics
+  relabelConfigs:
     - action: replace
       replacement: *name
       targetLabel: job
