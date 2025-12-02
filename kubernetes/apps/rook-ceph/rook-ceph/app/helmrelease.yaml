@@ -26,9 +26,9 @@ spec:
   values:
     csi:
       cephFSKernelMountOptions: ms_mode=prefer-crc
-      enableLiveness: true
-      serviceMonitor:
-        enabled: true
+      # enableLiveness: true TODO: why isn't this working?
+      # serviceMonitor:
+      #   enabled: true
     image:
       repository: ghcr.io/rook/ceph
     monitoring:
