@@ -40,8 +40,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-      spec:
-        configSecret: alertmanager-secret
     coreDns:
       enabled: true
     crds:
