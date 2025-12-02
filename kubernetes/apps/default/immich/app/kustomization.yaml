@@ -7,3 +7,4 @@ resources:
   - ./configmap.yaml
   - ./externalsecret.yaml
   - ./resourceclaimtemplate.yaml
+  - ./scaledobject.yaml
