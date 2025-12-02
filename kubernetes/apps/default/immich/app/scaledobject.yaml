@@ -8,18 +8,18 @@ spec:
   advanced:
     restoreToOriginalReplicaCount: true
   cooldownPeriod: 0
-  minReplicaCount: 0
   maxReplicaCount: 1
+  minReplicaCount: 0
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: *app
   triggers:
-    - type: metrics-api
-      metadata:
+    - metadata:
         targetValue: "1"
         url: http://victoria-logs.observability.svc.cluster.local:9428/select/logsql/query?query=READONLY+_time%3A1m%7Ccount%28%29%7Ceval+max%281-%22count%28%2A%29%22%2C0%29+as+logs
         valueLocation: logs
+      type: metrics-api
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/keda.sh/scaledobject_v1alpha1.json
 apiVersion: keda.sh/v1alpha1
@@ -30,15 +30,15 @@ spec:
   advanced:
     restoreToOriginalReplicaCount: true
   cooldownPeriod: 0
-  minReplicaCount: 0
   maxReplicaCount: 1
+  minReplicaCount: 0
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: *app
   triggers:
-    - type: metrics-api
-      metadata:
+    - metadata:
         targetValue: "1"
         url: http://victoria-logs.observability.svc.cluster.local:9428/select/logsql/query?query=READONLY+_time%3A1m%7Ccount%28%29%7Ceval+max%281-%22count%28%2A%29%22%2C0%29+as+logs
         valueLocation: logs
+      type: metrics-api

@@ -23,6 +23,7 @@ spec:
   interval: 1h
   values:
     dashboards:
+      enabled: true
       grafanaOperator:
         enabled: true
         spec:
@@ -41,6 +42,18 @@ spec:
       retentionPeriod: 30d
       route:
         enabled: true
+        extraRules:
+          - filters:
+              - requestRedirect:
+                  path:
+                    replaceFullPath: /select/vmui/
+                    type: ReplaceFullPath
+                  statusCode: 302
+                type: RequestRedirect
+            matches:
+              - path:
+                  type: Exact
+                  value: /
         hostnames:
           - logs.serek.xyz
         parentRefs:
