@@ -48,8 +48,8 @@ spec:
       enabled: false
     defaultDashboards:
       enabled: true
-      labels:
-        grafana_dashboard: "1"
+      grafanaOperator:
+        enabled: true
     defaultRules:
       create: true
     fullnameOverride: *app
@@ -59,6 +59,15 @@ spec:
       enabled: true
     kubeApiServer:
       enabled: true
+    defaultDatasources:
+      grafanaOperator:
+        # -- Create datasources as CRDs (requires grafana-operator to be installed)
+        enabled: true
+        spec:
+          instanceSelector:
+            matchLabels:
+              dashboards: grafana
+          allowCrossNamespaceImport: true
     kubeControllerManager:
       enabled: true
       service:
