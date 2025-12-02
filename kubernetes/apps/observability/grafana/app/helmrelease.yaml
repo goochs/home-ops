@@ -152,17 +152,12 @@ spec:
             type: victoriametrics-logs-datasource
             url: http://victoria-logs-server.observability.svc.cluster.local:9428
           - access: proxy
-            name: Prometheus
-            type: prometheus
-            uid: prometheus
-            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
-          - access: proxy
             jsonData:
               implementation: prometheus
             name: Alertmanager
             type: alertmanager
             uid: alertmanager
-            url: http://alertmanager-operated.observability.svc.cluster.local:9093
+            url: http://vmalertmanager-vm-operator-stack.observability.svc.cluster.local:9093
         deleteDatasources:
           - name: Prometheus
             orgId: 1
