@@ -21,12 +21,12 @@ spec:
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
-  name: prom-vm
+  name: prometheus
 spec:
   datasource:
     access: proxy
     isDefault: true
-    name: prom-vm
+    name: prometheus
     type: prometheus
     url: http://vmsingle-vm-operator-stack.observability.svc.cluster.local:8428
   instanceSelector:
