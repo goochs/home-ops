@@ -32,4 +32,5 @@ spec:
     operator:
       disable_prometheus_converter: false
       enable_converter_ownership: true
-    serviceMonitor: true
+    serviceMonitor:
+      enabled: true

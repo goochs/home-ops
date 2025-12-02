@@ -60,8 +60,8 @@ spec:
     grafana:
       enabled: false
     kube-state-metrics:
-      fullnameOverride: kube-state-metrics
       enabled: true
+      fullnameOverride: kube-state-metrics
     kubeApiServer:
       enabled: true
     kubeControllerManager:
