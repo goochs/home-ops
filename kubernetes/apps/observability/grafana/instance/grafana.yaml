@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafana_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  labels:
+    grafana.internal/instance: grafana
+  name: grafana
+spec:
+  config:
+    analytics:
+      check_for_plugin_updates: "false"
+      check_for_updates: "false"
+      feedback_links_enabled: "false"
+      reporting_enabled: "false"
+    auth:
+      disable_login_form: "false"
+    auth.anonymous:
+      enabled: "true"
+    log:
+      mode: console
+    metrics:
+      enabled: "true"
+    news:
+      news_feed_enabled: "false"
+    plugins:
+      plugin_admin_enabled: "false"
+    security:
+      angular_support_enabled: "true"
+    server:
+      enable_gzip: "true"
+      root_url: https://grafana.serek.xyz
+  deployment:
+    spec:
+      strategy:
+        type: Recreate
+      template:
+        spec:
+          containers:
+            - env:
+                - name: GF_SECURITY_ADMIN_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: admin-password
+                      name: grafana-admin-secret
+                - name: GF_SECURITY_ADMIN_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: admin-user
+                      name: grafana-admin-secret
+              name: grafana
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities: {drop: ["ALL"]}
+                readOnlyRootFilesystem: true
+          securityContext:
+            fsGroup: 3000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 3000
+            runAsNonRoot: true
+            runAsUser: 3000
+  disableDefaultAdminSecret: true
+  disableDefaultSecurityContext: All

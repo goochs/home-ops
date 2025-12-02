@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: victoriametrics
+spec:
+  datasource:
+    access: proxy
+    isDefault: true
+    name: victoriametrics
+    type: victoriametrics-metrics-datasource
+    url: http://vmsingle-vm-operator-stack.observability.svc.cluster.local:8428
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  plugins:
+    - name: victoriametrics-metrics-datasource
+      version: latest
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: victorialogs
+spec:
+  datasource:
+    access: proxy
+    name: victorialogs
+    type: victoriametrics-logs-datasource
+    url: http://victoria-logs-server.observability.svc.cluster.local:9428
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  plugins:
+    - name: victoriametrics-logs-datasource
+      version: latest
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: alertmanager
+spec:
+  datasource:
+    access: proxy
+    jsonData:
+      implementation: prometheus
+    name: alertmanager
+    type: alertmanager
+    url: http://vmalertmanager-vm-operator-stack.observability.svc.cluster.local:9093
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana

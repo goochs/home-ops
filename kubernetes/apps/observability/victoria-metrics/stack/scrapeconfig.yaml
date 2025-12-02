@@ -11,7 +11,7 @@ spec:
       targetLabel: job
   staticConfigs:
     - targets:
-      - nas.serek.xyz:9100
+        - nas.serek.xyz:9100
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMScrapeConfig
