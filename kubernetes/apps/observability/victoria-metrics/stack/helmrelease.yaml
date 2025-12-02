@@ -37,6 +37,8 @@ spec:
       enabled: false
     defaultDashboards:
       enabled: true
+      labels:
+        grafana_dashboard: "1"
     defaultRules:
       create: true
     fullnameOverride: *app
