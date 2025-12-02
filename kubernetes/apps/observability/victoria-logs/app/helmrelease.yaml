@@ -23,9 +23,10 @@ spec:
   interval: 1h
   values:
     dashboards:
-      enabled: true
-      labels:
-        grafana_dashboard: "1"
+      grafanaOperator:
+        enabled: true
+        spec:
+          allowCrossNamespaceImport: true
     server:
       extraArgs:
         syslog.extraFields.udp: '{"source":"syslog"}'
