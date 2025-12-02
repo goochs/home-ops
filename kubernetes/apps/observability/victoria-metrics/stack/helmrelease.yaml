@@ -48,6 +48,15 @@ spec:
       enabled: true
       grafanaOperator:
         enabled: true
+    defaultDatasources:
+      grafanaOperator:
+        # -- Create datasources as CRDs (requires grafana-operator to be installed)
+        enabled: true
+        spec:
+          allowCrossNamespaceImport: true
+          instanceSelector:
+            matchLabels:
+              dashboards: grafana
     defaultRules:
       create: true
     fullnameOverride: *app
@@ -57,15 +66,6 @@ spec:
       enabled: true
     kubeApiServer:
       enabled: true
-    defaultDatasources:
-      grafanaOperator:
-        # -- Create datasources as CRDs (requires grafana-operator to be installed)
-        enabled: true
-        spec:
-          instanceSelector:
-            matchLabels:
-              grafana.internal/instance: grafana
-          allowCrossNamespaceImport: true
     kubeControllerManager:
       enabled: true
       service:

@@ -12,7 +12,7 @@ spec:
     url: http://vmsingle-vm-operator-stack.observability.svc.cluster.local:8428
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   plugins:
     - name: victoriametrics-metrics-datasource
       version: latest
@@ -31,7 +31,7 @@ spec:
     url: http://vmsingle-vm-operator-stack.observability.svc.cluster.local:8428
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -46,7 +46,7 @@ spec:
     url: http://victoria-logs-server.observability.svc.cluster.local:9428
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   plugins:
     - name: victoriametrics-logs-datasource
       version: latest
@@ -66,4 +66,4 @@ spec:
     url: http://vmalertmanager-vm-operator-stack.observability.svc.cluster.local:9093
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
