@@ -9,6 +9,7 @@ resources:
   - ./fluent-bit/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
+  - ./keda/ks.yaml
   - ./kromgo/ks.yaml
   - ./mktxp-exporter/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
