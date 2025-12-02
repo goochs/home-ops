@@ -1,51 +1,31 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
-    'config:recommended',
-    'docker:enableMajor',
-    ':disableRateLimiting',
-    ':dependencyDashboard',
-    ':semanticCommits',
-    ':automergeBranch',
-    ':timezone(America/New_York)',
-    'github>goochs/home-ops//.renovate/autoMerge.json5',
-    'github>goochs/home-ops//.renovate/commitMessage.json5',
-    'github>goochs/home-ops//.renovate/customManagers.json5',
-    'github>goochs/home-ops//.renovate/grafanaDashboards.json5',
-    'github>goochs/home-ops//.renovate/groups.json5',
-    'github>goochs/home-ops//.renovate/labels.json5',
-    'github>goochs/home-ops//.renovate/packageRules.json5',
-    'github>goochs/home-ops//.renovate/semanticCommits.json5',
+    "config:recommended",
+    "docker:enableMajor",
+    "helpers:pinGitHubActionDigests",
+    "github>goochs/home-ops//.renovate/autoMerge.json5",
+    "github>goochs/home-ops//.renovate/customManagers.json5",
+    "github>goochs/home-ops//.renovate/grafanaDashboards.json5",
+    "github>goochs/home-ops//.renovate/groups.json5",
+    "github>goochs/home-ops//.renovate/labels.json5",
+    "github>goochs/home-ops//.renovate/semanticCommits.json5",
+    ":automergeBranch",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":timezone(America/New_York)",
   ],
-  dependencyDashboardTitle: 'Renovate Dashboard 🤖',
-  suppressNotifications: [
-    'prEditedNotification',
-    'prIgnoreNotification',
-  ],
-  rebaseWhen: 'conflicted',
+  dependencyDashboardTitle: "Renovate Dashboard 🤖",
+  suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
+  ignorePaths: ["**/*.sops.*", "**/resources/**"],
   flux: {
-    managerFilePatterns: [
-      '/(^|/)kubernetes/.+\\.ya?ml$/',
-    ],
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
-  'helm-values': {
-    managerFilePatterns: [
-      '/(^|/)kubernetes/.+\\.ya?ml$/',
-    ],
-  },
-  helmfile: {
-    managerFilePatterns: [
-      '/(^|/)helmfile\\.ya?ml$/',
-    ],
+  "helm-values": {
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
   kubernetes: {
-    managerFilePatterns: [
-      '/(^|/)kubernetes/.+\\.ya?ml$/',
-    ],
-  },
-  kustomize: {
-    managerFilePatterns: [
-      '/(^|/)kustomization\\.ya?ml$/',
-    ],
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
 }
