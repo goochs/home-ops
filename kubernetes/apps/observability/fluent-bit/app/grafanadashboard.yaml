@@ -6,12 +6,12 @@ metadata:
   name: fluent-bit
 spec:
   allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
+  configMapRef:
+    key: fluent-bit-fluent-bit.json
+    name: fluent-bit-dashboard-fluent-bit
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: fluent-bit-dashboard-fluent-bit
-    key: fluent-bit-fluent-bit.json
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana

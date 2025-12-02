@@ -26,6 +26,9 @@ spec:
   datasource:
     access: proxy
     isDefault: true
+    jsonData:
+      prometheusType: prometheus
+      prometheusVersion: 2.24.0
     name: prometheus
     type: prometheus
     url: http://vmsingle-vm-stack.observability.svc.cluster.local:8428

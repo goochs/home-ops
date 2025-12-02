@@ -6,12 +6,12 @@ metadata:
   name: cloudnative-pg
 spec:
   allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
+  configMapRef:
+    key: cnp.json
+    name: cnpg-grafana-dashboard
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: cnpg-grafana-dashboard
-    key: cnp.json
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana

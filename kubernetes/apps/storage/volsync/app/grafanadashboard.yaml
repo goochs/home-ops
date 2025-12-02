@@ -6,13 +6,13 @@ metadata:
   name: volsync
 spec:
   allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
   envs:
     - name: VAR_REPLICATIONDESTNAME
       value: .*-dst
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
   url: https://grafana.com/api/dashboards/21356/revisions/3/download

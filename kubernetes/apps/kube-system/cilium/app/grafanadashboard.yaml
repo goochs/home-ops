@@ -6,15 +6,15 @@ metadata:
   name: cilium
 spec:
   allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
+  configMapRef:
+    key: cilium-dashboard.json
+    name: cilium-dashboard
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: cilium-dashboard
-    key: cilium-dashboard.json
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -23,15 +23,15 @@ metadata:
   name: cilium-operator
 spec:
   allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
+  configMapRef:
+    key: cilium-operator-dashboard.json
+    name: cilium-operator-dashboard
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: cilium-operator-dashboard
-    key: cilium-operator-dashboard.json
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -40,12 +40,12 @@ metadata:
   name: hubble
 spec:
   allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
+  configMapRef:
+    key: hubble-dashboard.json
+    name: hubble-dashboard
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: hubble-dashboard
-    key: hubble-dashboard.json
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
