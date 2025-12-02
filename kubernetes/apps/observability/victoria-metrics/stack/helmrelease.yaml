@@ -45,7 +45,7 @@ spec:
     grafana:
       enabled: false
     kube-state-metrics:
-      enabled: false # TODO: revert when prometheus fully removed
+      enabled: true
     kubeApiServer:
       enabled: true
     kubeControllerManager:
@@ -87,7 +87,7 @@ spec:
     kubelet:
       enabled: true
     prometheus-node-exporter:
-      enabled: false # TODO: revert when prometheus fully removed
+      enabled: true
     victoria-metrics-operator:
       enabled: false
     vmagent:
