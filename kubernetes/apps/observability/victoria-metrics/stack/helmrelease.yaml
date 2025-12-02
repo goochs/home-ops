@@ -31,6 +31,17 @@ spec:
   values:
     alertmanager:
       enabled: true
+      monzotemplate:
+        enabled: false
+      route:
+        enabled: true
+        hostnames:
+          - alertmanager.serek.xyz
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+      spec:
+        configSecret: alertmanager-secret
     coreDns:
       enabled: true
     crds:
