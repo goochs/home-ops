@@ -3,15 +3,13 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-operator
+  name: cert-manager
 spec:
   allowCrossNamespaceImport: true
-  configMapRef:
-    key: grafana-operator.json
-    name: grafana-operator-dashboard
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
   instanceSelector:
     matchLabels:
       dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  url: https://grafana.com/api/dashboards/20842/revisions/3/download

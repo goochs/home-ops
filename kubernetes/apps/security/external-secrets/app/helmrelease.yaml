@@ -23,9 +23,6 @@ spec:
     name: external-secrets
   interval: 1h
   values:
-    certController:
-      serviceMonitor:
-        enabled: true
     grafanaDashboard:
       enabled: true
     leaderElect: true
@@ -33,5 +30,3 @@ spec:
       enabled: true
     webhook:
       replicaCount: 2
-      serviceMonitor:
-        enabled: true
