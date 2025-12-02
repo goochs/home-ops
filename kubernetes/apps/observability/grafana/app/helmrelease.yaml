@@ -146,11 +146,15 @@ spec:
         apiVersion: 1
         datasources:
           - access: proxy
+            isDefault: true
+            name: VictoriaMetrics
+            type: victoriametrics-metrics-datasource
+            url: http://vmsingle-vm-operator-stack.observability.svc.cluster.local:8428
+          - access: proxy
             name: VictoriaLogs
             type: victoriametrics-logs-datasource
             url: http://victoria-logs-server.observability.svc.cluster.local:9428
           - access: proxy
-            isDefault: true
             name: Prometheus
             type: prometheus
             uid: prometheus
@@ -188,6 +192,7 @@ spec:
       - grafana-piechart-panel
       - grafana-worldmap-panel
       - victoriametrics-logs-datasource
+      - victoriametrics-metrics-datasource
     route:
       main:
         enabled: true
