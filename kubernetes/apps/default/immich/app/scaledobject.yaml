@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/keda.sh/scaledobject_v1alpha1.json
+# yaml-language-server: $schema=https://schemas.serek.xyz/keda.sh/scaledobject_v1alpha1.json
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -21,7 +21,7 @@ spec:
         valueLocation: logs
       type: metrics-api
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/keda.sh/scaledobject_v1alpha1.json
+# yaml-language-server: $schema=https://schemas.serek.xyz/keda.sh/scaledobject_v1alpha1.json
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
