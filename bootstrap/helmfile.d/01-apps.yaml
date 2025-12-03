@@ -5,12 +5,26 @@ helmDefaults:
   waitForJobs: true
 
 releases:
+  - name: prometheus-operator-crds
+    namespace: observability
+    chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
+    version: 24.0.2
+
+  - name: vm-crds
+    namespace: observability
+    chart: oci://ghcr.io/victoriametrics/helm-charts/victoria-metrics-operator-crds
+    version: 0.6.0
+    needs:
+      - observability/prometheus-operator-crds
+
   - name: cilium
     namespace: kube-system
     chart: oci://ghcr.io/home-operations/charts-mirror/cilium
     version: 1.18.4
     values:
       - ./templates/values.yaml.gotmpl
+    needs:
+      - observability/vm-crds
     hooks:
       - events: ['postsync']
         command: kubectl

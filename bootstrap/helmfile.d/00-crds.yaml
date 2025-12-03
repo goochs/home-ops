@@ -12,8 +12,3 @@ releases:
     namespace: network
     chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
     version: 1.6.0
-
-  - name: kube-prometheus-stack
-    namespace: observability
-    chart: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
-    version: 79.11.0

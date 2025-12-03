@@ -10,11 +10,11 @@
       matchUpdateTypes: ["minor", "patch", "digest"],
     },
     {
-      description: "Auto-merge container patches for trusted containers",
+      description: "Auto-merge for trusted containers",
       matchDatasources: ["docker"],
       automerge: true,
       automergeType: "pr",
-      matchUpdateTypes: ["minor"],
+      matchUpdateTypes: ["minor", "patch", "digest"],
       matchPackagePrefixes: ["ghcr.io/home-operations", "ghcr.io/goochs/"],
     },
     {
@@ -22,8 +22,8 @@
       matchDatasources: ["docker"],
       automerge: true,
       automergeType: "pr",
-      matchUpdateTypes: ["minor", "patch"],
-      matchPackageNames: ["/kube-prometheus-stack/"],
+      matchUpdateTypes: ["major", "minor", "patch"],
+      matchPackageNames: ["/prometheus-operator-crds/"],
       ignoreTests: false,
     },
     {
