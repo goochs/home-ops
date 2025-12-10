@@ -19,6 +19,10 @@ spec:
           main:
             env:
               KOMODO_DATABASE_ADDRESS: komodo-ferret.default.svc.cluster.local:27017
+              KOMODO_HOST: https://komodo.serek.xyz
+              KOMODO_OIDC_CLIENT_ID: komodo
+              KOMODO_OIDC_ENABLED: true
+              KOMODO_OIDC_PROVIDER: https://sso.serek.xyz
             envFrom:
               - secretRef:
                   name: komodo-secret
