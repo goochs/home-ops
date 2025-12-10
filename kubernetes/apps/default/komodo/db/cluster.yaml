@@ -20,7 +20,9 @@ spec:
   instances: 3
   managed:
     roles:
-      - login: true
+      - inRoles:
+          - documentdb_admin_role
+        login: true
         name: komodo
         passwordSecret:
           name: komodo-pg-secret
@@ -37,6 +39,7 @@ spec:
   postgresql:
     parameters:
       cron.database_name: komodo
+      cron.use_background_workers: "on"
       # Copied from https://github.com/FerretDB/documentdb/blob/ferretdb/packaging/10-preload.sh
       documentdb.enableBypassDocumentValidation: "true"
       documentdb.enableCompact: "true"
