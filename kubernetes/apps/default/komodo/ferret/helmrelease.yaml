@@ -37,6 +37,9 @@ spec:
         runAsNonRoot: true
         runAsUser: 3000
         seccompProfile: {type: RuntimeDefault}
+    persistence:
+      state:
+        type: emptyDir
     service:
       komodo-ferret:
         controller: *app
