@@ -32,6 +32,8 @@ spec:
       parameters:
         barmanObjectName: minio
         serverName: komodo-pg-v6
+  postgresGID: 999
+  postgresUID: 999
   postgresql:
     parameters:
       max_connections: "300"
