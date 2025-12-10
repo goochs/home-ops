@@ -19,9 +19,10 @@ spec:
           main:
             env:
               FERRETDB_TELEMETRY: enable
-            envFrom:
-              - secretRef:
-                  name: komodo-ferret-secret
+              FERRETDB_POSTGRESQL_URL:
+                secretKeyRef:
+                  name: komodo-pg-app
+                  key: fqdn-uri
             image:
               repository: ghcr.io/ferretdb/ferretdb
               tag: 2.7.0@sha256:5d8966f7ec1267d35fc61acc56fd9f3f62f22b4baf65ecb6c331b63b86a52aac
