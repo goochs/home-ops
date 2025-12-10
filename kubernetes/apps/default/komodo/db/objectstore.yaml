@@ -1,0 +1,21 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: minio
+spec:
+  configuration:
+    data:
+      compression: bzip2
+    destinationPath: s3://cnpg/
+    endpointURL: https://s3.serek.xyz
+    s3Credentials:
+      accessKeyId:
+        key: s3-access-key
+        name: komodo-admin-pg-secret
+      secretAccessKey:
+        key: s3-secret-key
+        name: komodo-admin-pg-secret
+    wal:
+      compression: bzip2
+      maxParallel: 8
+  retentionPolicy: 30d

@@ -1,0 +1,57 @@
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: komodo-pg
+spec:
+  # bootstrap:
+  #   recovery:
+  #     source: source
+  enableSuperuserAccess: true
+  # externalClusters:
+  #   - name: source
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: minio
+  #         serverName: komodo-pg-v5
+  imageName: ghcr.io/ferretdb/postgres-documentdb:17-0.107.0-ferretdb-2.7.0
+  instances: 3
+  managed:
+    roles:
+      - login: true
+        name: komodo
+        passwordSecret:
+          name: komodo-pg-secret
+  monitoring:
+    enablePodMonitor: true
+  plugins:
+    - isWALArchiver: true
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: minio
+        serverName: komodo-pg-v6
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+    shared_preload_libraries:
+      - "pg_cron"
+      - "pg_documentdb_core"
+      - "pg_documentdb"
+  primaryUpdateStrategy: unsupervised
+  resources:
+    limits:
+      cpu: 1
+      hugepages-1Gi: 1Gi
+      memory: 2Gi
+    requests:
+      cpu: 1
+      hugepages-1Gi: 1Gi
+      memory: 2Gi
+  storage:
+    size: 20Gi
+    storageClass: openebs-hostpath
+  superuserSecret:
+    name: komodo-admin-pg-secret
