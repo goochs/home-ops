@@ -3,11 +3,19 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: "enabled"
   name: komodo-pg
 spec:
-  # bootstrap:
-  #   recovery:
-  #     source: source
+  bootstrap:
+    # recovery:
+    #   source: source
+    initdb:
+      database: komodo
+      owner: komodo
+      postInitApplicationSQL:
+        - create extension if not exists pg_cron;
+        - create extension if not exists documentdb cascade;
   enableSuperuserAccess: true
   # externalClusters:
   #   - name: source
@@ -39,7 +47,6 @@ spec:
   postgresql:
     parameters:
       cron.database_name: komodo
-      cron.use_background_workers: "on"
       # Copied from https://github.com/FerretDB/documentdb/blob/ferretdb/packaging/10-preload.sh
       documentdb.enableBypassDocumentValidation: "true"
       documentdb.enableCompact: "true"
@@ -51,6 +58,9 @@ spec:
       documentdb.maxUserLimit: "100"
       max_connections: "300"
       shared_buffers: 512MB
+    pg_hba:
+      - host komodo postgres localhost trust
+      - host komodo komodo localhost trust
     shared_preload_libraries:
       - "pg_cron"
       - "pg_documentdb_core"
