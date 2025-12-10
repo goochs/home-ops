@@ -36,6 +36,16 @@ spec:
   postgresUID: 999
   postgresql:
     parameters:
+      cron.database_name: komodo
+      # Copied from https://github.com/FerretDB/documentdb/blob/ferretdb/packaging/10-preload.sh
+      documentdb.enableBypassDocumentValidation: "true"
+      documentdb.enableCompact: "true"
+      documentdb.enableLetAndCollationForQueryMatch: "true"
+      documentdb.enableNowSystemVariable: "true"
+      documentdb.enableSchemaValidation: "true"
+      documentdb.enableSortbyIdPushDownToPrimaryKey: "true"
+      documentdb.enableUserCrud: "true"
+      documentdb.maxUserLimit: "100"
       max_connections: "300"
       shared_buffers: 512MB
     shared_preload_libraries:
