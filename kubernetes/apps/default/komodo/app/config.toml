@@ -1,3 +1,12 @@
+host = "https://komodo.serek.xyz"
+
+oidc_enabled = true
+oidc_provider = "https://sso.serek.xyz"
+oidc_client_id = "komodo"
+oidc_client_secret = "{{ .komodoSecret }}"
+
+database.uri = "mongodb://{{ .dbUser }}:{{ .dbPass }}@komodo-ferret.default.svc.cluster.local:27017"
+
 [[server]]
 name = "nas"
 [server.config]
