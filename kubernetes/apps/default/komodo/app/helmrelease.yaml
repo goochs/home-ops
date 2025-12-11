@@ -64,6 +64,13 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
+        rules:
+          - backendRefs:
+              - identifier: *app
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /listener/
     service:
       komodo:
         controller: *app
