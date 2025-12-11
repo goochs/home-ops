@@ -1,5 +1,9 @@
 host = "https://komodo.serek.xyz"
 
+ui_write_disabled = true
+
+passkey = "{{ .passkey }}"
+
 oidc_enabled = true
 oidc_provider = "https://sso.serek.xyz"
 oidc_client_id = "komodo"

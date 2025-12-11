@@ -17,15 +17,6 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           main:
-            env:
-              KOMODO_DATABASE_ADDRESS: komodo-ferret.default.svc.cluster.local:27017
-              KOMODO_HOST: https://komodo.serek.xyz
-              KOMODO_OIDC_CLIENT_ID: komodo
-              KOMODO_OIDC_ENABLED: true
-              KOMODO_OIDC_PROVIDER: https://sso.serek.xyz
-            envFrom:
-              - secretRef:
-                  name: komodo-secret
             image:
               repository: ghcr.io/moghtech/komodo-core
               tag: 1.19.5@sha256:a471706a65cab8093cc8ef97f064e6fca0575d118435914c14c3a6aa055cee93
@@ -45,6 +36,13 @@ spec:
       action-cache:
         type: emptyDir
       config:
+        globalMounts:
+          - path: /config/config.toml
+            readOnly: true
+            subPath: config.toml
+        name: komodo-secret
+        type: secret
+      state:
         existingClaim: *app
         globalMounts:
           - path: /syncs
