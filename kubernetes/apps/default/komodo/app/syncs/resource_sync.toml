@@ -1,0 +1,8 @@
+[[resource_sync]]
+name = "home-ops"
+[resource_sync.config]
+linked_repo = "home-ops"
+resource_path = [
+  "kubernetes/apps/default/komodo/app/syncs"
+]
+delete = true
