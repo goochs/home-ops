@@ -1,7 +1,7 @@
 ---
 services:
   docker:
-    image: registry:2
+    image: registry:3
     ports:
       - 5000:5000
     environment:
@@ -10,7 +10,7 @@ services:
       - ./data/docker:/var/lib/registry
     restart: always
   k8s:
-    image: registry:2
+    image: registry:3
     ports:
       - 5001:5000
     environment:
@@ -19,7 +19,7 @@ services:
       - ./data/k8s:/var/lib/registry
     restart: always
   gcr:
-    image: registry:2
+    image: registry:3
     ports:
       - 5002:5000
     environment:
@@ -28,7 +28,7 @@ services:
       - ./data/gcr:/var/lib/registry
     restart: always
   ghcr:
-    image: registry:2
+    image: registry:3
     ports:
       - 5003:5000
     environment:
