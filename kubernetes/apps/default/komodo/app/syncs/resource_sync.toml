@@ -3,6 +3,7 @@ name = "home-ops"
 [resource_sync.config]
 linked_repo = "home-ops"
 resource_path = [
-  "kubernetes/apps/default/komodo/app/syncs"
+  "kubernetes/apps/default/komodo/app/syncs",
+  "docker"
 ]
 delete = true

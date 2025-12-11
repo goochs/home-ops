@@ -1,0 +1,7 @@
+[[stack]]
+name = "autoheal"
+tags = ["rdio"]
+[stack.config]
+server = "rdio"
+linked_repo = "home-ops"
+run_directory = "docker/rdio/autoheal"
