@@ -11,6 +11,9 @@ oidc_client_secret = "{{ .komodoSecret }}"
 
 database.uri = "mongodb://{{ .dbUser }}:{{ .dbPass }}@komodo-ferret.default.svc.cluster.local:27017"
 
+webhook_secret = "{{ .webhookSecret }}"
+webhook_base_url = "https://komodo-hook.serek.xyz"
+
 [[repo]]
 name = "home-ops"
 [repo.config]

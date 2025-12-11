@@ -58,6 +58,12 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+      hook:
+        hostnames:
+          - komodo-hook.serek.xyz
+        parentRefs:
+          - name: envoy-external
+            namespace: network
     service:
       komodo:
         controller: *app
