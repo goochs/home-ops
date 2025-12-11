@@ -7,7 +7,7 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io
     volumes:
-      - ./data/docker:/var/lib/registry
+      - $DOCKER_DATA/registry/data/docker:/var/lib/registry
     restart: always
   k8s:
     image: registry:2
@@ -16,7 +16,7 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL=https://registry.k8s.io
     volumes:
-      - ./data/k8s:/var/lib/registry
+      - $DOCKER_DATA/registry/data/k8s:/var/lib/registry
     restart: always
   gcr:
     image: registry:2
@@ -25,7 +25,7 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL=https://gcr.io
     volumes:
-      - ./data/gcr:/var/lib/registry
+      - $DOCKER_DATA/registry/data/gcr:/var/lib/registry
     restart: always
   ghcr:
     image: registry:2
@@ -34,5 +34,5 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL=https://ghcr.io
     volumes:
-      - ./data/ghcr:/var/lib/registry
+      - $DOCKER_DATA/registry/data/ghcr:/var/lib/registry
     restart: always

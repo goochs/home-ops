@@ -79,3 +79,27 @@ tags = ["common", "rdio"]
 server = "rdio"
 linked_repo = "home-ops"
 run_directory = "docker/common/exporters"
+
+[[stack]]
+name = "haproxy"
+tags = ["nas"]
+[stack.config]
+server = "nas"
+linked_repo = "home-ops"
+run_directory = "docker/nas/haproxy"
+
+[[stack]]
+name = "pxe"
+tags = ["nas"]
+[stack.config]
+server = "nas"
+linked_repo = "home-ops"
+run_directory = "docker/nas/pxe"
+
+[[stack]]
+name = "registry"
+tags = ["nas"]
+[stack.config]
+server = "nas"
+linked_repo = "home-ops"
+run_directory = "docker/nas/registry"

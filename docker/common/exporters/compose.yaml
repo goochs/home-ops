@@ -25,5 +25,5 @@ services:
     ports:
       - 9633:9633
     privileged: true
-    restart: unless-stopped
+    restart: always
     user: root

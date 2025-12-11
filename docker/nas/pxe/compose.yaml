@@ -8,8 +8,8 @@ services:
       - MATCHBOX_LOG_LEVEL=debug
     network_mode: host
     volumes:
-      - ./varlib:/var/lib/matchbox
-      - ./assets:/var/lib/matchbox/assets
+      - $DOCKER_DATA/pxe/varlib:/var/lib/matchbox
+      - $DOCKER_DATA/pxe/assets:/var/lib/matchbox/assets
     restart: always
 
   dnsmasq:
