@@ -1,6 +1,6 @@
 host = "https://komodo.serek.xyz"
 
-ui_write_disabled = true
+ui_write_disabled = false #temporary for bootstrap
 
 passkey = "{{ .passkey }}"
 
