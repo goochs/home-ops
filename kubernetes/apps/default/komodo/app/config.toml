@@ -28,6 +28,9 @@ stats_monitoring = false
 [[repo]]
 name = "home-ops"
 [repo.config]
+git_account = "goochs"
+repo = "goochs/home-ops"
+webhook_enabled = false
 
 [[procedure]]
 name = "Backup Core Database"
@@ -60,3 +63,19 @@ domain = "github.com"
 accounts = [
   { username = "goochs", token = "{{ .githubPAT }}" },
 ]
+
+[[stack]]
+name = "nas-exporters"
+tags = ["common", "nas"]
+[stack.config]
+server = "nas"
+linked_repo = "home-ops"
+run_directory = "docker/common/exporters"
+
+[[stack]]
+name = "rdio-exporters"
+tags = ["common", "rdio"]
+[stack.config]
+server = "rdio"
+linked_repo = "home-ops"
+run_directory = "docker/common/exporters"
