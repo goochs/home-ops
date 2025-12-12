@@ -25,7 +25,7 @@ metadata:
   name: root-ca-issuer
 spec:
   ca:
-    secretName: root-secret
+    secretName: root-ca-secret
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
