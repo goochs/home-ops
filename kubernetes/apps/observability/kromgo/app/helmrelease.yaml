@@ -19,7 +19,7 @@ spec:
           app:
             env:
               HEALTH_PORT: &healthPort 8080
-              PROMETHEUS_URL: http://vmsingle-vm-stack.observability.svc.cluster.local:9090
+              PROMETHEUS_URL: http://vmsingle-vm-stack.observability.svc.cluster.local:8428
               SERVER_PORT: &serverPort 80
             image:
               repository: ghcr.io/kashalls/kromgo

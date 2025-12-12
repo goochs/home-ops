@@ -72,7 +72,7 @@ spec:
           enabled: true
       dashboard:
         enabled: true
-        prometheusEndpoint: http://vmsingle-vm-stack.observability.svc.cluster.local:9090
+        prometheusEndpoint: http://vmsingle-vm-stack.observability.svc.cluster.local:8428
         ssl: false
         urlPrefix: /
       mgr:
