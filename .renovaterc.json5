@@ -22,9 +22,6 @@
   flux: {
     managerFilePatterns: ["/\\.yaml$/"],
   },
-  docker: {
-    managerFilePatterns: ["/\\.yaml$/"],
-  },
   "helm-values": {
     managerFilePatterns: ["/(^|/)kubernetes/.+\\.yaml$/"],
   },
