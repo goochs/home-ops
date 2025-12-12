@@ -22,7 +22,7 @@ metadata:
   name: envoy-gateway-config
 spec:
   dependsOn:
-    - name: cert-manager-issuers
+    - name: cert-manager
       namespace: cert-manager
     - name: envoy-gateway
   interval: 1h

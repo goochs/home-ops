@@ -14,7 +14,7 @@ spec:
           cloudflare:
             apiTokenSecretRef:
               key: api-token
-              name: cert-manager-secret
+              name: cloudflare-issuer-secret
         selector:
           dnsZones:
             - "serek.xyz"
