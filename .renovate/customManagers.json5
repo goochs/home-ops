@@ -29,13 +29,13 @@
       description: "Process cloudnative-pg",
       customType: "regex",
       managerFilePatterns: ["/\\.yaml$/"],
+      // imageName: ghcr.io/cloudnative-pg/postgresql:16.10@sha256:3f0ef6da782d2872dda3b51202795e2d8ca361a2ea3070f9f7bee937319a9048
+      // imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0@sha256:2b397c7080ae712d407e925cc087ad7061dee7fbeb7ec6f55c6bc8482ef6b4f2
       matchStrings: [
-        "imageName: (?<depName>[^\\s:]+):(?<currentValue>[^\\s@]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?",
+        "imageName: (?<depName>[^:]+):(?<currentValue>[^@]+)@(?<currentDigest>sha256:[a-f0-9]+)",
       ],
       datasourceTemplate: "docker",
-      // matches: 17.6-202509151215-minimal-trixie
-      versioningTemplate: "regex:^(?<major>\\d+)\\.(?<minor>\\d+)-(?<patch>\\d+)-(?<compatibility>\\S+)$",
-      autoReplaceStringTemplate: "{{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}",
+      versioningTemplate: "regex:^(?<major>\\d+)\\.(?<minor>\\d+)(?<compatibility>-[\\d.]+)?",
     },
   ],
 }
