@@ -10,14 +10,14 @@ kind: Certificate
 metadata:
   name: root-ca
 spec:
-  isCA: true
-  duration: 87600h
   commonName: root-ca.internal.serek.xyz
-  secretName: root-ca-secret
-  privateKey:
-    algorithm: Ed25519
+  duration: 87600h
+  isCA: true
   issuerRef:
     name: selfsigned-issuer
+  privateKey:
+    algorithm: Ed25519
+  secretName: root-ca-secret
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -32,14 +32,14 @@ kind: Certificate
 metadata:
   name: intermediate-ca
 spec:
-  isCA: true
-  duration: 8760h
   commonName: intermediate-ca.internal.serek.xyz
-  secretName: intermediate-ca-secret
-  privateKey:
-    algorithm: Ed25519
+  duration: 8760h
+  isCA: true
   issuerRef:
     name: root-ca-issuer
+  privateKey:
+    algorithm: Ed25519
+  secretName: intermediate-ca-secret
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -52,12 +52,15 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: generated-cert
+  name: test-client
 spec:
-  duration: 8760h
-  commonName: generated.internal.serek.xyz
-  secretName: generated-secret
-  privateKey:
-    algorithm: Ed25519
+  dnsNames:
+    - "test-client.default.svc.cluster.local"
+    - "test-client"
+  isCA: false
   issuerRef:
     name: intermediate-ca-issuer
+  secretName: test-client
+  usages:
+    - server auth
+    - client auth
