@@ -16,7 +16,7 @@ spec:
         parameters:
           barmanObjectName: minio
           serverName: immich-pg-v5
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.6-0.5.3@sha256:20c1767e6b271f18cbff3fd65a8e550cdd314114aa7e46fd3abb483cb37bbdd1
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18.0-0.5.3@sha256:ac600b6bc8fb2da6988a5fc4d37ab99db4d78ba13f51ef7c747fd8ff4690e940
   instances: 3
   managed:
     roles:
