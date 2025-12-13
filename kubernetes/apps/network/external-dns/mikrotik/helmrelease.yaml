@@ -70,6 +70,7 @@ spec:
     sources:
       - service
       - gateway-httproute
+      - crd
     triggerLoopOnEvent: true
     txtOwnerId: main
     txtPrefix: k8s.main.
