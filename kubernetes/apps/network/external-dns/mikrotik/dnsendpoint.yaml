@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/externaldns.k8s.io/dnsendpoint_v1alpha1.json
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: external-ipv6-record
+spec:
+  endpoints:
+    - dnsName: external.serek.xyz
+      recordType: AAAA
+      targets:
+        - ::ffff:10.0.41.60
