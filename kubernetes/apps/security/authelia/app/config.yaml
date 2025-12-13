@@ -18,8 +18,7 @@ identity_providers:
   oidc:
     clients:
       - authorization_policy: one_factor
-        client_id: '{{ env "IMMICH_CLIENT" }}'
-        client_name: Immich
+        client_id: immich
         client_secret: '{{ env "IMMICH_DIGEST" }}'
         pre_configured_consent_duration: 1w
         redirect_uris:
