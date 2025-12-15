@@ -3,6 +3,8 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: "enabled"
   name: postgres16
 spec:
   bootstrap:
@@ -59,7 +61,7 @@ spec:
       name: barman-cloud.cloudnative-pg.io
       parameters:
         barmanObjectName: minio
-        serverName: postgres16-v6
+        serverName: postgres16
   postgresql:
     parameters:
       max_connections: "300"
