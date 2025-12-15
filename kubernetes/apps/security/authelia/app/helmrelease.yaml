@@ -36,9 +36,6 @@ spec:
               AUTHELIA_THEME: dark
               X_AUTHELIA_CONFIG: /config/config.yaml
               X_AUTHELIA_CONFIG_FILTERS: template
-            envFrom:
-              - secretRef:
-                  name: authelia-secret
             image:
               repository: ghcr.io/authelia/authelia
               tag: 4.39.15@sha256:d23ee3c721d465b4749cc58541cda4aebe5aa6f19d7b5ce0afebb44ebee69591
