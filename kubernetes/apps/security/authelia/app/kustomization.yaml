@@ -4,9 +4,6 @@ configMapGenerator:
   - files:
       - config.yaml=./config.yaml
     name: authelia-configmap
-  - files:
-      - config.yaml=./config.yaml
-    name: authelia-config-tpl
 generatorOptions:
   disableNameSuffixHash: true
 kind: Kustomization
