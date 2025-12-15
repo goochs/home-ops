@@ -3,7 +3,9 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: immich-pg
+  name: &name immich-pg
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: "enabled"
 spec:
   bootstrap:
     recovery:
@@ -13,9 +15,9 @@ spec:
     - name: source
       plugin:
         name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: minio
-          serverName: immich-pg-v5
+        parameters: &parameters
+          barmanObjectName: nas
+          serverName: *name
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18.0-0.5.3@sha256:ac600b6bc8fb2da6988a5fc4d37ab99db4d78ba13f51ef7c747fd8ff4690e940
   instances: 3
   managed:
@@ -29,9 +31,7 @@ spec:
   plugins:
     - isWALArchiver: true
       name: barman-cloud.cloudnative-pg.io
-      parameters:
-        barmanObjectName: minio
-        serverName: immich-pg-v6
+      parameters: *parameters
   postgresql:
     parameters:
       max_connections: "300"

@@ -1,13 +1,13 @@
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
-  name: minio
+  name: nas
 spec:
   configuration:
     data:
       compression: bzip2
     destinationPath: s3://cnpg/
-    endpointURL: https://s3.serek.xyz
+    endpointURL: https://versity.serek.xyz
     s3Credentials:
       accessKeyId:
         key: s3-access-key
