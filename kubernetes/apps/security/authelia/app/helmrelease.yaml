@@ -73,6 +73,11 @@ spec:
             subPath: config.yaml
         name: authelia-configmap
         type: configMap
+      secrets:
+        globalMounts:
+          - path: /config/secret/
+        name: authelia-secret
+        type: secret
     route:
       app:
         hostnames:
