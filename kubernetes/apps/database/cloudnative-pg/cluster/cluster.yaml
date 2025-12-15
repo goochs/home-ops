@@ -49,10 +49,6 @@ spec:
         passwordSecret:
           name: atuin-pg-secret
       - login: true
-        name: zipline
-        passwordSecret:
-          name: zipline-pg-secret
-      - login: true
         name: trunk-processor
         passwordSecret:
           name: trunk-processor-pg-secret

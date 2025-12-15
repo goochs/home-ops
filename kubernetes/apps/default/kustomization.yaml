@@ -17,5 +17,4 @@ resources:
   - ./speaches/ks.yaml
   - ./trunk-processor/ks.yaml
   - ./z2m/ks.yaml
-  - ./zipline/ks.yaml
   - ./namespace.yaml
