@@ -76,10 +76,9 @@ spec:
       config:
         globalMounts:
           - path: /config/config.yaml
-            readOnly: true
             subPath: config.yaml
-        name: authelia-configmap
-        type: configMap
+        name: authelia-config-secret
+        type: secret
       secrets:
         globalMounts:
           - path: /config/secret/
