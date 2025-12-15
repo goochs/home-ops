@@ -69,9 +69,11 @@ spec:
         annotations:
           io.cilium/lb-ipam-ips: 10.0.41.62
         controller: *app
+        externalTrafficPolicy: Cluster
         ports:
           http:
             port: *port
             primary: true
           ldap:
             port: *ldapPort
+        type: LoadBalancer
