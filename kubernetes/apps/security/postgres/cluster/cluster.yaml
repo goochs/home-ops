@@ -16,7 +16,7 @@ spec:
         parameters:
           barmanObjectName: minio
           serverName: security-pg-v5
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.11-system-trixie@sha256:d8bf4fba23ef46cf51786b96604c19f6c33460dbf5309e867263a3281a416bf4
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.11-system-trixie@sha256:9fd00c271f26246cb4baea013ab2cf8840a8fd0591bd89f42260f06f7dba2440
   instances: 3
   managed:
     roles:
