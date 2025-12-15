@@ -90,6 +90,8 @@ spec:
             namespace: network
     service:
       app:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.0.41.62
         controller: *app
         ports:
           http:
