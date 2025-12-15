@@ -70,3 +70,8 @@ session:
     host: authelia-dragonfly.security.svc.cluster.local
   remember_me: 1 month
   same_site: lax
+storage:
+  postgres:
+    address: tcp://security-pg-rw.security.svc.cluster.local:5432
+    database: authelia
+    username: '{{ .dbUser }}'
