@@ -13,7 +13,7 @@ spec:
   rules:
     - backendRefs:
         - name: kguardian-frontend
-          namespace: flux-system
+          namespace: security
           port: 5173
       matches:
         - path:
