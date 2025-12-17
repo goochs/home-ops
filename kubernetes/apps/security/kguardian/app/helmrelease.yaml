@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: kguardian
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.7.0
+  url: oci://ghcr.io/kguardian-dev/charts/kguardian
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/heads/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kguardian
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  interval: 1h
+  values:
+    broker:
+      image:
+        repository: ghcr.io/kguardian-dev/kguardian/broker
+        tag: v1.5.0
+    controller:
+      image:
+        repository: ghcr.io/kguardian-dev/kguardian/controller
+        tag: v1.6.0
+    frontend:
+      image:
+        repository: ghcr.io/kguardian-dev/kguardian/frontend
+        tag: v1.6.1
+    llmBridge:
+      enabled: false
+    mcpServer:
+      enabled: false
