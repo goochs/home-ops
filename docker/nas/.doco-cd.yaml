@@ -1,10 +1,12 @@
 ---
+name: nas
 working_dir: ./docker/nas
 auto_discover: true
 auto_discover_opts:
   depth: 1
   delete: true
 ---
+name: common
 working_dir: ./docker/common
 auto_discover: true
 auto_discover_opts:
