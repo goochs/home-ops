@@ -15,6 +15,7 @@ actionlint = "latest"
 lefthook = "latest"
 helmfile = "latest"
 "npm:renovate" = "latest"
+cilium-hubble = "latest"
 
 [env]
 KUBECONFIG = "{{config_root}}/kubeconfig"
