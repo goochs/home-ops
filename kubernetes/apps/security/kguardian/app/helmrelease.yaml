@@ -35,7 +35,7 @@ spec:
     frontend:
       image:
         repository: ghcr.io/kguardian-dev/kguardian/frontend
-        tag: v1.6.1
+        tag: v1.6.2
     llmBridge:
       enabled: false
     mcpServer:
