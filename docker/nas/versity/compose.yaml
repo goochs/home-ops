@@ -15,7 +15,7 @@ services:
       - caddy
     volumes:
       - /mnt/tank/docker/versity:/data
-      - ./log:/log
+      - /mnt/flash/docker/versity/log:/log
     restart: always
     labels:
       caddy_0: versity.serek.xyz
