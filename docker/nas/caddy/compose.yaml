@@ -1,0 +1,24 @@
+---
+services:
+  caddy:
+    container_name: caddy
+    image: ghcr.io/goochs/caddy:2.10.2
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=caddy
+      - CADDY_DOCKER_CADDYFILE_PATH=/tmp/Caddyfile.import
+      - API_TOKEN=$API_TOKEN
+      - EMAIL=$EMAIL
+    networks:
+      - caddy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/data
+      - ./Caddyfile:/tmp/Caddyfile.import:ro
+
+networks:
+  caddy:
+    external: true

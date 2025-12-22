@@ -5,6 +5,9 @@ auto_discover: true
 auto_discover_opts:
   depth: 1
   delete: true
+external_secrets:
+  EMAIL: "op://home-k8s/caddy/email"
+  API_TOKEN: "op://home-k8s/caddy/apiToken"
 ---
 name: exporters
 working_dir: ./docker/common/exporters
