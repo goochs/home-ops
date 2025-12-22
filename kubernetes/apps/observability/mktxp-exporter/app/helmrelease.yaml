@@ -22,7 +22,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/akpw/mktxp
-              tag: 1.2.15@sha256:44c28e84ffec3ee5c08131b4aa77aa988952e5b0b5f98b4eb26d6f661c764e4a
+              tag: 1.2.16@sha256:f866f423bc9bf97b39f8ffc10891170908be86c459d985b01ae17aa2beda30f9
             resources:
               limits:
                 memory: 512Mi
