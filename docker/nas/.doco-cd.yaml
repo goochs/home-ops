@@ -8,6 +8,7 @@ auto_discover_opts:
 external_secrets:
   EMAIL: "op://home-k8s/caddy/email"
   API_TOKEN: "op://home-k8s/caddy/apiToken"
+  VERSITY_ROOT_SECRET_KEY: "op://home-k8s/versity/rootSecretKey"
 ---
 name: exporters
 working_dir: ./docker/common/exporters

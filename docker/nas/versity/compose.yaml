@@ -1,0 +1,27 @@
+---
+services:
+  versity:
+    container_name: versity
+    image: ghcr.io/versity/versitygw:v1.0.19@sha256:df47c7f7c5a17b47ae946e7bc5608e2970237a197763f914e90600e3f0cc2bf3
+    user: 1000:1000
+    environment:
+      ROOT_ACCESS_KEY: 'versity'
+      ROOT_SECRET_KEY: $VERSITY_ROOT_SECRET_KEY
+      VGW_BACKEND: 'posix'
+      VGW_BACKEND_ARGS: '/data/buckets --chuid true --chgid true'
+      VGW_IAM_DIR: '/data/accounts'
+      LOGFILE: '/log/access.log'
+    networks:
+      - caddy
+    volumes:
+      - /mnt/tank/docker/versity:/data
+      - ./log:/log
+    restart: always
+    labels:
+      caddy_0: versity.serek.xyz
+      caddy_0.reverse_proxy: "{{upstreams 7070}}"
+      caddy_0.import: cf
+
+networks:
+  caddy:
+    external: true
