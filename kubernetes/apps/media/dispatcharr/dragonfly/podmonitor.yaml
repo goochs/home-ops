@@ -1,0 +1,13 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: dispatcharr-dragonfly
+spec:
+  fallbackScrapeProtocol: PrometheusText1.0.0
+  podMetricsEndpoints:
+    - port: admin
+  podTargetLabels: ["app"]
+  selector:
+    matchLabels:
+      app: dispatcharr-dragonfly

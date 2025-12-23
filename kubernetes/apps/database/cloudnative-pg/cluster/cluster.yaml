@@ -54,6 +54,10 @@ spec:
         name: trunk-processor
         passwordSecret:
           name: trunk-processor-pg-secret
+      - login: true
+        name: dispatcharr
+        passwordSecret:
+          name: dispatcharr-pg-secret
   monitoring:
     enablePodMonitor: true
   plugins:

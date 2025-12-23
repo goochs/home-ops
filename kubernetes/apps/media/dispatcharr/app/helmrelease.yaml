@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/heads/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app dispatcharr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  interval: 1h
+  values:
+    controllers:
+      dispatcharr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              DISPATCHARR_PORT: &port 9191
+              TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: dispatcharr-secret
+            image:
+              repository: ghcr.io/dispatcharr/dispatcharr
+              tag: 0.15.0@sha256:2794b537aebeb30f5173bc186e99238106b95a62b50453cf62bd7a09c90ab434
+            resources:
+              limits:
+                memory: 3Gi
+              requests:
+                cpu: 50m
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 3000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 3000
+        seccompProfile: {type: RuntimeDefault}
+    persistence:
+      data:
+        existingClaim: dispatcharr-cache
+      tmp:
+        type: emptyDir
+    route:
+      app:
+        hostnames:
+          - dispatcharr.serek.xyz
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            appProtocol: kubernetes.io/wss
+            port: *port

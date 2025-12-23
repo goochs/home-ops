@@ -6,6 +6,7 @@ kind: Kustomization
 namespace: media
 resources:
   - ./bazarr/ks.yaml
+  - ./dispatcharr/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./prowlarr/ks.yaml
