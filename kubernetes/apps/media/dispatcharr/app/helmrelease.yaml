@@ -33,10 +33,6 @@ spec:
               requests:
                 cpu: 50m
                 memory: 1Gi
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities: {drop: ["ALL"]}
-              readOnlyRootFilesystem: true
         initContainers:
           chown-dbdir:
             args:
@@ -50,14 +46,6 @@ spec:
               tag: "3.23"
             securityContext:
               runAsUser: 0
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 3000
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 3000
-        runAsNonRoot: true
-        runAsUser: 3000
-        seccompProfile: {type: RuntimeDefault}
     persistence:
       data:
         existingClaim: *app
