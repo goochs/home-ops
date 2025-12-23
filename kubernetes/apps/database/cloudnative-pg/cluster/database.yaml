@@ -108,13 +108,3 @@ spec:
     name: postgres16
   name: trunk-processor
   owner: trunk-processor
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Database
-metadata:
-  name: dispatcharr
-spec:
-  cluster:
-    name: postgres16
-  name: dispatcharr
-  owner: dispatcharr
