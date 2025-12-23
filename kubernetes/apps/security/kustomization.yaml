@@ -7,7 +7,6 @@ namespace: security
 resources:
   - ./authelia/ks.yaml
   - ./external-secrets/ks.yaml
-  - ./kguardian/ks.yaml
   - ./lldap/ks.yaml
   - ./onepass-connect/ks.yaml
   - ./postgres/ks.yaml
