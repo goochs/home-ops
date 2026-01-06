@@ -61,7 +61,7 @@ spec:
               UNIQUE_FILENAMES: true
             image:
               repository: ghcr.io/home-operations/k8s-sidecar
-              tag: 2.2.2@sha256:0e24db30a4d01558751a8c2d968c24f6d25b457f8ea1fd120eff3222db1f2cec
+              tag: 2.2.3@sha256:03f53e1d630fa1f09959d949b22d84dd368f4011e937458711db35fe8349f1c1
             probes:
               liveness: &initprobes
                 custom: true
