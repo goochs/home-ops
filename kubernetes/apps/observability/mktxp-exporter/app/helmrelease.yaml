@@ -40,8 +40,6 @@ spec:
         runAsUser: 1000
     persistence:
       config:
-        globalMounts:
-          - path: /etc/mktxp/
         name: mktxp-exporter-secret
         type: secret
     service:
