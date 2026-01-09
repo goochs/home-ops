@@ -17,7 +17,6 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
-            args: ["--cfg-dir", "/config", "export"]
             env:
               TZ: America/New_York
             image:
@@ -39,7 +38,8 @@ spec:
         runAsUser: 1000
     persistence:
       config:
-        enabled: true
+        globalMounts:
+          - path: /etc/mktxp/
         name: mktxp-exporter-secret
         type: secret
     service:
