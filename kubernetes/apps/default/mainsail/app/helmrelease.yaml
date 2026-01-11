@@ -21,7 +21,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/goochs/mainsail
-              tag: 2.16.1@sha256:3aae90145f5d009a894ace95b028763f5525dbdf421aa2a0e3679f84ff65a1f9
+              tag: 2.17.0@sha256:efdbba030e4898e9707e4fbe04eb84a876ec1624ff0f7a87900354b94836c3a2
             probes:
               readiness:
                 spec:
