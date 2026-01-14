@@ -1,0 +1,28 @@
+host = "https://komodo.serek.xyz"
+
+ui_write_disabled = false #temporary for bootstrap
+
+passkey = "{{ .passkey }}"
+
+oidc_enabled = true
+oidc_provider = "https://sso.serek.xyz"
+oidc_client_id = "komodo"
+oidc_client_secret = "{{ .komodoSecret }}"
+
+database.uri = "mongodb://{{ .dbUser }}:{{ .dbPass }}@komodo-ferret.default.svc.cluster.local:27017"
+
+webhook_secret = "{{ .webhookSecret }}"
+webhook_base_url = "https://komodo-hook.serek.xyz"
+
+[[repo]]
+name = "home-ops"
+[repo.config]
+git_account = "goochs"
+repo = "goochs/home-ops"
+webhook_enabled = false
+
+[[git_provider]]
+domain = "github.com"
+accounts = [
+  { username = "goochs", token = "{{ .githubPAT }}" },
+]

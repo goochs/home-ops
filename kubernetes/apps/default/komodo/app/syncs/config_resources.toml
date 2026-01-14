@@ -1,0 +1,12 @@
+[[repo]]
+name = "home-ops"
+[repo.config]
+git_account = "goochs"
+repo = "goochs/home-ops"
+webhook_enabled = false
+
+[[git_provider]]
+domain = "github.com"
+accounts = [
+  { username = "goochs", token = "{{ .githubPAT }}" },
+]
