@@ -52,7 +52,7 @@ spec:
                 name: *secret
         image:
           repository: ghcr.io/mirceanton/external-dns-provider-mikrotik
-          tag: v1.5.3@sha256:ac850405668f21741cb975b8214152f1252bce190f3a6d335326efb7b770b7d5
+          tag: v1.5.4@sha256:03405be542cd65c32b4c36fef79e07807609543d72e0d4cbf398c2304aa50b89
         livenessProbe:
           httpGet:
             path: /healthz
