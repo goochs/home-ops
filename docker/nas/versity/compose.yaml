@@ -2,7 +2,7 @@
 services:
   versity:
     container_name: versity
-    image: ghcr.io/versity/versitygw:v1.0.20@sha256:dd255743892cdf5ed0f1ed4d3911de0207255467af08c4eee14845fb2263a3c2
+    image: ghcr.io/versity/versitygw:v1.1.0@sha256:6cafed5ccb62f287ea98fd5db3eac314f73c2648c8f05ac5ebb3f5d768c4ebca
     user: 1000:1000
     environment:
       ROOT_ACCESS_KEY: 'versity'
