@@ -10,9 +10,9 @@ resources:
   - ./esphome/ks.yaml
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
-  - ./komodo/ks.yaml
   - ./mainsail/ks.yaml
   - ./node-red/ks.yaml
+  - ./paperless/ks.yaml
   - ./rdio-scanner/ks.yaml
   - ./speaches/ks.yaml
   - ./trunk-processor/ks.yaml
