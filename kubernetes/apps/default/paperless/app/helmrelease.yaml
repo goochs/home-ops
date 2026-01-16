@@ -50,6 +50,7 @@ spec:
               PAPERLESS_MEDIA_ROOT: /data/nas/media
               PAPERLESS_OCR_LANGUAGE: eng
               PAPERLESS_PORT: "8000"
+              PAPERLESS_REDIS: redis://paperless-redis.default.svc.cluster.local:6379
               PAPERLESS_TASK_WORKERS: "2"
               PAPERLESS_TIKA_ENABLED: "true"
               PAPERLESS_TIKA_ENDPOINT: http://paperless-tika.default.svc.cluster.local:9998
@@ -85,7 +86,7 @@ spec:
           redis:
             image:
               repository: ghcr.io/valkey-io/valkey
-              tag: 9.0.1@sha256:2acd71cda5cd2b664d65ba3d758a9fb69df2e2b40fcc1795d501e6561965f7ef 
+              tag: 9.0.1@sha256:2acd71cda5cd2b664d65ba3d758a9fb69df2e2b40fcc1795d501e6561965f7ef
             resources:
               limits:
                 memory: 128Mi
