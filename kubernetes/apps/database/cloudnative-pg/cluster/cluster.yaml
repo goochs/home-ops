@@ -54,6 +54,10 @@ spec:
         name: trunk-processor
         passwordSecret:
           name: trunk-processor-pg-secret
+      - login: true
+        name: paperless
+        passwordSecret:
+          name: paperless-pg-secret
   monitoring:
     enablePodMonitor: true
   plugins:
