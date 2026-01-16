@@ -79,13 +79,13 @@ spec:
       data:
         advancedMounts:
           paperless:
-            app:
+            main:
               - path: /data/local
         existingClaim: *app
       nas:
         advancedMounts:
           paperless:
-            app:
+            main:
               - path: /data/nas
         path: /mnt/tank/apps/paperless
         server: 10.0.30.40
