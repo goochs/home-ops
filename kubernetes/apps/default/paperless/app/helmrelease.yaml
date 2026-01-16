@@ -12,6 +12,22 @@ spec:
   interval: 1h
   values:
     controllers:
+      gotenberg:
+        containers:
+          gotenberg:
+            args:
+              - "--chromium-disable-javascript=true"
+              - "--chromium-allow-list=file:///tmp/.*"
+            command: ["gotenberg"]
+            image:
+              repository: docker.io/gotenberg/gotenberg
+              tag: 8.25.1@sha256:1eec278eae6ceb8a33e7fd5f9cbc010b1849e785954d3f378cf156bcb7ed4b85
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 200m
+                memory: 200Mi
       paperless:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -34,12 +50,13 @@ spec:
               PAPERLESS_MEDIA_ROOT: /data/nas/media
               PAPERLESS_OCR_LANGUAGE: eng
               PAPERLESS_PORT: "8000"
-              PAPERLESS_REDIS: redis://paperless-redis.default.svc.cluster.local:6379
               PAPERLESS_TASK_WORKERS: "2"
+              PAPERLESS_TIKA_ENABLED: "true"
+              PAPERLESS_TIKA_ENDPOINT: http://paperless-tika.default.svc.cluster.local:9998
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg.default.svc.cluster.local:3000
               PAPERLESS_TIME_ZONE: America/New_York
               PAPERLESS_URL: https://paperless.serek.xyz
               PAPERLESS_WEBSERVER_WORKERS: "2"
-              USERMAP_GID: "1000"
             envFrom:
               - secretRef:
                   name: paperless-secret
@@ -68,13 +85,25 @@ spec:
           redis:
             image:
               repository: ghcr.io/valkey-io/valkey
-              tag: 9.0.1
+              tag: 9.0.1@sha256:2acd71cda5cd2b664d65ba3d758a9fb69df2e2b40fcc1795d501e6561965f7ef 
             resources:
               limits:
                 memory: 128Mi
               requests:
                 cpu: 5m
                 memory: 32Mi
+      tika:
+        containers:
+          tika:
+            image:
+              repository: docker.io/apache/tika
+              tag: 3.2.3.0@sha256:3fafa194474c5f3a8cff25a0eefd07e7c0513b7f552074ad455e1af58a06bbea
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 100m
+                memory: 200Mi
     persistence:
       data:
         advancedMounts:
@@ -109,8 +138,18 @@ spec:
           http:
             port: 8000
         primary: true
+      gotenberg:
+        controller: gotenberg
+        ports:
+          http:
+            port: 3000
       redis:
         controller: redis
         ports:
           http:
             port: 6379
+      tika:
+        controller: tika
+        ports:
+          http:
+            port: 9998
