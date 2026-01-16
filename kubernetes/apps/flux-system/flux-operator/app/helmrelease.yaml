@@ -24,8 +24,8 @@ spec:
     name: *app
   interval: 1h
   values:
+    serviceMonitor:
+      create: true
     web:
       networkPolicy:
         create: false
-    serviceMonitor:
-      create: true

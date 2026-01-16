@@ -17,8 +17,8 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
-            command: ["mktxp"]
             args: ["--cfg-dir", "/config", "export"]
+            command: ["mktxp"]
             env:
               TZ: America/New_York
             image:
