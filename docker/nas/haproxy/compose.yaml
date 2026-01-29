@@ -2,7 +2,7 @@
 services:
   haproxy:
     container_name: haproxy
-    image: haproxy:3.3.1-alpine3.23
+    image: haproxy:3.3.2-alpine3.23
     restart: always
     ports:
       - 6443:6443
