@@ -11,6 +11,7 @@ resources:
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
   - ./mainsail/ks.yaml
+  - ./mc-router/ks.yaml
   - ./node-red/ks.yaml
   - ./paperless/ks.yaml
   - ./rdio-scanner/ks.yaml
