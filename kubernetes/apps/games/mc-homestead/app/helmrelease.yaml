@@ -50,7 +50,7 @@ spec:
       type: FABRIC
       version: 1.20.1
       viewDistance: 12
-      whitelist: "UnworldlyAlex,ManXnTheMoon,The_Windmill"
+      whitelist: "UnworldlyAlex,ManXnTheMoon,The_Windmill,RedMoonCactus"
       worldSaveName: homestead
     persistence:
       dataDir:
