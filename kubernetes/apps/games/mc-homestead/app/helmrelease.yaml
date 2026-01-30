@@ -44,8 +44,9 @@ spec:
     mcbackup:
       backupInterval: 90m
       compressMethod: zstd
-      destDir: /mnt/backups
       enabled: true
+      extraEnv:
+        DEST_DIR: /mnt/backups
       image:
         repository: ghcr.io/itzg/mc-backup
         tag: 2026.1.1@sha256:70489199145be9d6294eb0daf3335f9f00c2e37e1531758dbbb04e7dbfb6a663
