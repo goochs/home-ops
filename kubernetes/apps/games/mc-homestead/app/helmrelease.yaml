@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: mc-homestead
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 5.0.0
+  url: oci://ghcr.io/itzg/minecraft-server-charts/minecraft
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mc-homestead
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  interval: 1h
+  values:
+    extraEnv:
+      TZ: America/New_York
+    fullnameOverride: *app
+    image:
+      repository: ghcr.io/itzg/minecraft-server
+      tag: 2026.1.3@sha256:da84359bd92be3d48f4f64b35a70ba9cd593d23a6fc8f68ccacb72ce4e972c41
+    livenessProbe:
+      initialDelaySeconds: 30
+    minecraftServer:
+      difficulty: normal
+      eula: true
+      gameMode: survival
+      jvmXXOpts: "-Xms10240M -Xmx10240M --add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20"
+      motd: "Homestead for you."
+      onlineMode: true
+      ops: "UnworldlyAlex"
+      overrideServerProperties: true
+      pvp: true
+      rcon:
+        enabled: true
+      spawnProtection: 0
+      type: FABRIC
+      version: 1.20.1
+      viewDistance: 12
+      whitelist: "UnworldlyAlex"
+      worldSaveName: homestead
+    persistence:
+      dataDir:
+        enabled: true
+        existingClaim: *app
+    readinessProbe:
+      initialDelaySeconds: 30
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 12Gi
+      requests:
+        cpu: 200m
+    securityContext:
+      fsGroup: 3000
+      runAsUser: 3000
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: homestead.serek.xyz
+    startupProbe:
+      enabled: true
+  valuesFrom:
+    - kind: Secret
+      name: *app
+      targetPath: minecraftServer.rcon.password
+      valuesKey: RCON_PASSWORD
