@@ -9,11 +9,11 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/apps/default/mc-router/app
+  path: ./kubernetes/apps/games/mc-router/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
     namespace: flux-system
-  targetNamespace: default
+  targetNamespace: games
   wait: true
