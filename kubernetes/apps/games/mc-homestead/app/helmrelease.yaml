@@ -26,6 +26,15 @@ spec:
   values:
     extraEnv:
       TZ: America/New_York
+    extraVolumes:
+      - volumeMounts:
+          - mountPath: /mnt/backups
+            name: nfs
+        volumes:
+          - name: nfs
+            nfs:
+              path: /mnt/tank/apps/mc/homestead
+              server: 10.0.30.40
     fullnameOverride: *app
     image:
       repository: ghcr.io/itzg/minecraft-server
