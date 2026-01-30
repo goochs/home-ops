@@ -71,6 +71,6 @@ spec:
       enabled: true
   valuesFrom:
     - kind: Secret
-      name: *app
+      name: mc-homestead-secret
       targetPath: minecraftServer.rcon.password
       valuesKey: RCON_PASSWORD
