@@ -63,7 +63,7 @@ spec:
                   name: paperless-secret
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.20.5@sha256:d35fa00286e582fa2efe0f9828738a83ce7cbbebdd0b139a1f27c2b3544db1b5
+              tag: 2.20.6@sha256:04c06b177f9730e73fdaf9629b6c7f0d2668a99fa1959f3125b28da7b9d53792
             probes:
               liveness:
                 enabled: true
