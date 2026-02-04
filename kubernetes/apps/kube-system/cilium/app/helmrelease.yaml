@@ -34,7 +34,6 @@ spec:
       datapathMode: netkit
       masquerade: true # See https://github.com/siderolabs/talos/issues/8836 (forwardKubeDNSToHost)
       preallocateMaps: true
-      tproxy: true
     bpfClockProbe: true
     cgroup:
       automount:
