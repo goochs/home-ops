@@ -7,6 +7,7 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io
       - REGISTRY_PROXY_TTL=48h
+      - OTEL_TRACES_EXPORTER=none
     volumes:
       - /mnt/flash/docker/registry/data/docker:/var/lib/registry
     restart: always
@@ -17,6 +18,7 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL=https://registry.k8s.io
       - REGISTRY_PROXY_TTL=48h
+      - OTEL_TRACES_EXPORTER=none
     volumes:
       - /mnt/flash/docker/registry/data/k8s:/var/lib/registry
     restart: always
@@ -27,6 +29,7 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL=https://gcr.io
       - REGISTRY_PROXY_TTL=48h
+      - OTEL_TRACES_EXPORTER=none
     volumes:
       - /mnt/flash/docker/registry/data/gcr:/var/lib/registry
     restart: always
@@ -37,6 +40,7 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL=https://ghcr.io
       - REGISTRY_PROXY_TTL=48h
+      - OTEL_TRACES_EXPORTER=none
     volumes:
       - /mnt/flash/docker/registry/data/ghcr:/var/lib/registry
     restart: always
