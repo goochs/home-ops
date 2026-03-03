@@ -22,7 +22,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/actualbudget/actual-server
-              tag: 26.2.1
+              tag: 26.3.0
             probes:
               readiness:
                 spec:
