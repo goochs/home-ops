@@ -2,7 +2,7 @@
 services:
   caddy:
     container_name: caddy
-    image: ghcr.io/goochs/caddy:2.11.1
+    image: ghcr.io/goochs/caddy:2.11.2
     command: caddy docker-proxy
     restart: unless-stopped
     ports:
