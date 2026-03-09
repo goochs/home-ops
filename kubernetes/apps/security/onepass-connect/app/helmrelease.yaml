@@ -77,7 +77,7 @@ spec:
               XDG_DATA_HOME: /config
             image:
               repository: docker.io/1password/connect-sync
-              tag: 1.8.1
+              tag: 1.8.2
             probes:
               liveness:
                 custom: true
