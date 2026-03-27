@@ -230,6 +230,8 @@ controlPlane:
       machine:
         kubelet:
           extraConfig:
+            imageGCHighThresholdPercent: 70
+            imageGCLowThresholdPercent: 65
             maxPods: 150
           nodeIP:
             validSubnets: ["10.0.30.0/24"]
