@@ -9,3 +9,4 @@ talsecret.yaml
 
 .venv
 resticpass
+.secret.env
