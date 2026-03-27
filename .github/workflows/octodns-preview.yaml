@@ -40,7 +40,7 @@ jobs:
       - name: Install the project
         run: uv sync --extra octodns
       - name: Load secret
-        uses: 1password/load-secrets-action@dafbe7cb03502b260e2b2893c753c352eee545bf # v3
+        uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4
         with:
           export-env: true
         env:
