@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://schemas.serek.xyz/dragonflydb.io/dragonfly_v1alpha1.json
 apiVersion: dragonflydb.io/v1alpha1
 kind: Dragonfly
 metadata:
@@ -17,6 +18,7 @@ spec:
           divisor: 1Mi
           resource: limits.memory
   image: ghcr.io/dragonflydb/dragonfly:v1.37.2@sha256:e45de310788d110d621655f6340b5b0818d860210ad6a350a4d277d57c14349a
+  networkPolicyEnabled: false
   replicas: 3
   resources:
     limits:
