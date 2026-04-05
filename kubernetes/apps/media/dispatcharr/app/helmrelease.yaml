@@ -26,7 +26,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/dispatcharr/dispatcharr
-              tag: 0.21.1@sha256:3fe4da0af06887781aba4650bb64bbffc3a10f11a602d4d5a1a8df6a8edca416
+              tag: 0.22.1@sha256:ccdfa7e407f48878567fed06dcf895e437e01b9240f7b944a486722ba8aa6c4d
             resources:
               limits:
                 memory: 3Gi
