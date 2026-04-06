@@ -18,7 +18,7 @@ spec:
         parameters: &parameters
           barmanObjectName: nas
           serverName: *name
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.13-system-trixie@sha256:23473c9eb2d3bf6c0da8712506992143457f5f0ac756b5b65967e9d8c8bf8561
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.13-system-trixie@sha256:d64ec63b26b106bc7bc51df49062cfe5b901928c5c5752f93c377f769c953b04
   instances: 3
   managed:
     roles:
