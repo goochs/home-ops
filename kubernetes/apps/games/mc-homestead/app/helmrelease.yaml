@@ -38,7 +38,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: ghcr.io/itzg/minecraft-server
-      tag: java17@sha256:4a252d19125722b9369fb6fc3c84d4244d61bc41102ae54c0b72b3d8f012eab7
+      tag: java17@sha256:1d39fe731b37fbb431db2bb22f728864ed593dd50b91a1d84b826f568680b118
     livenessProbe:
       initialDelaySeconds: 30
     mcbackup:
