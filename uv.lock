@@ -548,9 +548,9 @@ requires-dist = [
     { name = "ansible", specifier = ">=13.5.0" },
     { name = "ansible-dev-tools", specifier = ">=26.3.1" },
     { name = "ansible-lint", specifier = ">=26.4.0" },
-    { name = "github3-py", specifier = ">=1.0.0a3" },
+    { name = "github3-py", specifier = ">=4.0.1" },
     { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.16.0" },
-    { name = "octodns-cloudflare", marker = "extra == 'octodns'", specifier = "~=1.0.0" },
+    { name = "octodns-cloudflare", marker = "extra == 'octodns'", specifier = "~=1.1.0" },
 ]
 provides-extras = ["octodns"]
 
@@ -752,15 +752,15 @@ wheels = [
 
 [[package]]
 name = "octodns-cloudflare"
-version = "1.0.0"
+version = "1.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "octodns" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f1/7c/99818c558bfb4aa89273254ca19dc76ddfd1e0fc71b4f817b0d69cbb8b7f/octodns_cloudflare-1.0.0.tar.gz", hash = "sha256:412572d36cbd975a18c112ede3bf26a9d55b38204ac05a494cb75c70023e8c91", size = 34156, upload-time = "2025-05-03T19:52:44.735Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0e/c9/376510d9e1138b03bc9ef74fc75a7173e9c69d67e94b6d6d69cdc51e06cb/octodns_cloudflare-1.1.0.tar.gz", hash = "sha256:351de43e5389d40c8a54368c892382f41c158964d96535d1e1b5a230858647bf", size = 36270, upload-time = "2026-04-03T23:39:29.112Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/48/19916a5447f003fa41877cf7b1d0d61f5c1e97019cb4e817c894bcbe7031/octodns_cloudflare-1.0.0-py3-none-any.whl", hash = "sha256:9e2dbbc69820b161061f8176c17db053d7624efbb88b3ebe30d27154a13f7d32", size = 17887, upload-time = "2025-05-03T19:52:43.286Z" },
+    { url = "https://files.pythonhosted.org/packages/fc/9f/107f31715d2fc8cb02c12971bf39ad506b8caf48790208b0f6b1f9486906/octodns_cloudflare-1.1.0-py3-none-any.whl", hash = "sha256:377a42cd834b042021fa97194544a15c873119120eac01ac5a000825b6c1751d", size = 19190, upload-time = "2026-04-03T23:39:27.681Z" },
 ]
 
 [[package]]

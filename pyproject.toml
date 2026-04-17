@@ -14,6 +14,6 @@ dependencies = [
 [project.optional-dependencies]
 octodns = [
   "octodns~=1.16.0",
-  "octodns-cloudflare~=1.0.0"
+  "octodns-cloudflare~=1.1.0"
 ]
 
