@@ -6,7 +6,7 @@ sonarr:
     api_key: !env_var SONARR_API_KEY
     delete_old_custom_formats: true
     media_naming:
-      series: jellyfin
+      series: jellyfin-tvdb
       season: default
       episodes:
         rename: true
@@ -57,7 +57,9 @@ radarr:
         rename: true
         standard: jellyfin-imdb
     quality_profiles:
-      - name: SQP-2
+      - trash_id: c3933358ba2356bafc41524f81471069 # [SQP] SQP-2
+        reset_unmatched_scores:
+          enabled: true
     include:
       - template: radarr-quality-definition-sqp-uhd
       - template: radarr-quality-profile-sqp-2

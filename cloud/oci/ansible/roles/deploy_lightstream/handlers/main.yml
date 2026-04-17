@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for deploy_lightstream
+- name: restart lightstream service
+  ansible.builtin.systemd_service:
+    name: litestream
+    state: restarted

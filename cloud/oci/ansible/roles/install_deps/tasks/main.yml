@@ -1,0 +1,37 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for install_deps
+- name: Append node to desired packages if include_node is true
+  when: include_node == true
+  ansible.builtin.set_fact:
+    desired_packages: "{{ desired_packages + ['nodejs'] }}"
+
+- name: Add node repository
+  when: include_node == true
+  ansible.builtin.yum_repository:
+    name: nodesource
+    description: NodeSource RPM repo
+    baseurl: https://rpm.nodesource.com/pub_24.x/nodistro/nodejs/aarch64
+    priority: 9
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://rpm.nodesource.com/gpgkey/ns-operations-public.key
+    module_hotfixes: true
+
+- name: Install dependencies
+  ansible.builtin.dnf:
+    name: "{{ desired_packages }}"
+    state: present
+    update_cache: true
+
+- name: Accept security updates
+  ansible.builtin.dnf:
+    name: "{{ desired_packages }}"
+    state: latest
+    security: true
+
+- name: Ensure pnpm is available
+  when: include_node == true
+  community.general.npm:
+    name: pnpm
+    global: true

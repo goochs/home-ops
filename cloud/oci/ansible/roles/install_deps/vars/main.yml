@@ -1,0 +1,6 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for install_deps
+include_node: false
+desired_packages:
+  - git

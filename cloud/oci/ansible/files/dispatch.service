@@ -1,0 +1,15 @@
+[Unit]
+Description=Runs dispatch bot
+After=network.target
+Wants=qotd.timer
+Before=qotd.timer
+
+[Service]
+User=svc_dispatch
+WorkingDirectory=/opt/dispatch/current
+ExecStart=/usr/bin/node index.js
+Restart=on-failure
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

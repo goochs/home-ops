@@ -29,20 +29,12 @@ resource "oci_identity_compartment" "dispatch_compartment" {
   enable_delete  = false // true will cause this compartment to be deleted when running `terrafrom destroy`
 }
 
-output "compartment" {
-  value = oci_identity_compartment.dispatch_compartment
-}
-
 resource "oci_core_vcn" "dispatch_vcn" {
   compartment_id = oci_identity_compartment.dispatch_compartment.id
   display_name   = "dispatchvcn"
   dns_label      = "vcn0"
   cidr_blocks    = ["10.3.0.0/24"]
   is_ipv6enabled = true
-}
-
-output "vcn" {
-  value = oci_core_vcn.dispatch_vcn
 }
 
 resource "oci_core_internet_gateway" "dispatch_internet_gateway" {
@@ -74,18 +66,14 @@ resource "oci_core_subnet" "dispatch_subnet" {
   ipv6cidr_blocks = [cidrsubnet(oci_core_vcn.dispatch_vcn.ipv6cidr_blocks[0], 8, 0)]
 }
 
-output "subnet" {
-  value = oci_core_subnet.dispatch_subnet
-}
-
 resource "oci_core_instance" "dispatch_instance" {
   availability_domain = "RVCJ:US-CHICAGO-1-AD-1"
   compartment_id      = oci_identity_compartment.dispatch_compartment.id
   shape               = "VM.Standard.A1.Flex"
   display_name        = "dispatch-instance"
   shape_config {
-    ocpus         = 2
-    memory_in_gbs = 12
+    ocpus         = 4
+    memory_in_gbs = 24
   }
   create_vnic_details {
     subnet_id                 = oci_core_subnet.dispatch_subnet.id
@@ -106,5 +94,5 @@ resource "oci_core_instance" "dispatch_instance" {
 }
 
 output "instance" {
-  value = oci_core_instance.dispatch_instance
+  value = oci_core_instance.dispatch_instance.public_ip
 }

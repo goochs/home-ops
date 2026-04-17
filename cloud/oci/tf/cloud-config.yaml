@@ -8,11 +8,14 @@ users:
   - name: aster
     groups: botadmin
     sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINbD/jpMFSRvQLQWBx0h+XYaX6PzWZUKJdCiutAq+Rj6
   - name: alex
     groups: botadmin
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOFyVit0RfzUzV3uSA9yAo9QIomZKx+hKhxX/vfIrZ7q
-
-runcmd:
- - echo 'This instance was provisioned by Terraform.' >> /etc/tf-provisioned.txt
+  - name: svc_dispatch
+    groups: botadmin
+    system: true
+    shell: /sbin/nologin

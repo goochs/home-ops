@@ -25,3 +25,6 @@ TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 RESTIC_PASSWORD_FILE = "{{config_root}}/resticpass"
 GITHUB_TOKEN = "{{ exec(command='gh auth token') }}"
 _.file = ".secret.env"
+
+[settings]
+python.uv_venv_auto = "create|source"

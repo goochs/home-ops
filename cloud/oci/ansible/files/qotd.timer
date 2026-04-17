@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer for qotd unit
+
+[Timer]
+OnCalendar=*-*-* *:*:10
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target

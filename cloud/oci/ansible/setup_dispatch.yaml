@@ -1,0 +1,118 @@
+- hosts: dispatch
+  gather_facts: true
+  become: true
+  vars:
+    app_dir: /opt/dispatch
+    release_timestamp: "{{ ansible_facts['date_time']['epoch'] }}"
+    release_dir: "{{ app_dir }}/releases/{{ release_timestamp }}"
+
+  tasks:
+    - name: install_deps
+      import_role:
+        name: install_deps
+      vars:
+        include_node: true
+        desired_packages:
+          - git
+          - sqlite
+
+    - name: Setup pnpm rc
+      ansible.builtin.lineinfile:
+        path: /root/.config/pnpm/rc
+        line: 'only-built-dependencies[]=better-sqlite3'
+        create: yes
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Setup app directories
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
+        mode: '2775'
+        owner: svc_dispatch
+        group: botadmin
+
+    - name: Set default ACL for botadmin group on app dir
+      ansible.posix.acl:
+        path: "{{ app_dir }}"
+        entity: botadmin
+        etype: group
+        permissions: rwX
+        default: true
+        state: present
+
+    # - name: Restore state files
+    #   ansible.builtin.copy:
+    #     src: 'state/{{ item }}'
+    #     dest: "{{ app_dir }}/{{ item }}"
+    #     force: false
+    #     owner: svc_dispatch
+    #     group: botadmin
+    #     mode: '0664'
+    #   loop:
+    #     - "dispatch.sqlite"
+    #     - ".env"
+
+    - name: Clone with HTTPS token
+      ansible.builtin.git:
+        repo: "https://{{ github_token }}@github.com/FreeWifi0802/dispatch.git"
+        dest: '{{ release_dir }}'
+        version: main
+        depth: 1
+      vars:
+        github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
+
+      # Requires seeded DB and .env to be placed first
+    - name: Link shared/persistence
+      ansible.builtin.file:
+        src: "{{ app_dir }}/{{ item }}"
+        dest: "{{ release_dir }}/{{ item }}"
+        state: link
+        force: true
+      loop:
+        - "dispatch.sqlite"
+        - ".env"
+
+    - name: Install dependencies with pnpm
+      community.general.pnpm:
+        path: "{{ release_dir }}"
+
+    - name: Update the current symlink to the new release
+      ansible.builtin.file:
+        src: "{{ release_dir }}"
+        dest: "{{ app_dir }}/current"
+        state: link
+        force: true
+
+    - name: Install systemd service files
+      ansible.builtin.copy:
+        src: "files/{{ item }}"
+        dest: "/etc/systemd/system/{{ item }}"
+        owner: root
+        group: root
+        mode: '0644'
+      loop:
+        - "dispatch.service"
+        - "qotd.service"
+        - "qotd.timer"
+      notify: reload systemd daemon
+
+    - name: Flush handlers
+      meta: flush_handlers
+
+    - name: Restart dispatch service
+      ansible.builtin.systemd_service:
+        name: dispatch
+        enabled: true
+        state: restarted
+
+    - name: deploy_lightstream
+      import_role:
+        name: deploy_lightstream
+
+
+  handlers:
+    - name: reload systemd daemon
+      ansible.builtin.systemd_service:
+        daemon_reload: true

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run qotd scheduler
+After=network.target
+
+[Service]
+User=svc_dispatch
+WorkingDirectory=/opt/dispatch/current
+ExecStart=/usr/bin/pnpm run qotd:scheduler
+
+[Install]
+WantedBy=multi-user.target
