@@ -49,7 +49,7 @@ spec:
         DEST_DIR: /mnt/backups
       image:
         repository: ghcr.io/itzg/mc-backup
-        tag: 2026.3.2@sha256:2af40caba58537ea5d19d58296f23bd107c40845bd1f257e00d7135ddcbde0f9
+        tag: 2026.4.2@sha256:4a03952379225f65cb065070e4e5c0211c758ab0e028d9b6b9ea0538b45ca844
     minecraftServer:
       difficulty: normal
       eula: true
