@@ -20,7 +20,7 @@ releases:
 
   - name: coredns
     namespace: kube-system
-    version: 1.45.2
+    version: 1.46.0
     chart: oci://ghcr.io/coredns/charts/coredns
     values:
       - '{{ requiredEnv "KUBERNETES_DIR" }}/apps/kube-system/coredns/app/helm-values.yaml'
