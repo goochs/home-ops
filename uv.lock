@@ -548,8 +548,8 @@ requires-dist = [
     { name = "ansible", specifier = ">=13.5.0" },
     { name = "ansible-dev-tools", specifier = ">=26.3.1" },
     { name = "ansible-lint", specifier = ">=26.4.0" },
-    { name = "github3-py", specifier = ">=1.0.0a3" },
-    { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.16.0" },
+    { name = "github3-py", specifier = ">=4.0.1" },
+    { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.20.0" },
     { name = "octodns-cloudflare", marker = "extra == 'octodns'", specifier = "~=1.0.0" },
 ]
 provides-extras = ["octodns"]
@@ -735,7 +735,7 @@ wheels = [
 
 [[package]]
 name = "octodns"
-version = "1.16.0"
+version = "1.20.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dnspython" },
@@ -745,9 +745,9 @@ dependencies = [
     { name = "python-dateutil" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0b/e4/24ff5f8138e82acff859f50a29fd5a28f7b3cbf0c9c6af44faa062920676/octodns-1.16.0.tar.gz", hash = "sha256:d3b1b24cdccf8d904c5872b7e58a762c939d1411bcfb8e107312e04c0d8e3157", size = 944821, upload-time = "2026-03-22T23:39:56.23Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6c/3f/efa3684728098eec6e406958920497704805e9d676a32cb75f2fa9abb439/octodns-1.20.0.tar.gz", hash = "sha256:35a556be684e8e07a02efb7f8c26669cbf16cb6a74c302d59410569cffb3a1e2", size = 654824, upload-time = "2026-06-21T19:35:49.292Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4e/ce/9aff9aa5427b5a71d329ace740d9e9d91eba051b053f5caef5a930433b87/octodns-1.16.0-py3-none-any.whl", hash = "sha256:2708972eb4ca41122b0ad14e9b99068d3da26cf9f16e6b63610f4cfd2ac4c7ab", size = 111204, upload-time = "2026-03-22T23:39:54.483Z" },
+    { url = "https://files.pythonhosted.org/packages/af/8c/be145fc185f21cb9f3737182f6f7c88d6d43403ecbeb5742231c51b7739a/octodns-1.20.0-py3-none-any.whl", hash = "sha256:9da10b3e5ec51f1814d74ba3269c9e5dfaa75404e5694639d5837db28bca3e5b", size = 152321, upload-time = "2026-06-21T19:35:47.831Z" },
 ]
 
 [[package]]
