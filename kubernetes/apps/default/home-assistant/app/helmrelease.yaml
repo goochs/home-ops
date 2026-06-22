@@ -26,7 +26,7 @@ spec:
                   name: home-assistant-secret
             image:
               repository: ghcr.io/home-operations/home-assistant
-              tag: 2026.6.4@sha256:a1cb7da73bb16b4debfb23b543f62dfcfffb9df70138dfa570c33a235da00c78
+              tag: 2026.6.4@sha256:64dbb816165e9abff33cf3e3cc4c64e391d7407ff137dbfa01c1be39f66e88fa
             resources:
               limits:
                 memory: 4Gi
