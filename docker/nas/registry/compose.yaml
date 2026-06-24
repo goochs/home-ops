@@ -1,7 +1,7 @@
 ---
 services:
   docker:
-    image: ghcr.io/distribution/distribution:3.0.0
+    image: ghcr.io/distribution/distribution:3.1.1
     ports:
       - 5000:5000
     environment:
@@ -12,7 +12,7 @@ services:
       - /mnt/flash/docker/registry/data/docker:/var/lib/registry
     restart: always
   k8s:
-    image: ghcr.io/distribution/distribution:3.0.0
+    image: ghcr.io/distribution/distribution:3.1.1
     ports:
       - 5001:5000
     environment:
@@ -23,7 +23,7 @@ services:
       - /mnt/flash/docker/registry/data/k8s:/var/lib/registry
     restart: always
   gcr:
-    image: ghcr.io/distribution/distribution:3.0.0
+    image: ghcr.io/distribution/distribution:3.1.1
     ports:
       - 5002:5000
     environment:
@@ -34,7 +34,7 @@ services:
       - /mnt/flash/docker/registry/data/gcr:/var/lib/registry
     restart: always
   ghcr:
-    image: ghcr.io/distribution/distribution:3.0.0
+    image: ghcr.io/distribution/distribution:3.1.1
     ports:
       - 5003:5000
     environment:
