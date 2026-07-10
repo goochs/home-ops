@@ -13,8 +13,5 @@ resources:
   - ./mainsail/ks.yaml
   - ./node-red/ks.yaml
   - ./paperless/ks.yaml
-  - ./rdio-scanner/ks.yaml
-  - ./speaches/ks.yaml
-  - ./trunk-processor/ks.yaml
   - ./z2m/ks.yaml
   - ./namespace.yaml
