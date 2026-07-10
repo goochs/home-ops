@@ -22,7 +22,7 @@ spec:
               TZ: America/New_York
             image:
               repository: ghcr.io/jellyfin/jellyfin
-              tag: 10.11.11@sha256:45f648c382a0c8b552582fcea40e95cb17c5d475473a891cba0eb7523fb92112
+              tag: 10.11.11@sha256:ddf59965ae63fccc66dfe72384495df355c67ea5abd9cc04eb65988f9a6010d1
             probes:
               liveness: &probes
                 custom: true
