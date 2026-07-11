@@ -105,6 +105,14 @@ spec:
               requests:
                 cpu: 100m
                 memory: 200Mi
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile: {type: RuntimeDefault}
     persistence:
       data:
         advancedMounts:
