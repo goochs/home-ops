@@ -39,7 +39,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: ghcr.io/itzg/minecraft-server
-      tag: java17@sha256:972b4a4993b0fb4d1235133326adf9a76fc292eceeb30fabf44d1bc90564ca60
+      tag: java25@sha256:9e96d969466dedc8434ebf8e700097903eecf3af940afaa6a28ad8610ea7906d
     livenessProbe:
       initialDelaySeconds: 30
     mcbackup:
@@ -50,7 +50,7 @@ spec:
         DEST_DIR: /mnt/backups
       image:
         repository: ghcr.io/itzg/mc-backup
-        tag: 2026.3.2@sha256:2af40caba58537ea5d19d58296f23bd107c40845bd1f257e00d7135ddcbde0f9
+        tag: 2026.7.1@sha256:153ed8b10f74517980e523846a2770869b024391bd1806bd8bacaba9efba5025
     minecraftServer:
       difficulty: normal
       eula: true
@@ -74,6 +74,10 @@ spec:
       dataDir:
         enabled: true
         existingClaim: *app
+    podSecurityContext:
+      fsGroup: 3000
+      runAsGroup: 3000
+      runAsUser: 3000
     readinessProbe:
       initialDelaySeconds: 30
     resources:
@@ -82,9 +86,6 @@ spec:
         memory: 8Gi
       requests:
         cpu: 200m
-    securityContext:
-      fsGroup: 3000
-      runAsUser: 3000
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: vanilla.serek.xyz
     startupProbe:
