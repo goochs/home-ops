@@ -3,7 +3,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: mc-homestead
+  name: mc-vanilla
 spec:
   interval: 15m
   layerSelector:
@@ -17,7 +17,7 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app mc-homestead
+  name: &app mc-vanilla
 spec:
   chartRef:
     kind: OCIRepository
@@ -25,6 +25,7 @@ spec:
   interval: 1h
   values:
     extraEnv:
+      PAPER_CHANNEL: experimental
       TZ: America/New_York
     extraVolumes:
       - volumeMounts:
@@ -33,7 +34,7 @@ spec:
         volumes:
           - name: nfs
             nfs:
-              path: /mnt/tank/apps/mc/homestead
+              path: /mnt/tank/apps/mc/vanilla
               server: 10.0.30.40
     fullnameOverride: *app
     image:
@@ -53,11 +54,10 @@ spec:
     minecraftServer:
       difficulty: normal
       eula: true
-      fabricLauncherVersion: "1.1.1"
       gameMode: survival
       jvmXXOpts: "--add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20"
-      memory: 10240M
-      motd: "Homestead for you."
+      memory: 6144M
+      motd: "Vanilla for you."
       onlineMode: true
       ops: "UnworldlyAlex"
       overrideServerProperties: true
@@ -65,11 +65,11 @@ spec:
       rcon:
         enabled: true
       spawnProtection: 0
-      type: FABRIC
-      version: 1.20.1
+      type: PAPER
+      version: "26.2"
       viewDistance: 12
-      whitelist: "UnworldlyAlex,ManXnTheMoon,The_Windmill,RedMoonCactus,BonezTheMiner"
-      worldSaveName: homestead
+      whitelist: "UnworldlyAlex,The_Windmill,RedMoonCactus,BonezTheMiner"
+      worldSaveName: vanilla
     persistence:
       dataDir:
         enabled: true
@@ -79,18 +79,18 @@ spec:
     resources:
       limits:
         cpu: 4000m
-        memory: 12Gi
+        memory: 8Gi
       requests:
         cpu: 200m
     securityContext:
       fsGroup: 3000
       runAsUser: 3000
     serviceAnnotations:
-      mc-router.itzg.me/externalServerName: homestead.serek.xyz
+      mc-router.itzg.me/externalServerName: vanilla.serek.xyz
     startupProbe:
       enabled: true
   valuesFrom:
     - kind: Secret
-      name: mc-homestead-secret
+      name: mc-vanilla-secret
       targetPath: minecraftServer.rcon.password
       valuesKey: RCON_PASSWORD

@@ -6,4 +6,5 @@ kind: Kustomization
 namespace: games
 resources:
   - ./mc-router/ks.yaml
+  - ./mc-vanilla/ks.yaml
   - ./namespace.yaml
