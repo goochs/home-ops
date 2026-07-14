@@ -31,6 +31,6 @@ spec:
     services:
       minecraft:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: homestead.serek.xyz
+          external-dns.alpha.kubernetes.io/hostname: vanilla.serek.xyz
           lbipam.cilium.io/ips: 10.0.41.71
         type: LoadBalancer
