@@ -26,7 +26,7 @@ spec:
                   name: immich-configmap
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.6.3@sha256:0cc1f82953d9598eb9e9dd11cbde1f50fe54f9c46c4506b089e8ad7bfc9d1f0c
+              tag: v3.0.3@sha256:c716dc20f957aafd89fa9d284a2ec63e25c9e2d8d8e87c6197d540a3dce237db
             resources:
               claims:
                 - name: gpu
