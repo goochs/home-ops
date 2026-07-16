@@ -23,7 +23,7 @@ spec:
                   name: recyclarr-secret
             image:
               repository: ghcr.io/recyclarr/recyclarr
-              tag: 8.5.1@sha256:734cecf44ae9be7cf0cb05b2c1bc7da0abef9d938cc11b605e58b3146205e5c0
+              tag: 8.7.0@sha256:2d6107f758d882a59fe9d646aa54fa8a5a4fb7a40995125fade575652a3f7871
             resources:
               limits:
                 memory: 256Mi
