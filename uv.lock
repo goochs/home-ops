@@ -51,7 +51,7 @@ wheels = [
 
 [[package]]
 name = "ansible-core"
-version = "2.20.4"
+version = "2.20.7rc1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
@@ -60,9 +60,9 @@ dependencies = [
     { name = "pyyaml" },
     { name = "resolvelib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/11/7c/57263940ef61d7a829baef6e752556b1434f3a66ae05885c80753efbca50/ansible_core-2.20.4.tar.gz", hash = "sha256:2060c06195ada0cca0ac3128025d1167f567479da465897d818982fbe28bed1f", size = 3334074, upload-time = "2026-03-23T17:39:36.24Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9a/74/8f1e51adb9ff06c51bda46f1c71fcfcec0dcdb10a5fad5077df419630499/ansible_core-2.20.7rc1.tar.gz", hash = "sha256:daa7aa3c99da1a66508838becf92bdcfefa4dc5e5b831ce13596038d28441de2", size = 3344569, upload-time = "2026-06-11T19:30:45.686Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/71/19/fecf85f0f677405c0d4bec0c9f304b9f906f25599a176f4b16db7fa83571/ansible_core-2.20.4-py3-none-any.whl", hash = "sha256:fb3a8f0301aab863f847f70aea9cbd47d635c6a283b441c56cec881b4aedcb04", size = 2426247, upload-time = "2026-03-23T17:39:34.669Z" },
+    { url = "https://files.pythonhosted.org/packages/d8/29/fc10dfa0ef748749c190df9c63e0195e1dc4af2eb83f9ba34af397db2115/ansible_core-2.20.7rc1-py3-none-any.whl", hash = "sha256:a863f8edc2651dd29f3f4dcb369ca50217bf8dabc5a12485d27a7b86fa808c48", size = 2427172, upload-time = "2026-06-11T19:30:44.09Z" },
 ]
 
 [[package]]
@@ -548,7 +548,7 @@ requires-dist = [
     { name = "ansible", specifier = ">=13.5.0" },
     { name = "ansible-dev-tools", specifier = ">=26.3.1" },
     { name = "ansible-lint", specifier = ">=26.4.0" },
-    { name = "github3-py", specifier = ">=1.0.0a3" },
+    { name = "github3-py", specifier = ">=4.0.1" },
     { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.16.0" },
     { name = "octodns-cloudflare", marker = "extra == 'octodns'", specifier = "~=1.0.0" },
 ]
