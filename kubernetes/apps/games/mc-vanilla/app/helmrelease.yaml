@@ -50,7 +50,7 @@ spec:
       type: PAPER
       version: "26.2"
       viewDistance: 12
-      whitelist: "UnworldlyAlex,The_Windmill,RedMoonCactus,BonezTheMiner"
+      whitelist: "UnworldlyAlex,The_Windmill,RedMoonCactus,BonezTheMiner,homernays"
       worldSaveName: vanilla
     persistence:
       dataDir:
