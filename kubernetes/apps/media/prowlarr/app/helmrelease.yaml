@@ -30,7 +30,7 @@ spec:
             image:
               pullPolicy: IfNotPresent
               repository: ghcr.io/home-operations/prowlarr
-              tag: 2.5.1.5464@sha256:aca21a1da209688f46a6731d504f6bd9db3998d1a26b8215ab8e1e6f8811b346
+              tag: 2.5.2.5483@sha256:3a4b3028a712befb23507ca14835d3e6ca69da73b4327ea5b2b7fc1ebdaa0da9
             resources:
               limits:
                 memory: 250Mi
