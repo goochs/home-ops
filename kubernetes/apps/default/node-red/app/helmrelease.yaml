@@ -24,7 +24,7 @@ spec:
                   name: node-red-secret
             image:
               repository: ghcr.io/node-red/node-red
-              tag: 4.1.12-22@sha256:e987fea821e580f670ac82f17af62a59e2a7703bb938d8f25a7d85e691a14e75
+              tag: 4.1.13-22@sha256:7d8a2bc628f80d2efc9a21832eac7c579a2c9ea4cda9040d3b0d4d68a1e36bc4
             resources:
               limits:
                 memory: 1Gi
