@@ -39,7 +39,7 @@ spec:
     githubConfigSecret: home-ops-runner-secret
     githubConfigUrl: https://github.com/goochs/home-ops
     maxRunners: 3
-    minRunners: 1
+    minRunners: 0
     template:
       spec:
         containers:
@@ -52,7 +52,7 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
-            image: ghcr.io/home-operations/actions-runner:2.336.0@sha256:2c4f38ab0f54154c36ae105111a3e768924fe0a1a04a381775bc8c3841d1064a 
+            image: ghcr.io/home-operations/actions-runner:2.336.0@sha256:2c4f38ab0f54154c36ae105111a3e768924fe0a1a04a381775bc8c3841d1064a
             name: runner
             volumeMounts:
               - mountPath: /var/run/secrets/talos.dev
