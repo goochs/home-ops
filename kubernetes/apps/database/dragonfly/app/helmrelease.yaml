@@ -59,6 +59,7 @@ spec:
           identifier: *app
         strategy: RollingUpdate
     defaultPodOptions:
+      automountServiceAccountToken: true
       securityContext:
         fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch

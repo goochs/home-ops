@@ -84,6 +84,7 @@ spec:
         serviceAccount:
           identifier: *app
     defaultPodOptions:
+      automountServiceAccountToken: true
       securityContext:
         fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
