@@ -39,7 +39,7 @@ spec:
     githubConfigSecret: home-ops-runner-secret
     githubConfigUrl: https://github.com/goochs/home-ops
     maxRunners: 3
-    minRunners: 0
+    minRunners: 1
     template:
       spec:
         containers:
