@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/esphome
-              tag: 2026.7.4@sha256:8e8946beaa479bb7af506c3da08713d6b7b9afec07605a2459ae3536c7ed7afa
+              tag: 2026.7.4@sha256:b419ffcc4356d38370e43dbedc3cf3c2c358f9605b28898ea5114be87948c6b8
             resources:
               limits:
                 memory: 4Gi
