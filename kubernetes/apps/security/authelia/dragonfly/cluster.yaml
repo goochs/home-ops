@@ -17,7 +17,7 @@ spec:
         resourceFieldRef:
           divisor: 1Mi
           resource: limits.memory
-  image: ghcr.io/dragonflydb/dragonfly:v1.37.2@sha256:e45de310788d110d621655f6340b5b0818d860210ad6a350a4d277d57c14349a
+  image: ghcr.io/dragonflydb/dragonfly:v1.40.1@sha256:ebf3c6c213e82fb51b4521660cca13f06f3421dc5b1ed14f2f474c50b5e29986
   networkPolicyEnabled: false
   replicas: 3
   resources:
