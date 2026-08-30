@@ -33,7 +33,7 @@ spec:
             args: ["--auth", "none", "--user-data-dir", "/config/.vscode", "--extensions-dir", "/config/.vscode", "--port", "12321", "/config"]
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.112.0@sha256:f22e689c75a721481403c86325057a4d4516bbb8fa3a2a242a53169317fa43f8
+              tag: 4.135.0@sha256:53a0ea3fb8aa6c234d39c15ed9ce483605915022cd0882c3cb779c894c5fbf4c
             resources:
               limits:
                 memory: 512Mi
