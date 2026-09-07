@@ -86,7 +86,7 @@ spec:
           redis:
             image:
               repository: ghcr.io/valkey-io/valkey
-              tag: 9.0.4@sha256:d7a741fd71c38f2043d1cfdfb2b1e05fc4ce804d3779c2d17b47905ecc79302a
+              tag: 9.1.2@sha256:67878c70fc179bb928b1a9b510860aff1c475ff245e91d98d4b2133326bf8e3e
             resources:
               limits:
                 memory: 128Mi
