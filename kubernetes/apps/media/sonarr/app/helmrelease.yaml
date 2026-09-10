@@ -31,7 +31,7 @@ spec:
                   name: sonarr-secret
             image:
               repository: ghcr.io/home-operations/sonarr
-              tag: 4.0.19.3011@sha256:886b03ae69b3cbdc6097e360898cf4432417e4f369a7e59a07b62a17bfe94804
+              tag: 4.0.20.3012@sha256:2bc5fba1b4b76b0773d30ce18e15cc5d34b1f9332e96ae4e09186415ffc56526
             probes:
               liveness: &probes
                 custom: true
