@@ -26,7 +26,7 @@ spec:
                   name: immich-configmap
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.7.5@sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
+              tag: v3.2.2@sha256:79cc1623323d5894922686d8743b4780181428f98eecbfb58ce12c41ef02d1ea
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: {drop: ["ALL"]}
