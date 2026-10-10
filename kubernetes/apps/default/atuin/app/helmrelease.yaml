@@ -31,7 +31,7 @@ spec:
                   name: atuin-secret
             image:
               repository: ghcr.io/atuinsh/atuin
-              tag: 18.13.6@sha256:9bde3fe6b1633c357cb19c07ea49bb9834720e8ff42d04b39ad7865155581150
+              tag: 18.23.0@sha256:f232feeead54a0a13132b9cd477e312c3380e9dc90f1db24c4f79ce6c8e034ea
             probes:
               liveness: &probes
                 custom: true
