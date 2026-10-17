@@ -32,7 +32,7 @@ spec:
                 spec:
                   failureThreshold: 3
                   httpGet:
-                    path: /api/system/health
+                    path: /api/system/ping
                     port: &port 6767
                   initialDelaySeconds: 0
                   periodSeconds: 10
