@@ -22,7 +22,7 @@ spec:
                   name: ddns-secret
             image:
               repository: ghcr.io/qdm12/ddns-updater
-              tag: 2.9.0@sha256:ed73f1fb7ab54a8a8fa26001eecc77cc8be56cdf3fb0ca91fee831124bcbb696
+              tag: v2.10.0@sha256:3e2aa558946b5a293def4d73008fa4651c072b2c12932cecd02126fb23979831
             resources:
               limits:
                 memory: 200Mi
