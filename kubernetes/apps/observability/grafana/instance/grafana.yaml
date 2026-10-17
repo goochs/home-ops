@@ -61,3 +61,10 @@ spec:
             runAsUser: 3000
   disableDefaultAdminSecret: true
   disableDefaultSecurityContext: All
+  httpRoute:
+    spec:
+      hostnames:
+        - grafana.serek.xyz
+      parentRefs:
+        - name: envoy-internal
+          namespace: network
