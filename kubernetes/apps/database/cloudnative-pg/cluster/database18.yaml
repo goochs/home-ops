@@ -1,0 +1,132 @@
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: bazarr
+spec:
+  cluster:
+    name: postgres18
+  name: bazarr
+  owner: bazarr
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: prowlarr-main
+spec:
+  cluster:
+    name: postgres18
+  name: prowlarr-main
+  owner: prowlarr
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: prowlarr-log
+spec:
+  cluster:
+    name: postgres18
+  name: prowlarr-log
+  owner: prowlarr
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: radarr-main
+spec:
+  cluster:
+    name: postgres18
+  name: radarr-main
+  owner: radarr
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: radarr-log
+spec:
+  cluster:
+    name: postgres18
+  name: radarr-log
+  owner: radarr
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: sonarr-main
+spec:
+  cluster:
+    name: postgres18
+  name: sonarr-main
+  owner: sonarr
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: sonarr-log
+spec:
+  cluster:
+    name: postgres18
+  name: sonarr-log
+  owner: sonarr
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: gatus
+spec:
+  cluster:
+    name: postgres18
+  name: gatus
+  owner: gatus
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: jellyseerr
+spec:
+  cluster:
+    name: postgres18
+  name: jellyseerr
+  owner: jellyseerr
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: atuin
+spec:
+  cluster:
+    name: postgres18
+  name: atuin
+  owner: atuin
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: trunk-processor
+spec:
+  cluster:
+    name: postgres18
+  name: trunk-processor
+  owner: trunk-processor
+---
+# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: paperless
+spec:
+  cluster:
+    name: postgres18
+  name: paperless
+  owner: paperless
