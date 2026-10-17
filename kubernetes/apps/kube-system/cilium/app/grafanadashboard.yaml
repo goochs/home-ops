@@ -32,20 +32,3 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: grafana
----
-# yaml-language-server: $schema=https://schemas.serek.xyz/grafana.integreatly.org/grafanadashboard_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  name: hubble
-spec:
-  allowCrossNamespaceImport: true
-  configMapRef:
-    key: hubble-dashboard.json
-    name: hubble-dashboard
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana

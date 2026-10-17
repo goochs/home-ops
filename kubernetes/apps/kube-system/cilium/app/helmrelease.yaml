@@ -50,42 +50,21 @@ spec:
       enabled: true
     endpointRoutes:
       enabled: true
+    envoy:
+      enabled: false
     hubble:
-      enabled: true
-      metrics:
-        dashboards:
-          annotations:
-            grafana_folder: Cilium
-          enabled: true
-        enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-        serviceMonitor:
-          enabled: true
-      relay:
-        enabled: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
-        rollOutPods: true
-      ui:
-        enabled: true
-        rollOutPods: true
+      enabled: false
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.1.0.0/17
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
-    kubeProxyReplacementHealthzBindAddr: "0.0.0.0:10256"
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     loadBalancer:
       algorithm: maglev
       mode: dsr
+      serviceTopology: true
     localRedirectPolicy: true
     operator:
       dashboards:

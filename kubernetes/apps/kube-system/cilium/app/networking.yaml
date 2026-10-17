@@ -1,4 +1,14 @@
 ---
+# yaml-language-server: $schema=https://schemas.serek.xyz/cilium.io/ciliumloadbalancerippool_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: bgp-pool
+spec:
+  allowFirstLastIPs: "No"
+  blocks:
+    - cidr: "10.0.41.0/24"
+---
 # yaml-language-server: $schema=https://schemas.serek.xyz/cilium.io/ciliumbgpclusterconfig_v2.json
 apiVersion: cilium.io/v2
 kind: CiliumBGPClusterConfig
