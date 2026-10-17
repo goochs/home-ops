@@ -21,7 +21,7 @@ kind: Service
 metadata:
   annotations:
     lbipam.cilium.io/ips: 10.0.41.48
-  name: postgres-lb
+  name: postgres18-lb
 spec:
   ports:
     - name: postgres
