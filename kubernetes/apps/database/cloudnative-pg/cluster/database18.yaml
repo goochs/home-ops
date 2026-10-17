@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: bazarr
+  name: bazarr18
 spec:
   cluster:
     name: postgres18
@@ -14,7 +14,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: prowlarr-main
+  name: prowlarr-main18
 spec:
   cluster:
     name: postgres18
@@ -25,7 +25,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: prowlarr-log
+  name: prowlarr-log18
 spec:
   cluster:
     name: postgres18
@@ -36,7 +36,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: radarr-main
+  name: radarr-main18
 spec:
   cluster:
     name: postgres18
@@ -47,7 +47,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: radarr-log
+  name: radarr-log18
 spec:
   cluster:
     name: postgres18
@@ -58,7 +58,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: sonarr-main
+  name: sonarr-main18
 spec:
   cluster:
     name: postgres18
@@ -69,7 +69,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: sonarr-log
+  name: sonarr-log18
 spec:
   cluster:
     name: postgres18
@@ -80,7 +80,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: gatus
+  name: gatus18
 spec:
   cluster:
     name: postgres18
@@ -91,7 +91,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: jellyseerr
+  name: jellyseerr18
 spec:
   cluster:
     name: postgres18
@@ -102,7 +102,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: atuin
+  name: atuin18
 spec:
   cluster:
     name: postgres18
@@ -113,7 +113,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: trunk-processor
+  name: trunk-processor18
 spec:
   cluster:
     name: postgres18
@@ -124,7 +124,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: paperless
+  name: paperless18
 spec:
   cluster:
     name: postgres18
