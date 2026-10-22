@@ -27,3 +27,7 @@ spec:
     cdi:
       dynamicPath: /var/cdi/dynamic
       staticPath: /var/cdi/static
+    kubeletPlugin:
+      healthMonitoring:
+        enabled: false
+      privileged: true
