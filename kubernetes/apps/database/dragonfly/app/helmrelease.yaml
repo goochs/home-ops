@@ -59,6 +59,10 @@ spec:
           identifier: *app
         strategy: RollingUpdate
     defaultPodOptions:
+      labels:
+        # required for the operator to determine a primary in each deployed cluster
+        # ref: https://deepwiki.com/dragonflydb/dragonfly-operator/2.2-manual-installation#namespace-resource
+        control-plane: controller-manager
       automountServiceAccountToken: true
       securityContext:
         fsGroup: 3000
@@ -82,20 +86,20 @@ spec:
       roles:
         dragonfly-operator:
           rules:
+            - apiGroups: ["coordination.k8s.io"]
+              resources: ["leases"]
+              verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
             - apiGroups: [""]
               resources: ["events"]
               verbs: ["create", "patch"]
             - apiGroups: [""]
-              resources: ["pods", "services"]
+              resources: ["configmaps", "pods", "services"]
               verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
             - apiGroups: [""]
               resources: ["pods/status"]
               verbs: ["get", "patch", "update"]
             - apiGroups: ["apps"]
               resources: ["statefulsets"]
-              verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
-            - apiGroups: ["networking.k8s.io"]
-              resources: ["networkpolicies"]
               verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
             - apiGroups: ["dragonflydb.io"]
               resources: ["dragonflies"]
@@ -106,6 +110,9 @@ spec:
             - apiGroups: ["dragonflydb.io"]
               resources: ["dragonflies/status"]
               verbs: ["get", "patch", "update"]
+            - apiGroups: ["networking.k8s.io"]
+              resources: ["networkpolicies"]
+              verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
             - apiGroups: ["policy"]
               resources: ["poddisruptionbudgets"]
               verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
