@@ -52,7 +52,7 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
-            image: ghcr.io/home-operations/actions-runner:2.338.0@sha256:48520fe3c832e054fde0e69ebaed3df978b01b56a6145a6040583cdd9e28c560
+            image: ghcr.io/home-operations/actions-runner:2.338.1@sha256:1cb3843e725c611577a47e2af248462b0a2526912dafe306cb5a22ce1594faa1
             name: runner
             volumeMounts:
               - mountPath: /var/run/secrets/talos.dev
