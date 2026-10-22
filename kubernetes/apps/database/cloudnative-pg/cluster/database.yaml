@@ -6,7 +6,7 @@ metadata:
   name: bazarr
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: bazarr
   owner: bazarr
 ---
@@ -17,7 +17,7 @@ metadata:
   name: prowlarr-main
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: prowlarr-main
   owner: prowlarr
 ---
@@ -28,7 +28,7 @@ metadata:
   name: prowlarr-log
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: prowlarr-log
   owner: prowlarr
 ---
@@ -39,7 +39,7 @@ metadata:
   name: radarr-main
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: radarr-main
   owner: radarr
 ---
@@ -50,7 +50,7 @@ metadata:
   name: radarr-log
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: radarr-log
   owner: radarr
 ---
@@ -61,7 +61,7 @@ metadata:
   name: sonarr-main
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: sonarr-main
   owner: sonarr
 ---
@@ -72,7 +72,7 @@ metadata:
   name: sonarr-log
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: sonarr-log
   owner: sonarr
 ---
@@ -83,7 +83,7 @@ metadata:
   name: gatus
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: gatus
   owner: gatus
 ---
@@ -94,7 +94,7 @@ metadata:
   name: jellyseerr
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: jellyseerr
   owner: jellyseerr
 ---
@@ -105,7 +105,7 @@ metadata:
   name: atuin
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: atuin
   owner: atuin
 ---
@@ -116,7 +116,7 @@ metadata:
   name: trunk-processor
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: trunk-processor
   owner: trunk-processor
 ---
@@ -127,6 +127,6 @@ metadata:
   name: paperless
 spec:
   cluster:
-    name: postgres16
+    name: postgres18
   name: paperless
   owner: paperless

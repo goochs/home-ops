@@ -5,7 +5,7 @@ kind: Cluster
 metadata:
   annotations:
     cnpg.io/skipEmptyWalArchiveCheck: "enabled"
-  name: &name postgres16
+  name: &name postgres18
 spec:
   bootstrap:
     recovery:
@@ -18,91 +18,6 @@ spec:
         parameters: &parameters
           barmanObjectName: nas
           serverName: *name
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.13-system-trixie@sha256:b68ba56c224800b3d4fdaaa79692eb11d38ed7919d5c56c650f52f3f8514ca45
-  instances: 3
-  managed:
-    roles:
-      - login: true
-        name: bazarr
-        passwordSecret:
-          name: bazarr-pg-secret
-      - login: true
-        name: prowlarr
-        passwordSecret:
-          name: prowlarr-pg-secret
-      - login: true
-        name: radarr
-        passwordSecret:
-          name: radarr-pg-secret
-      - login: true
-        name: sonarr
-        passwordSecret:
-          name: sonarr-pg-secret
-      - login: true
-        name: gatus
-        passwordSecret:
-          name: gatus-pg-secret
-      - login: true
-        name: jellyseerr
-        passwordSecret:
-          name: jellyseerr-pg-secret
-      - login: true
-        name: atuin
-        passwordSecret:
-          name: atuin-pg-secret
-      - login: true
-        name: trunk-processor
-        passwordSecret:
-          name: trunk-processor-pg-secret
-      - login: true
-        name: paperless
-        passwordSecret:
-          name: paperless-pg-secret
-  monitoring:
-    enablePodMonitor: true
-  plugins:
-    - isWALArchiver: true
-      name: barman-cloud.cloudnative-pg.io
-      parameters: *parameters
-  postgresql:
-    parameters:
-      max_connections: "300"
-      shared_buffers: 512MB
-  primaryUpdateStrategy: unsupervised
-  resources:
-    limits:
-      cpu: 2
-      hugepages-1Gi: 1Gi
-      memory: 2Gi
-    requests:
-      cpu: 2
-      hugepages-1Gi: 1Gi
-      memory: 2Gi
-  storage:
-    size: 20Gi
-    storageClass: openebs-hostpath
-  superuserSecret:
-    name: cloudnative-pg-secret
----
-# yaml-language-server: $schema=https://schemas.serek.xyz/postgresql.cnpg.io/cluster_v1.json
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  annotations:
-    cnpg.io/skipEmptyWalArchiveCheck: "enabled"
-  name: &name postgres18
-spec:
-  bootstrap:
-    recovery:
-      source: source
-  enableSuperuserAccess: true
-  externalClusters:
-    - name: source
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: nas
-          serverName: postgres16
   imageName: ghcr.io/cloudnative-pg/postgresql:18.6-system-trixie@sha256:40168f065c5814acb464f38c9e43beb971f496ff03a27419f205a905043c578e
   instances: 3
   managed:
@@ -148,9 +63,7 @@ spec:
   plugins:
     - isWALArchiver: true
       name: barman-cloud.cloudnative-pg.io
-      parameters:
-        barmanObjectName: nas
-        serverName: postgres18
+      parameters: *parameters
   postgresql:
     parameters:
       max_connections: "300"
