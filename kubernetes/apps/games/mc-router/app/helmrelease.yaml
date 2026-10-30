@@ -27,7 +27,7 @@ spec:
     image:
       pullPolicy: IfNotPresent
       repository: ghcr.io/itzg/mc-router
-      tag: 1.41.0@sha256:927b9bfb6bf8c83c7194ff79c406812176181438eae8aa7a5477d5ede1d13caa
+      tag: 1.51.0@sha256:0ffc4f772863b6b09a5bcbe3f86538ef8723f267f27bb474169b363c47da6127
     services:
       minecraft:
         annotations:
