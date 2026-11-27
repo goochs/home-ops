@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.13"
 
 [[package]]
@@ -158,7 +158,7 @@ octodns = [
 [package.metadata]
 requires-dist = [
     { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.22.0" },
-    { name = "octodns-cloudflare", marker = "extra == 'octodns'", specifier = "~=1.2.0" },
+    { name = "octodns-cloudflare", marker = "extra == 'octodns'", specifier = "~=2.0.1" },
 ]
 provides-extras = ["octodns"]
 
@@ -199,15 +199,15 @@ wheels = [
 
 [[package]]
 name = "octodns-cloudflare"
-version = "1.2.0"
+version = "2.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "octodns" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6d/dc/518e48e615bbcbabea274e0b802ee8a5ac2fb6360680ff0e249c86bfcc0e/octodns_cloudflare-1.2.0.tar.gz", hash = "sha256:d33cd8db5cea0097bb60c8b1c107edf5de1651a8fdf0879e2bbfb7122e979c77", size = 43091, upload-time = "2026-06-19T07:36:08.154Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1c/2a/2303f509042c1035f84d25fd0356554b57f2eb96b6a4198b6cf4e1b5574a/octodns_cloudflare-2.0.1.tar.gz", hash = "sha256:ae50e547dc9667bdea539f45f3f3fd6ac5fc7b5c1cc0ffd4e1c741af6d67691f", size = 75381, upload-time = "2026-11-18T15:29:51.715Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/16/58/5320a82c6fbc14f2442efb68ac0c8760a8b0a9ad9153b7a4898e50507a81/octodns_cloudflare-1.2.0-py3-none-any.whl", hash = "sha256:4fc1a119890494a950997360d534e7e1c133b17228227570881327d6cfcf7391", size = 21861, upload-time = "2026-06-19T07:36:06.815Z" },
+    { url = "https://files.pythonhosted.org/packages/44/05/344397a5de7f7097dd803b37bca078ecaa89e24481f24ad0f57cf99cfa05/octodns_cloudflare-2.0.1-py3-none-any.whl", hash = "sha256:6158a6155795ef31a8c5fc8c1c7fee47d10bc849a4e34588944d6ff16bcddda2", size = 34465, upload-time = "2026-11-18T15:29:50.562Z" },
 ]
 
 [[package]]
